@@ -2,7 +2,6 @@ var roleBuilder = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
-        if(Memory.peace){
         
     	    if(creep.memory.building && creep.carry.energy == 0) {
                 creep.memory.building = false;
@@ -27,9 +26,6 @@ var roleBuilder = {
                     creep.moveTo(sources[1], {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
     	    }
-        }else{
-            creep.moveTo(Game.flags['PanicRoom'].pos);
-        }
 	}
 };
 
