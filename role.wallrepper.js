@@ -2,6 +2,9 @@ var roleWallrepper = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
+        
+        var wall = Game.getObjectById(Memory.wall);
+
 
               if(creep.memory.repairing && creep.carry.energy == 0) {
                   creep.memory.repairing = false;
@@ -14,13 +17,11 @@ var roleWallrepper = {
         	    }
 
         	    if(creep.memory.repairing) {    
-                    var wall = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_WALL) && structure.energy < structure.energyCapacity;}});
-    
-           	        if(wall.length > 0) {
-                           if(creep.repair(wall[0]) == ERR_NOT_IN_RANGE) {
-                               creep.moveTo(wall[0], {visualizePathStyle: {stroke: '#ffffff'}});
-                           }
+           	                
+                    if(creep.repair(wall) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(wall.pos, {visualizePathStyle: {stroke: '#ffffff'}});
                     }
+                    
                 }else{
                   var sources = creep.room.find(FIND_SOURCES);
                     if(creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
