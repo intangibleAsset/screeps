@@ -5,11 +5,11 @@ var roleUpgrader = {
 
 		if(creep.memory.upgrading && creep.carry.energy == 0) {
 		    creep.memory.upgrading = false;
-		    creep.say('Ã°Å¸ââ harvest');
+		    creep.say('ÃÂ°ÃÂ¸Ã¢ÂÂÃ¢ÂÂ harvest');
 		    }
 		    if(!creep.memory.upgrading && creep.carry.energy == creep.carryCapacity) {
 			creep.memory.upgrading = true;
-			creep.say('Ã¢Å¡Â¡ upgrade');
+			creep.say('ÃÂ¢ÃÂ¡ÃÂ¡ upgrade');
 		    }
 
 		    if(creep.memory.upgrading) {
