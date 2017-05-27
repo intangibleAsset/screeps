@@ -9,7 +9,6 @@ var roleTower = {
             var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
             if(closestHostile) {
                 tower.attack(closestHostile);
-                Memory.peace = false;
                 Game.spawns['Spawn1'].room.controller.activateSafeMode();
             }
             
