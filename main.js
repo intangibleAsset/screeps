@@ -4,6 +4,8 @@ var roleBuilder = require('role.builder');
 var roleTower = require('role.tower');
 var roleWallrepper = require('role.wallrepper');
 var roleTank = require('role.tank');
+var roleHoarder = require('role.hoarder');
+var roleHoarderTwo = require('role.hoardertwo');
 
 module.exports.loop = function () {
     
@@ -26,9 +28,11 @@ module.exports.loop = function () {
     var roleArray = [
         ['harvester',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleHarvester,4],
         ['upgrader',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,1],
-        ['builder',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,0],
+        ['builder',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,3],
         ['wallrepper',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,1],
-        ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,0]
+        ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,0],
+        ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarder,0],
+        ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,0]
     ];
     
     //********************tower function********************************************************
@@ -51,7 +55,7 @@ module.exports.loop = function () {
             Game.spawns['Spawn1'].pos.y, 
             {align: 'left', opacity: 0.8});
     }
-        //*****************************setting up memory roles for creeps************************
+        //*****************************autospawning creeps**************************************
     
     for(let i = 0; i < roleArray.length; i++){
         let temp = _.filter(Game.creeps, (creep) => creep.memory.role == roleArray[i][0]);
