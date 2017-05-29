@@ -6,8 +6,20 @@ var roleWallrepper = require('role.wallrepper');
 var roleTank = require('role.tank');
 var roleHoarder = require('role.hoarder');
 var roleHoarderTwo = require('role.hoardertwo');
+var roleTrucker = require('role.trucker');
 
 module.exports.loop = function () {
+    
+    //******************Unit amounts*************************************************************
+    var HARVESTERS = 1;
+    var UPGRADERS = 1;
+    var BUILDERS = 0;
+    var HOARDERS = 1;
+    var HOARDERTWOS = 1;
+    var TRUCKERS = 3;
+    var TANKS = 0;
+    var WALLREPPERS = 1;
+    
     
     //******************wallrepper helper function (probably could be done better)***************
     
@@ -26,13 +38,14 @@ module.exports.loop = function () {
     
     
     var roleArray = [
-        ['harvester',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleHarvester,4],
-        ['upgrader',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,1],
-        ['builder',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,3],
-        ['wallrepper',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,1],
-        ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,0],
-        ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarder,0],
-        ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,0]
+        ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
+        ['upgrader',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+        ['builder',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
+        ['wallrepper',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
+        ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
+        ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
+        ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
+        ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS]
     ];
     
     //********************tower function********************************************************
