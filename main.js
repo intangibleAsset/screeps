@@ -10,16 +10,58 @@ var roleTrucker = require('role.trucker');
 
 module.exports.loop = function () {
     
-    //******************Unit amounts*************************************************************
-    var HARVESTERS = 1;
-    var UPGRADERS = 1;
-    var BUILDERS = 0;
-    var HOARDERS = 1;
-    var HOARDERTWOS = 1;
-    var TRUCKERS = 3;
-    var TANKS = 0;
-    var WALLREPPERS = 1;
+    Memory.hostileInRoom;
     
+    //******************Unit amounts*************************************************************
+    if(!Memory.hostileInRoom){
+        var HARVESTERS = 1;
+        var UPGRADERS = 1;
+        var BUILDERS = 0;
+        var HOARDERS = 1;
+        var HOARDERTWOS = 1;
+        var TRUCKERS = 3;
+        var TANKS = 0;
+        var WALLREPPERS = 1;
+        
+        
+    }else{
+        var HARVESTERS = 1;
+        var UPGRADERS = 0;
+        var BUILDERS = 0;
+        var HOARDERS = 0;
+        var HOARDERTWOS = 0;
+        var TRUCKERS = 3;
+        var TANKS = 2;
+        var WALLREPPERS = 0;
+        
+        //give one trucker the role of filling the tower
+        var towerFiller = false;
+        for(var name in Game.creeps) {
+            var creep = Game.creeps[name];
+            if(creep.memory.role === 'trucker'){
+                if(creep.memory.towerFiller){
+                    towerFiller = true;
+                }
+            }
+        }
+        if(!towerFiller){
+            for(var name in Game.creeps) {
+                var creep = Game.creeps[name];
+                let x = false;
+                if(creep.memory.role === 'trucker'){
+                    creep.memory.towerFiller = true;
+                    x = true;
+                }
+                
+                if(x){
+                    break;
+                }
+                
+            }
+        }
+
+        
+    }
     
     //******************wallrepper helper function (probably could be done better)***************
     
@@ -31,7 +73,7 @@ module.exports.loop = function () {
         allWalls.sort(function(a,b){return a.hits - b.hits;});
         wallstrength = allWalls[0].hits + 2000;
         Memory.wall = allWalls[0].id;
-        console.log(wallstrength);
+        //console.log(wallstrength);
     }
     
     //*****************role arrays***************************************************************

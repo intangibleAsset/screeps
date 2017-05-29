@@ -9,7 +9,10 @@ var roleTower = {
             var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
             if(closestHostile) {
                 tower.attack(closestHostile);
+                Memory.hostileInRoom = true;
                 Game.spawns['Spawn1'].room.controller.activateSafeMode();
+            }else{
+                Memory.hostileInRoom = false;
             }
             
             var damagedStructures = tower.pos.findClosestByRange(FIND_STRUCTURES, {
@@ -26,6 +29,7 @@ var roleTower = {
             if(damagedStructures) {
                 tower.repair(damagedStructures);
             }
+            
         }
         
 	}
