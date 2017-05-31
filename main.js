@@ -8,6 +8,7 @@ var roleHoarder = require('role.hoarder');
 var roleHoarderTwo = require('role.hoardertwo');
 var roleTrucker = require('role.trucker');
 var roleRemoteHarvester = require('role.remoteharvester');
+var roleMedic = require('role.medic');
 
 module.exports.loop = function () {
     
@@ -24,6 +25,7 @@ module.exports.loop = function () {
         var TANKS = 0;
         var WALLREPPERS = 1;
         var REMOTE_HARVESTERS = 2;
+        var MEDICS = 0;
         
         
     }else{
@@ -34,6 +36,7 @@ module.exports.loop = function () {
         var HOARDERTWOS = 0;
         var TRUCKERS = 2;
         var TANKS = 5;
+        var MEDICS = 5;
         var WALLREPPERS = 0;
         
         //give one trucker the role of filling the tower
@@ -63,6 +66,13 @@ module.exports.loop = function () {
         }
 
         
+    }
+    
+    //******************setup a unit to anchor the logi on***************************************
+    
+    var tank = _.filter(Game.creeps, (creep) => creep.memory.role == 'tank');
+    if(tank[0]){
+        Memory.captain = tank[0].id;
     }
     
     //******************wallrepper helper function (probably could be done better)***************
@@ -127,6 +137,7 @@ module.exports.loop = function () {
     
     for(var name in Game.creeps) {
         var creep = Game.creeps[name];
+        //console.log(JSON.stringify(creep));
         
         for(let i = 0; i < roleArray.length; i++){
             if(creep.memory.role == roleArray[i][0]){
