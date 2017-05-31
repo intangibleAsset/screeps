@@ -9,6 +9,7 @@ var roleHoarderTwo = require('role.hoardertwo');
 var roleTrucker = require('role.trucker');
 var roleRemoteHarvester = require('role.remoteharvester');
 var roleMedic = require('role.medic');
+var roleInfantry = require('role.infantry');
 
 module.exports.loop = function () {
     
@@ -26,6 +27,7 @@ module.exports.loop = function () {
         var WALLREPPERS = 1;
         var REMOTE_HARVESTERS = 2;
         var MEDICS = 0;
+        var INFANTRY = 0;
         
         
     }else{
@@ -35,9 +37,10 @@ module.exports.loop = function () {
         var HOARDERS = 0;
         var HOARDERTWOS = 0;
         var TRUCKERS = 2;
-        var TANKS = 5;
-        var MEDICS = 5;
+        var TANKS = 2;
+        var MEDICS = 3;
         var WALLREPPERS = 0;
+        var INFANTRY = 0;
         
         //give one trucker the role of filling the tower
         var towerFiller = false;
@@ -93,6 +96,7 @@ module.exports.loop = function () {
     
     var roleArray = [
         ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
+        ['infantry'[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
         ['upgrader',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
         ['builder',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
         ['wallrepper',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
