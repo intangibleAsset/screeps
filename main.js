@@ -19,16 +19,16 @@ module.exports.loop = function () {
     //******************Unit amounts*************************************************************
     if(!Memory.hostileInRoom){
         var HARVESTERS = 1;
-        var UPGRADERS = 0;
+        var UPGRADERS = 2;
         var BUILDERS = 0;
         var HOARDERS = 1;
         var HOARDERTWOS = 1;
         var TRUCKERS = 2;
-        var TANKS = 0;
-        var WALLREPPERS = 0;
-        var REMOTE_HARVESTERS = 0;
-        var MEDICS = 0;
-        var INFANTRY = 0;
+        var TANKS = 1;
+        var WALLREPPERS = 1;
+        var REMOTE_HARVESTERS = 2;
+        var MEDICS = 1;
+        var INFANTRY = 1;
         var RESERVERS = 0;
         
         
@@ -42,7 +42,7 @@ module.exports.loop = function () {
         var TANKS = 5;
         var MEDICS = 3;
         var WALLREPPERS = 0;
-        var INFANTRY = 0;
+        var INFANTRY = 3;
         
         //give one trucker the role of filling the tower
         var towerFiller = false;
@@ -100,14 +100,14 @@ module.exports.loop = function () {
         ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
         ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
         ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
-        ['infantry'[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
+        ['infantry',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
         ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
         ['builder',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
         ['wallrepper',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
         ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
         ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
         ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
-        ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
+        ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
         ['remoteharvester',[WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteHarvester,REMOTE_HARVESTERS]
     ];
     
