@@ -10,6 +10,7 @@ var roleTrucker = require('role.trucker');
 var roleRemoteHarvester = require('role.remoteharvester');
 var roleMedic = require('role.medic');
 var roleInfantry = require('role.infantry');
+var roleReserver = require('role.reserver');
 
 module.exports.loop = function () {
     
@@ -18,16 +19,17 @@ module.exports.loop = function () {
     //******************Unit amounts*************************************************************
     if(!Memory.hostileInRoom){
         var HARVESTERS = 1;
-        var UPGRADERS = 3;
+        var UPGRADERS = 0;
         var BUILDERS = 0;
         var HOARDERS = 1;
         var HOARDERTWOS = 1;
-        var TRUCKERS = 3;
+        var TRUCKERS = 2;
         var TANKS = 0;
-        var WALLREPPERS = 1;
-        var REMOTE_HARVESTERS = 2;
+        var WALLREPPERS = 0;
+        var REMOTE_HARVESTERS = 0;
         var MEDICS = 0;
         var INFANTRY = 0;
+        var RESERVERS = 0;
         
         
     }else{
@@ -37,7 +39,7 @@ module.exports.loop = function () {
         var HOARDERS = 0;
         var HOARDERTWOS = 0;
         var TRUCKERS = 2;
-        var TANKS = 2;
+        var TANKS = 5;
         var MEDICS = 3;
         var WALLREPPERS = 0;
         var INFANTRY = 0;
@@ -95,9 +97,11 @@ module.exports.loop = function () {
     
     
     var roleArray = [
+        ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
+        ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
         ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
         ['infantry'[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
-        ['upgrader',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+        ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
         ['builder',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
         ['wallrepper',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
         ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
@@ -107,9 +111,10 @@ module.exports.loop = function () {
         ['remoteharvester',[WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteHarvester,REMOTE_HARVESTERS]
     ];
     
-    //********************tower function********************************************************
+    //********************tower functions********************************************************
     
     roleTower.run('5924a27e9ad4233b1ce2ea36');
+    roleTower.run('5930a8f3b6369e8f4cad12a4');
     
     //********************delete dead creeps****************************************************
     for(var i in Memory.creeps) {
