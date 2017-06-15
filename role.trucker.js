@@ -38,7 +38,7 @@ var roleTrucker = {
         	       
                 }
                 else {
-        			var container = creep.pos.findClosestByRange(FIND_STRUCTURES,{ filter: (structure) => { return(structure.structureType == STRUCTURE_CONTAINER) && structure.store[RESOURCE_ENERGY] > 0}});
+        			var container = creep.pos.findClosestByRange(FIND_STRUCTURES,{ filter: (structure) => { return(structure.structureType == STRUCTURE_CONTAINER) && structure.store[RESOURCE_ENERGY] > 301}});
         			if(container){
         			    if(creep.withdraw(container,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
         				    creep.moveTo(container);

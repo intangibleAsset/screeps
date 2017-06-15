@@ -10,7 +10,7 @@ var roleTower = {
             if(closestHostile) {
                 tower.attack(closestHostile);
                 Memory.hostileInRoom = true;
-                Game.spawns['Spawn1'].room.controller.activateSafeMode();
+                //Game.spawns['Spawn1'].room.controller.activateSafeMode();
             }else{
                 Memory.hostileInRoom = false;
             }

@@ -19,16 +19,16 @@ module.exports.loop = function () {
     //******************Unit amounts*************************************************************
     if(!Memory.hostileInRoom){
         var HARVESTERS = 1;
-        var UPGRADERS = 2;
+        var UPGRADERS = 5;
         var BUILDERS = 0;
         var HOARDERS = 1;
         var HOARDERTWOS = 1;
         var TRUCKERS = 2;
-        var TANKS = 1;
+        var TANKS = 0;
         var WALLREPPERS = 1;
-        var REMOTE_HARVESTERS = 2;
-        var MEDICS = 1;
-        var INFANTRY = 1;
+        var REMOTE_HARVESTERS = 0;
+        var MEDICS = 0;
+        var INFANTRY = 0;
         var RESERVERS = 0;
         
         
@@ -39,10 +39,10 @@ module.exports.loop = function () {
         var HOARDERS = 0;
         var HOARDERTWOS = 0;
         var TRUCKERS = 2;
-        var TANKS = 5;
-        var MEDICS = 3;
+        var TANKS = 2;
+        var MEDICS = 2;
         var WALLREPPERS = 0;
-        var INFANTRY = 3;
+        var INFANTRY = 2;
         
         //give one trucker the role of filling the tower
         var towerFiller = false;
@@ -84,6 +84,8 @@ module.exports.loop = function () {
     
     //function that sorts walls by hit points, finds the wall / rampart with the lowest and adds 2000 so all walls eventually get up to the 
     //same value then upgrade over time
+    
+    
     var wallstrength;
     var allWalls = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES,{filter: (structure) => {return(structure.structureType == STRUCTURE_WALL || structure.structureType == STRUCTURE_RAMPART ) && structure.hits < structure.hitsMax;}});
     if(allWalls){
@@ -100,21 +102,21 @@ module.exports.loop = function () {
         ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
         ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
         ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
-        ['infantry',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
-        ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
-        ['builder',[WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
-        ['wallrepper',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
+        ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
+        ['upgrader',[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+        ['builder',[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
+        ['wallrepper',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
         ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
         ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
-        ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
-        ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
+        ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
+        ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
         ['remoteharvester',[WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteHarvester,REMOTE_HARVESTERS]
     ];
     
     //********************tower functions********************************************************
     
-    roleTower.run('5924a27e9ad4233b1ce2ea36');
-    roleTower.run('5930a8f3b6369e8f4cad12a4');
+    roleTower.run('5938757562b0d652193adbd1');
+    //roleTower.run('5930a8f3b6369e8f4cad12a4');
     
     //********************delete dead creeps****************************************************
     for(var i in Memory.creeps) {
@@ -147,6 +149,7 @@ module.exports.loop = function () {
     for(var name in Game.creeps) {
         var creep = Game.creeps[name];
         //console.log(JSON.stringify(creep));
+        console.log(creep);
         
         for(let i = 0; i < roleArray.length; i++){
             if(creep.memory.role == roleArray[i][0]){

@@ -31,7 +31,8 @@ var roleReserver = {
                 creep.moveTo(creep.room.controller);
             }
         }
-        
+        //creep.signController(creep.room.controller,'Hostile acts with be repaid in kind, so will co-operative ones. Message me if you intend either.');
+
         
     }//end run
 };
