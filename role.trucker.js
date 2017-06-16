@@ -5,7 +5,7 @@ var roleTrucker = {
         
         creep.memory.towerFiller;
         
-        if(!Memory.hostileInRoom){
+        if(true){
             
                 if(creep.memory.transferring && creep.carry.energy == 0) {
                     creep.memory.transferring = false;
