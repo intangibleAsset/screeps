@@ -19,7 +19,7 @@ var roleReserver = {
         }
         
         if(creep.memory.atBase){
-            creep.moveTo(Game.flags['NewEden'].pos)
+            creep.moveTo(Game.flags['NewEden'].pos, {visualizePathStyle: {stroke: '#ffffff'}})
                 if(creep.pos.roomName == Game.flags['NewEden'].pos.roomName){
                     creep.memory.atRemoteRoom = true;
                     creep.memory.atBase = false;
@@ -28,10 +28,10 @@ var roleReserver = {
         }
         if(creep.memory.atRemoteRoom){
             if(creep.reserveController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(creep.room.controller);
+                creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
             }
         }
-        //creep.signController(creep.room.controller,'Hostile acts with be repaid in kind, so will co-operative ones. Message me if you intend either.');
+        creep.signController(creep.room.controller,"roomy two bedroom with potential for off road parking....I'll take it");
 
         
     }//end run

@@ -25,8 +25,8 @@ var remoteharvester = {
         
         
         if(!creep.memory.atRemoteRoom && !creep.memory.deposit){
-            creep.moveTo(Game.flags['NewEden']);
-            if(creep.pos.roomName == Game.flags['NewEden'].pos.roomName){
+            creep.moveTo(Game.flags['Terminus']);
+            if(creep.pos.roomName == Game.flags['Terminus'].pos.roomName){
                 creep.memory.atRemoteRoom = true;
                 //console.log('1');
             }

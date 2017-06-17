@@ -1,7 +1,7 @@
 var roleTower = {
 
     /** @param {Creep} creep **/
-    run: function(towerId) {
+    run: function(towerId,spawn) {
        
         var tower = Game.getObjectById(towerId);
         if(tower) {
@@ -9,10 +9,10 @@ var roleTower = {
             var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
             if(closestHostile) {
                 tower.attack(closestHostile);
-                //Memory.hostileInRoom = true;
+                spawn.memory.hostileInRoom = true;
                 //Game.spawns['Spawn1'].room.controller.activateSafeMode();
             }else{
-                //Memory.hostileInRoom = false;
+                spawn.memory.hostileInRoom = false;
             }
             
             var damagedStructures = tower.pos.findClosestByRange(FIND_STRUCTURES, {

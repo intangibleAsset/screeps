@@ -4,8 +4,10 @@ var roleTrucker = {
     run: function(creep) {
         
         creep.memory.towerFiller;
+        var spawn = Game.getObjectById(Game.spawns[creep.memory.spawnName].id);
         
-        if(true){
+        
+        if(!spawn.memory.hostileInRoom){
             
                 if(creep.memory.transferring && creep.carry.energy == 0) {
                     creep.memory.transferring = false;

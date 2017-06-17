@@ -3,12 +3,15 @@ var roleWallrepper = {
     /** @param {Creep} creep **/
     run: function(creep) {
         
-        //if statement ot set creeps target to repair so it dumps energy into one wall, otherwise they flit from one low hit point wall to another
-        if(!creep.memory.currentWall){
-            creep.memory.currentWall = Memory.wall;
-        }
-        
-        var wall = Game.getObjectById(creep.memory.currentWall);
+            creep.memory.wallstrength;
+            var wall;
+            
+            var allWalls = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES,{filter: (structure) => {return(structure.structureType == STRUCTURE_WALL || structure.structureType == STRUCTURE_RAMPART ) && structure.hits < structure.hitsMax;}});
+            if(allWalls){
+                allWalls.sort(function(a,b){return a.hits - b.hits;});
+                creep.memory.wallstrength = allWalls[0].hits + 2000;
+                wall = allWalls[0];
+                }
 
 
               if(creep.memory.repairing && creep.carry.energy == 0) {
@@ -28,9 +31,8 @@ var roleWallrepper = {
                     }
                     
                 }else{
-                    var sources = creep.room.find(FIND_SOURCES);
-                    if(creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(sources[1], {visualizePathStyle: {stroke: '#ffaa00'}});
+                    if(creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(creep.room.storage.pos);
                     }
                 }
 
