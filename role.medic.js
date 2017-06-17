@@ -19,11 +19,8 @@ var roleMedic = {
                 creep.rangedHeal(target);
             }
         }else{
-            let captain = Game.getObjectById(Memory.captain);
-            if(captain){
-                creep.moveTo(captain.pos);
+                creep.moveTo(Game.flags['Eden'].pos); 
                 
-            }
         }
             
     }

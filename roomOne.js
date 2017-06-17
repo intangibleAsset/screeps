@@ -20,8 +20,8 @@ var roomOne = {
     ///////////start/////////////////////////////////////////////////////////////////////////////////////////
     
     var HARVESTERS = 0;
-    var UPGRADERS = 0;
-    var BUILDERS = 0;
+    var UPGRADERS = 2;
+    var BUILDERS = 1;
     var HOARDERS = 1;
     var HOARDERTWOS = 1;
     var TRUCKERS = 2;
@@ -31,6 +31,7 @@ var roomOne = {
     var MEDICS = 0;
     var INFANTRY = 0;
     var RESERVERS = 0;
+    
         
     var roleArray = [
         ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
@@ -50,6 +51,7 @@ var roomOne = {
     //********************tower functions********************************************************
     
     roleTower.run('5938757562b0d652193adbd1');
+    roleTower.run('594448126fb030030f61580f');
     
     //*****************************autospawning creeps**************************************
     
@@ -67,7 +69,6 @@ var roomOne = {
     //*******************run this rooms creeps***************************************************
     
     var thisRoomsCreeps = _.filter(Game.creeps,(creep)=> creep.memory.spawnName === spawn.name );
-    console.log(thisRoomsCreeps);
     
     for(var creep of thisRoomsCreeps) {
         
