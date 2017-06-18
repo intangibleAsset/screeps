@@ -1,5 +1,5 @@
 var roomOne = require('roomOne');
-//var roomTwo = require('roomTwo');
+var roomTwo = require('roomTwo');
 
 
 
@@ -14,7 +14,7 @@ module.exports.loop = function () {
     
     //********************run various rooms*****************************************************
     roomOne.run(Game.spawns['Spawn1']);
-    
+    roomTwo.run(Game.spawns['Spawn2']);
     
     
 }

@@ -11,27 +11,25 @@ var roleRemoteHarvester = require('role.remoteharvester');
 var roleMedic = require('role.medic');
 var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
-var roleRemoteBuilder = require('role.remoteBuilder');
 
-var roomOne = {
+var roomTwo = {
 
     /** @param {creep} creep **/
     run: function(spawn) {
  
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 2;
-            var BUILDERS = 1;
-            var HOARDERS = 1;
-            var HOARDERTWOS = 1;
-            var TRUCKERS = 2;
+            var UPGRADERS = 0;
+            var BUILDERS = 0;
+            var HOARDERS = 0;
+            var HOARDERTWOS = 0;
+            var TRUCKERS = 0;
             var TANKS = 0;
-            var WALLREPPERS = 1;
-            var REMOTE_HARVESTERS = 1;
+            var WALLREPPERS = 0;
+            var REMOTE_HARVESTERS = 0;
             var MEDICS = 0;
             var INFANTRY = 0;
             var RESERVERS = 0;
-            var REMOTE_BUILDERS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -49,12 +47,11 @@ var roomOne = {
     
         
         var roleArray = [
-            ['remoteBuilder',[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
             ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
-            ['upgrader',[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['upgrader',[WORK,CARRY,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
@@ -112,4 +109,4 @@ var roomOne = {
 	
 };
 
-module.exports = roomOne;
+module.exports = roomTwo;

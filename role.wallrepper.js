@@ -12,6 +12,11 @@ var roleWallrepper = {
                 creep.memory.wallstrength = allWalls[0].hits + 2000;
                 wall = allWalls[0];
                 }
+                
+            //if statement ot set creeps target to repair so it dumps energy into one wall, otherwise they flit from one low hit point wall to another
+            if(!creep.memory.currentWall){
+                creep.memory.currentWall = wall.id;
+            }
 
 
               if(creep.memory.repairing && creep.carry.energy == 0) {
@@ -26,8 +31,8 @@ var roleWallrepper = {
 
         	    if(creep.memory.repairing) {    
            	                
-                    if(creep.repair(wall) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(wall.pos, {visualizePathStyle: {stroke: '#ffffff'}});
+                    if(creep.repair(Game.getObjectById(creep.memory.currentWall)) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(Game.getObjectById(creep.memory.currentWall).pos, {visualizePathStyle: {stroke: '#ffffff'}});
                     }
                     
                 }else{

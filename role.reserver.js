@@ -19,6 +19,7 @@ var roleReserver = {
         }
         
         if(creep.memory.atBase){
+            //creep.move(BOTTOM);
             creep.moveTo(Game.flags['NewEden'].pos, {visualizePathStyle: {stroke: '#ffffff'}})
                 if(creep.pos.roomName == Game.flags['NewEden'].pos.roomName){
                     creep.memory.atRemoteRoom = true;
@@ -27,11 +28,11 @@ var roleReserver = {
             
         }
         if(creep.memory.atRemoteRoom){
-            if(creep.reserveController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+            if(creep.claimController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
             }
         }
-        creep.signController(creep.room.controller,"roomy two bedroom with potential for off road parking....I'll take it");
+        creep.signController(creep.room.controller,"His Noodliness, the Flying Spaghetti Monster is the ultimate truth in the universe");
 
         
     }//end run
