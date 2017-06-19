@@ -12,6 +12,7 @@ var roleMedic = require('role.medic');
 var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
 var roleRemoteBuilder = require('role.remoteBuilder');
+var roleRemoteTank = require('role.remoteTank');
 
 var roomOne = {
 
@@ -20,7 +21,7 @@ var roomOne = {
  
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 2;
+            var UPGRADERS = 4;
             var BUILDERS = 1;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -31,7 +32,8 @@ var roomOne = {
             var MEDICS = 0;
             var INFANTRY = 0;
             var RESERVERS = 0;
-            var REMOTE_BUILDERS = 0;
+            var REMOTE_BUILDERS = 2;
+            var REMOTE_TANKS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -49,6 +51,7 @@ var roomOne = {
     
         
         var roleArray = [
+            ['remoteTank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,WORK,MOVE],roleRemoteTank,REMOTE_TANKS],
             ['remoteBuilder',[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
             ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
@@ -75,7 +78,7 @@ var roomOne = {
             let temp = _.filter(Game.creeps, (creep) => creep.memory.role == roleArray[i][0] && creep.memory.spawnName === spawn.name);
             
             if(temp.length < roleArray[i][3]){
-                var newName = Game.spawns['Spawn1'].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name});
+                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name});
                 console.log('spawning new '+ roleArray[i][0] + ' : ' + newName );
             }
         }

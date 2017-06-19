@@ -18,8 +18,8 @@ var roomTwo = {
     run: function(spawn) {
  
         if(!spawn.memory.hostileInRoom){
-            var HARVESTERS = 1;
-            var UPGRADERS = 0;
+            var HARVESTERS = 2;
+            var UPGRADERS = 3;
             var BUILDERS = 0;
             var HOARDERS = 0;
             var HOARDERTWOS = 0;
@@ -52,7 +52,7 @@ var roomTwo = {
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
             ['upgrader',[WORK,CARRY,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
-            ['builder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
+            ['builder',[WORK,CARRY,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
@@ -63,21 +63,21 @@ var roomTwo = {
     
         //********************tower functions********************************************************
         
-        roleTower.run('5938757562b0d652193adbd1',spawn);
-        roleTower.run('594448126fb030030f61580f',spawn);
+        //roleTower.run('5938757562b0d652193adbd1',spawn);
+        //roleTower.run('594448126fb030030f61580f',spawn);
         
         //*****************************autospawning creeps**************************************
         
         for(let i = 0; i < roleArray.length; i++){
-            let temp = _.filter(Game.creeps, (creep) => creep.memory.role == roleArray[i][0] && creep.memory.spawnName === spawn.name);
+            let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && creep.memory.spawnName === spawn.name);
+            console.log(temp.length);
             
             if(temp.length < roleArray[i][3]){
-                var newName = Game.spawns['Spawn1'].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name});
+                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name});
                 console.log('spawning new '+ roleArray[i][0] + ' : ' + newName );
             }
         }
     
-
 
         //*******************run this rooms creeps***************************************************
         

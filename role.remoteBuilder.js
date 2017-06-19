@@ -18,12 +18,20 @@ var roleRemoteBuilder = {
         }
         
         if(creep.memory.atBase){
-            //creep.move(BOTTOM);
+            if(!creep.memory.full){
+                if(creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(creep.room.storage.pos);
+                }
+                if(creep.carry.energy == creep.carryCapacity){
+                    creep.memory.full = true;
+                }
+            }else{
             creep.moveTo(Game.flags['NewEden'].pos, {visualizePathStyle: {stroke: '#ffffff'}})
                 if(creep.pos.roomName == Game.flags['NewEden'].pos.roomName){
                     creep.memory.atRemoteRoom = true;
                     creep.memory.atBase = false;
                 }
+            }
             
         }
         if(creep.memory.atRemoteRoom){
