@@ -18,14 +18,14 @@ var roomTwo = {
     run: function(spawn) {
  
         if(!spawn.memory.hostileInRoom){
-            var HARVESTERS = 2;
+            var HARVESTERS = 3;
             var UPGRADERS = 3;
             var BUILDERS = 0;
             var HOARDERS = 0;
             var HOARDERTWOS = 0;
             var TRUCKERS = 0;
             var TANKS = 0;
-            var WALLREPPERS = 0;
+            var WALLREPPERS = 1;
             var REMOTE_HARVESTERS = 0;
             var MEDICS = 0;
             var INFANTRY = 0;
@@ -49,11 +49,11 @@ var roomTwo = {
         var roleArray = [
             ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
-            ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
+            ['harvester',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
-            ['upgrader',[WORK,CARRY,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
-            ['builder',[WORK,CARRY,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
-            ['wallrepper',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
+            ['upgrader',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['builder',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
+            ['wallrepper',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
@@ -70,7 +70,6 @@ var roomTwo = {
         
         for(let i = 0; i < roleArray.length; i++){
             let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && creep.memory.spawnName === spawn.name);
-            console.log(temp.length);
             
             if(temp.length < roleArray[i][3]){
                 var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name});

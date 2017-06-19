@@ -6,7 +6,7 @@ var roleWallrepper = {
             creep.memory.wallstrength;
             var wall;
             
-            var allWalls = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES,{filter: (structure) => {return(structure.structureType == STRUCTURE_WALL || structure.structureType == STRUCTURE_RAMPART ) && structure.hits < structure.hitsMax;}});
+            var allWalls = Game.spawns[creep.memory.spawnName].room.find(FIND_STRUCTURES,{filter: (structure) => {return(structure.structureType == STRUCTURE_WALL || structure.structureType == STRUCTURE_RAMPART ) && structure.hits < structure.hitsMax;}});
             if(allWalls){
                 allWalls.sort(function(a,b){return a.hits - b.hits;});
                 creep.memory.wallstrength = allWalls[0].hits + 2000;
@@ -36,8 +36,16 @@ var roleWallrepper = {
                     }
                     
                 }else{
-                    if(creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(creep.room.storage.pos);
+                    if(creep.memory.spawnName == 'Spawn1'){
+                        if(creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(creep.room.storage.pos);
+                        }
+                    }
+                    if(creep.memory.spawnName == 'Spawn2'){
+                        var sources = creep.room.find(FIND_SOURCES);
+                        if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+                        }
                     }
                 }
 
