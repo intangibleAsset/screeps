@@ -28,7 +28,7 @@ var roomOne = {
             var TRUCKERS = 3;
             var TANKS = 0;
             var WALLREPPERS = 1;
-            var REMOTE_HARVESTERS = 1;
+            var REMOTE_HARVESTERS = 3;
             var MEDICS = 0;
             var INFANTRY = 0;
             var RESERVERS = 0;
@@ -79,27 +79,31 @@ var roomOne = {
             
             if(temp.length < roleArray[i][3]){
                 var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name});
-                console.log('spawning new '+ roleArray[i][0] + ' : ' + newName );
+                console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ spawn.name);
             }
         }
         
         //****************************remote harvesting helper***************************************
+        
         var remoteRoomFlags = [
             'Terminus',
             'The Kingdom',
             'Hope Street'
         ];
         
-        var remoteHarvesters = [];
+        var creepArray = []
         
-        for(let names in Game.creeps){
-            let creep = Game.creeps[names];
-            if(creep.memory.role === 'remoteharvester' && creep.memory.spawnName === spawn.name){
-                
-            } 
+        for(let i in Game.creeps){
+            let creep = Game.creeps[i];
+            if(creep.memory.role === 'remoteharvester' && creep.memory.spawnName == spawn.name){
+                creepArray.push(creep);
+            }
         }
-    
-
+        
+        for(let i=0;i<creepArray.length;i++){
+            creepArray[i].memory.flag = remoteRoomFlags[i];
+        }
+        
 
         //*******************run this rooms creeps***************************************************
         

@@ -4,10 +4,10 @@ var remoteharvester = {
     /** @param {Creep} creep **/
     run: function(creep) {
         
-        
         creep.memory.atRemoteRoom;
         creep.memory.deposit;
         creep.memory.atBase;
+        creep.memory.flag;
         
         //set default spawn values
         
@@ -25,8 +25,8 @@ var remoteharvester = {
         
         
         if(!creep.memory.atRemoteRoom && !creep.memory.deposit){
-            creep.moveTo(Game.flags['Terminus']);
-            if(creep.pos.roomName == Game.flags['Terminus'].pos.roomName){
+            creep.moveTo(Game.flags[creep.memory.flag]);
+            if(creep.pos.roomName == Game.flags[creep.memory.flag].pos.roomName){
                 creep.memory.atRemoteRoom = true;
                 //console.log('1');
             }
