@@ -20,7 +20,7 @@ var roleTrucker = {
         
         	    if(creep.memory.transferring) {
         	       
-        	       var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+        	       var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                             filter: (structure) => {
                                 return (structure.structureType == STRUCTURE_EXTENSION ||
                                         structure.structureType == STRUCTURE_SPAWN ||
@@ -40,12 +40,24 @@ var roleTrucker = {
         	       
                 }
                 else {
-        			var container = creep.pos.findClosestByRange(FIND_STRUCTURES,{ filter: (structure) => { return(structure.structureType == STRUCTURE_CONTAINER) && structure.store[RESOURCE_ENERGY] > 301}});
-        			if(container){
-        			    if(creep.withdraw(container,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-        				    creep.moveTo(container);
-        			    } 
-        	        }
+                    var droppedEnergy = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES,{filter: (resource) => {return( resource.resourceType == RESOURCE_ENERGY )}});
+                    
+                    if(droppedEnergy){
+                        console.log(droppedEnergy+' '+creep.memory.spawnName+' '+creep.id);
+                        if(creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE){
+                            creep.moveTo(droppedEnergy,{visualizePathStyle: {stroke: '#ffaa00'}});
+                        }
+                    }else{
+                        
+            			var container = creep.pos.findClosestByRange(FIND_STRUCTURES,{ filter: (structure) => { return(structure.structureType == STRUCTURE_CONTAINER) && structure.store[RESOURCE_ENERGY] > 301}});
+            			if(container){
+            			    if(creep.withdraw(container,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+            				    creep.moveTo(container);
+            			    } 
+            	        }
+                    }
+        	        
+        	        
         	    }
         }else{
             
