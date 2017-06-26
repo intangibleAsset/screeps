@@ -33,17 +33,19 @@ var roleTrucker = {
                             creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
                         }
                     }else{
-                        if(creep.transfer(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(creep.room.storage.pos);
+                        if(creep.room.storage){
+                            if(creep.transfer(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(creep.room.storage.pos);
+                            }
                         }
+                        
                     }
         	       
                 }
-                else {
+                else {     ///dropped energy method may be better in harester creep seems to be a bottleneck for truckers so turned off.
                     var droppedEnergy = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES,{filter: (resource) => {return( resource.resourceType == RESOURCE_ENERGY )}});
                     
-                    if(droppedEnergy){
-                        console.log(droppedEnergy+' '+creep.memory.spawnName+' '+creep.id);
+                    if(/*droppedEnergy*/false){ ///turned off as inefficent
                         if(creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE){
                             creep.moveTo(droppedEnergy,{visualizePathStyle: {stroke: '#ffaa00'}});
                         }
@@ -85,9 +87,11 @@ var roleTrucker = {
                         }	        
                 }
                 else {
+                    if(creep.room.storage){
                         if(creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                             creep.moveTo(creep.room.storage.pos);
                         }
+                    }
         	    }
             
             
