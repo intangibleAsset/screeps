@@ -20,7 +20,7 @@ var roomOne = {
  
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 4;
+            var UPGRADERS = 2;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;

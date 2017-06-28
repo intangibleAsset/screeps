@@ -19,7 +19,7 @@ var roomTwo = {
  
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 2;
+            var UPGRADERS = 3;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -31,16 +31,16 @@ var roomTwo = {
             var INFANTRY = 0;
             var RESERVERS = 0;
         }else{
-            var HARVESTERS = 1;
+            var HARVESTERS = 0;
             var UPGRADERS = 0;
             var BUILDERS = 0;
             var HOARDERS = 0;
             var HOARDERTWOS = 0;
-            var TRUCKERS = 0;
-            var TANKS = 2;
+            var TRUCKERS = 1;
+            var TANKS = 3;
             var WALLREPPERS = 0;
             var REMOTE_HARVESTERS = 0;
-            var MEDICS = 0;
+            var MEDICS = 3;
             var INFANTRY = 0;
             var RESERVERS = 0;        
         }
@@ -51,7 +51,7 @@ var roomTwo = {
             ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
             ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
-            ['upgrader',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['upgrader',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
