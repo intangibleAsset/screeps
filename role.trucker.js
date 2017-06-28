@@ -1,9 +1,11 @@
+var um = require('utilityMethods');
+
 var roleTrucker = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
+        creep.memory.container;
         
-        creep.memory.towerFiller;
         var spawn = Game.getObjectById(Game.spawns[creep.memory.spawnName].id);
         
         
@@ -11,6 +13,7 @@ var roleTrucker = {
             
                 if(creep.memory.transferring && creep.carry.energy == 0) {
                     creep.memory.transferring = false;
+                    creep.memory.container = null;
                     creep.say('collect');
         	    }
         	    if(!creep.memory.transferring && creep.carry.energy == creep.carryCapacity) {
@@ -51,12 +54,16 @@ var roleTrucker = {
                         }
                     }else{
                         
-            			var container = creep.pos.findClosestByRange(FIND_STRUCTURES,{ filter: (structure) => { return(structure.structureType == STRUCTURE_CONTAINER) && structure.store[RESOURCE_ENERGY] > 301}});
-            			if(container){
-            			    if(creep.withdraw(container,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-            				    creep.moveTo(container);
-            			    } 
-            	        }
+            			if(!creep.memory.container || Game.getObjectById(creep.memory.container).store[RESOURCE_ENERGY] == 0){
+                            creep.memory.container = um.returnContainer(creep);
+                        }
+            			
+            			if(creep.memory.container){
+                			var container = Game.getObjectById(creep.memory.container);
+                			if(creep.withdraw(container,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                			    creep.moveTo(container, {visualizePathStyle: {stroke: '#ffffff'}});
+                			} 
+            			}
                     }
         	        
         	        
