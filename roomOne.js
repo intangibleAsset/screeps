@@ -12,14 +12,13 @@ var roleMedic = require('role.medic');
 var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
 var roleRemoteBuilder = require('role.remoteBuilder');
+var roleMineralMiner = require('role.mineralMiner');
 
 var roomOne = {
 
     /** @param {creep} creep **/
     run: function(spawn) {
         
-        console.log(Game.spawns['Spawn1'].pos.findClosestByRange(FIND_SOURCES_ACTIVE).pos);
- 
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 2;
@@ -35,6 +34,7 @@ var roomOne = {
             var RESERVERS = 0;
             var REMOTE_BUILDERS = 2;
             var REMOTE_TANKS = 0;
+            var MINERAL_MINERS = 1;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -64,7 +64,8 @@ var roomOne = {
             ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
-            ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS]
+            ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
+            ['mineralMiner',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleMineralMiner,MINERAL_MINERS]
             
         ];
     
