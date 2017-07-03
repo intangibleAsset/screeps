@@ -6,6 +6,8 @@ var roomThree = require('roomThree');
 
 module.exports.loop = function () {
     
+    console.log(Game.cpu.tickLimit);
+    
     //********************delete dead creeps****************************************************
     for(var i in Memory.creeps) {
         if(!Game.creeps[i]) {

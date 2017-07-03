@@ -16,7 +16,7 @@ var roleTrucker = {
                     creep.memory.container = null;
                     creep.say('collect');
         	    }
-        	    if(!creep.memory.transferring && creep.carry.energy == creep.carryCapacity) {
+        	    if(!creep.memory.transferring && creep.carry.energy == creep.carryCapacity || creep.ticksToLive < 40) {
         	        creep.memory.transferring = true;
         	        creep.say('transfer');
         	    }
