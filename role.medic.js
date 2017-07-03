@@ -19,7 +19,7 @@ var roleMedic = {
                 creep.rangedHeal(target);
             }
         }else{
-                creep.moveTo(Game.flags['Eden'].pos); 
+                creep.moveTo(Game.flags['Aunsou'].pos); 
                 
         }
             

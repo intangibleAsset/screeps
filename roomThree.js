@@ -12,18 +12,18 @@ var roleMedic = require('role.medic');
 var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
 
-var roomTwo = {
+var roomThree = {
 
     /** @param {creep} creep **/
     run: function(spawn) {
  
         if(!spawn.memory.hostileInRoom){
-            var HARVESTERS = 1;
-            var UPGRADERS = 4;
-            var BUILDERS = 1;
-            var HOARDERS = 1;
-            var HOARDERTWOS = 1;
-            var TRUCKERS = 1;
+            var HARVESTERS = 4;
+            var UPGRADERS = 3;
+            var BUILDERS = 0;
+            var HOARDERS = 0;
+            var HOARDERTWOS = 0;
+            var TRUCKERS = 0;
             var TANKS = 0;
             var WALLREPPERS = 1;
             var REMOTE_HARVESTERS = 0;
@@ -36,11 +36,11 @@ var roomTwo = {
             var BUILDERS = 0;
             var HOARDERS = 0;
             var HOARDERTWOS = 0;
-            var TRUCKERS = 1;
+            var TRUCKERS = 0;
             var TANKS = 3;
             var WALLREPPERS = 0;
             var REMOTE_HARVESTERS = 0;
-            var MEDICS = 3;
+            var MEDICS = 0;
             var INFANTRY = 0;
             var RESERVERS = 0;        
         }
@@ -51,10 +51,10 @@ var roomTwo = {
             ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
             ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
-            ['upgrader',[WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE],roleUpgrader,UPGRADERS],
+            ['upgrader',[WORK,CARRY,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
-            ['wallrepper',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
-            ['tank',[TOUGH,TOUGH,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
+            ['wallrepper',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
+            ['tank',[TOUGH,TOUGH,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE],roleTank,TANKS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
             ['trucker',[CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE],roleTrucker,TRUCKERS],
@@ -64,7 +64,7 @@ var roomTwo = {
         //********************tower functions********************************************************
         
         roleTower.run('594968a8d1f9f08022176354',spawn);
-        roleTower.run('5956e8a71b40cf68a3732e58',spawn);
+        //roleTower.run('594448126fb030030f61580f',spawn);
         
         //****************************safe mode trigger**********************************************
         
@@ -115,4 +115,4 @@ var roomTwo = {
 	
 };
 
-module.exports = roomTwo;
+module.exports = roomThree;
