@@ -19,9 +19,14 @@ var roomOne = {
     /** @param {creep} creep **/
     run: function(spawn) {
         
+        new RoomVisual('W63N36').text("Room 1", 40, 1, {color: 'white', font: 1});
+        
+        const cost = Game.market.calcTransactionCost(1000, 'W63N36', 'W65S73');
+        console.log(cost);
+        
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 2;
+            var UPGRADERS = 1;
             var BUILDERS = 1;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -32,9 +37,9 @@ var roomOne = {
             var MEDICS = 0;
             var INFANTRY = 0;
             var RESERVERS = 0;
-            var REMOTE_BUILDERS = 2;
+            var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
-            var MINERAL_MINERS = 1;
+            var MINERAL_MINERS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -42,11 +47,11 @@ var roomOne = {
             var HOARDERS = 0;
             var HOARDERTWOS = 0;
             var TRUCKERS = 2;
-            var TANKS = 2;
+            var TANKS = 0;
             var WALLREPPERS = 0;
             var REMOTE_HARVESTERS = 0;
-            var MEDICS = 3;
-            var INFANTRY = 2;
+            var MEDICS = 0;
+            var INFANTRY = 3;
             var RESERVERS = 0;        
         }
     
@@ -61,7 +66,7 @@ var roomOne = {
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
             ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
             ['upgrader',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
-            ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
+            ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
             ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],

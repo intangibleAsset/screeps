@@ -16,7 +16,7 @@ var roleTrucker = {
                     creep.memory.container = null;
                     creep.say('collect');
         	    }
-        	    if(!creep.memory.transferring && creep.carry.energy == creep.carryCapacity || creep.ticksToLive < 40) {
+        	    if(!creep.memory.transferring && creep.carry.energy == creep.carryCapacity || creep.ticksToLive < 60) {
         	        creep.memory.transferring = true;
         	        creep.say('transfer');
         	    }
@@ -81,11 +81,9 @@ var roleTrucker = {
         
         	    if(creep.memory.transferring) {
         	        
-        	            if(!creep.memory.towerFiller){
-                            var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity;}});
-        	            }else{
-        	                var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;}});
-        	            }
+        	            
+                        var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TOWER || structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity;}});
+
                         
         	            if(target) {
                             if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

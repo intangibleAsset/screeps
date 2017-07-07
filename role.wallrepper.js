@@ -5,8 +5,8 @@ var roleWallrepper = {
         
             creep.memory.wallstrength;
             var wall;
-            
-            var allWalls = Game.spawns[creep.memory.spawnName].room.find(FIND_STRUCTURES,{filter: (structure) => {return(structure.structureType == STRUCTURE_WALL || structure.structureType == STRUCTURE_RAMPART ) && structure.hits < structure.hitsMax;}});
+            console.log('change back wallrepper to fix walls');
+            var allWalls = Game.spawns[creep.memory.spawnName].room.find(FIND_STRUCTURES,{filter: (structure) => {return( /*structure.structureType == STRUCTURE_WALL ||*/ structure.structureType == STRUCTURE_RAMPART ) && structure.hits < structure.hitsMax;}});
             if(allWalls){
                 allWalls.sort(function(a,b){return a.hits - b.hits;});
                 creep.memory.wallstrength = allWalls[0].hits + 2000;
@@ -38,7 +38,7 @@ var roleWallrepper = {
                 }else{
                         if(creep.room.storage){
                             if(creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                                creep.moveTo(creep.room.storage.pos);
+                                creep.moveTo(creep.room.storage.pos, {visualizePathStyle: {stroke: '#ffffff'}});
                             }
                         }else{
                             var sources = creep.room.find(FIND_SOURCES);

@@ -23,7 +23,7 @@ var utilityMethods = {
         let temp = sourceArray.sort(function(a,b){ return a[1] - b[1]; });
         creep.memory.source = sourceArray[0][0];
         
-   }, //note the comma after the first method. It would appear that this is because
+   }, //note the comma after the first method. It would appear that this is because functions can be variables it makes sense as dictionary notation
    
    returnContainer: function(creep){
         //find all none empty containers
@@ -58,6 +58,28 @@ var utilityMethods = {
         }
         return value;
         
+   },
+   
+   followFlags: function(creep,flagArray){
+       if(creep.memory.path === (null || undefined)){
+           creep.memory.path = flagArray;
+           creep.memory.step = 0;
+       }
+       
+       while(creep.memory.step < flagArray.length){
+           creep.moveTo(flagArray[creep.memory.step], {visualizePathStyle: {stroke: '#ffffff'}});
+           if(creep.pos.isNearTo(Game.flags[creep.memory.flagArray[creep.memory.step]].pos)){
+               creep.memory.step += 1;
+           }
+       }
+       
+       if(flagArray.length === creep.memory.step){
+            creep.memory.path = null;
+            creep.memory.step = 0;
+       }
+            
+    
+       
    }
 
 };

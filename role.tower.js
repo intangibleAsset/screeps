@@ -6,9 +6,10 @@ var roleTower = {
         var tower = Game.getObjectById(towerId);
         if(tower) {
             
-            var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-            if(closestHostile) {
-                tower.attack(closestHostile);
+            var closestHostile = tower.room.find(FIND_HOSTILE_CREEPS);
+            if(closestHostile.length > 0) {
+                console.log(closestHostile[closestHostile.length -1]);
+                tower.attack(closestHostile[closestHostile.length -1]);
                 spawn.memory.hostileInRoom = true;
                 //Game.spawns['Spawn1'].room.controller.activateSafeMode();
             }else{
@@ -27,7 +28,7 @@ var roleTower = {
                 });
             
             
-            if(damagedStructures) {
+            if(damagedStructures && (!spawn.memory.hostileInRoom)) {
                 tower.repair(damagedStructures);
             }
             
