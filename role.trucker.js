@@ -45,14 +45,7 @@ var roleTrucker = {
                     }
         	       
                 }
-                else {     ///dropped energy method may be better in harester creep seems to be a bottleneck for truckers so turned off.
-                    var droppedEnergy = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES,{filter: (resource) => {return( resource.resourceType == RESOURCE_ENERGY )}});
-                    
-                    if(/*droppedEnergy*/false){ ///turned off as inefficent
-                        if(creep.pickup(droppedEnergy) == ERR_NOT_IN_RANGE){
-                            creep.moveTo(droppedEnergy,{visualizePathStyle: {stroke: '#ffaa00'}});
-                        }
-                    }else{
+                else {
                         
             			if(!creep.memory.container || Game.getObjectById(creep.memory.container).store[RESOURCE_ENERGY] == 0){
                             creep.memory.container = um.returnContainer(creep);
@@ -64,7 +57,7 @@ var roleTrucker = {
                 			    creep.moveTo(container, {visualizePathStyle: {stroke: '#ffffff'}});
                 			} 
             			}
-                    }
+                    
         	        
         	        
         	    }
@@ -82,7 +75,7 @@ var roleTrucker = {
         	    if(creep.memory.transferring) {
         	        
         	            
-                        var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_TOWER || structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity;}});
+                        var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity;}});
 
                         
         	            if(target) {
@@ -90,8 +83,7 @@ var roleTrucker = {
                                 creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
                             }
                         }	        
-                }
-                else {
+                }else{
                     if(creep.room.storage){
                         if(creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                             creep.moveTo(creep.room.storage.pos);

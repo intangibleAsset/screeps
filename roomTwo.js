@@ -17,7 +17,8 @@ var roomTwo = {
     /** @param {creep} creep **/
     run: function(spawn) {
         
-        new RoomVisual('W61N35').text("Room 2", 42, 1, {color: 'white', font: 1});
+        new RoomVisual('W61N35').text("Room 2", 1, 0, {color: 'white', font: 0.5, align: 'left'});
+        new RoomVisual('W61N35').text("Total energy capacity: "+spawn.room.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
  
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;

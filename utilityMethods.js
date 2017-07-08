@@ -61,19 +61,19 @@ var utilityMethods = {
    },
    
    followFlags: function(creep,flagArray){
-       if(creep.memory.path === (null || undefined)){
+       if(creep.memory.path === null || undefined){
            creep.memory.path = flagArray;
            creep.memory.step = 0;
        }
        
-       while(creep.memory.step < flagArray.length){
-           creep.moveTo(flagArray[creep.memory.step], {visualizePathStyle: {stroke: '#ffffff'}});
-           if(creep.pos.isNearTo(Game.flags[creep.memory.flagArray[creep.memory.step]].pos)){
+       if(creep.memory.step < creep.memory.path.length){
+           creep.moveTo(Game.flags[creep.memory.path[creep.memory.step]], {visualizePathStyle: {stroke: '#ffffff'}});
+           if(creep.pos.isNearTo(Game.flags[creep.memory.path[creep.memory.step]].pos)){
                creep.memory.step += 1;
            }
        }
        
-       if(flagArray.length === creep.memory.step){
+       if(creep.memory.path.length === creep.memory.step){
             creep.memory.path = null;
             creep.memory.step = 0;
        }

@@ -13,21 +13,23 @@ var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
 var roleRemoteBuilder = require('role.remoteBuilder');
 var roleMineralMiner = require('role.mineralMiner');
+var roleRemoteMineralMiner = require('role.remoteMineralMiner');
 
 var roomOne = {
 
     /** @param {creep} creep **/
     run: function(spawn) {
         
-        new RoomVisual('W63N36').text("Room 1", 40, 1, {color: 'white', font: 1});
+        new RoomVisual('W63N36').text("Room 1", 1, 0, {color: 'white', font: 0.5, align: 'left'});
+        new RoomVisual('W63N36').text("Total energy capacity: "+spawn.room.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
         
-        const cost = Game.market.calcTransactionCost(1000, 'W63N36', 'W65S73');
-        console.log(cost);
+        //const cost = Game.market.calcTransactionCost(1000, 'W63N36', 'W65S73');
+        //console.log(cost);
         
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 1;
-            var BUILDERS = 1;
+            var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 3;
@@ -40,6 +42,7 @@ var roomOne = {
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
             var MINERAL_MINERS = 0;
+            var REMOTE_MINERAL_MINERS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -47,7 +50,7 @@ var roomOne = {
             var HOARDERS = 0;
             var HOARDERTWOS = 0;
             var TRUCKERS = 2;
-            var TANKS = 0;
+            var TANKS = 2;
             var WALLREPPERS = 0;
             var REMOTE_HARVESTERS = 0;
             var MEDICS = 0;
@@ -57,6 +60,7 @@ var roomOne = {
     
         
         var roleArray = [
+            ['remotemineralminer',[WORK,CARRY,MOVE],roleRemoteMineralMiner,REMOTE_MINERAL_MINERS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],

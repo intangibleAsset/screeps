@@ -17,15 +17,16 @@ var roomThree = {
     /** @param {creep} creep **/
     run: function(spawn) {
         
-        new RoomVisual('W68N35').text("Room 3", 42, 1, {color: 'white', font: 1});
- 
+        new RoomVisual('W68N35').text("Room 2", 1, 0, {color: 'white', font: 0.5, align: 'left'});
+        new RoomVisual('W68N35').text("Total energy capacity: "+spawn.room.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
+        
         if(!spawn.memory.hostileInRoom){
-            var HARVESTERS = 4;
+            var HARVESTERS = 1;
             var UPGRADERS = 3;
             var BUILDERS = 1;
-            var HOARDERS = 0;
-            var HOARDERTWOS = 0;
-            var TRUCKERS = 1;
+            var HOARDERS = 1;
+            var HOARDERTWOS = 1;
+            var TRUCKERS = 3;
             var TANKS = 0;
             var WALLREPPERS = 1;
             var REMOTE_HARVESTERS = 0;
@@ -57,9 +58,9 @@ var roomThree = {
             ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK],roleTank,TANKS],
-            ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
-            ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
-            ['trucker',[CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
+            ['hoarder',[WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
+            ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
+            ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
             ['remoteharvester',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteHarvester,REMOTE_HARVESTERS]
         ];
     
