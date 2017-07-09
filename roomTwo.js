@@ -22,11 +22,11 @@ var roomTwo = {
  
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 4;
-            var BUILDERS = 1;
+            var UPGRADERS = 2;
+            var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
-            var TRUCKERS = 1;
+            var TRUCKERS = 2;
             var TANKS = 0;
             var WALLREPPERS = 1;
             var REMOTE_HARVESTERS = 0;
