@@ -23,7 +23,7 @@ var roomThree = {
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 3;
-            var BUILDERS = 1;
+            var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 3;
@@ -54,7 +54,7 @@ var roomThree = {
             ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
             ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
-            ['upgrader',[WORK,CARRY,CARRY,MOVE,MOVE,WORK,CARRY,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['upgrader',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK],roleTank,TANKS],

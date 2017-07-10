@@ -4,6 +4,11 @@ var remoteharvester = {
     /** @param {Creep} creep **/
     run: function(creep) {
         
+        
+        
+        var baseFlag = Game.spawns[creep.memory.spawnName].room.find(FIND_FLAGS)[0];
+
+        
         creep.memory.atRemoteRoom;
         creep.memory.deposit;
         creep.memory.atBase;
@@ -32,7 +37,7 @@ var remoteharvester = {
             }
         }
         
-        if(creep.pos.roomName != Game.flags['Eden'].pos.roomName){
+        if(creep.pos.roomName != baseFlag.pos.roomName){
             creep.memory.atBase = false;
             //console.log('2');
         }
@@ -51,8 +56,8 @@ var remoteharvester = {
         }
         
         if(creep.memory.deposit && !creep.memory.atBase){
-            creep.moveTo(Game.flags['Eden']);
-            if(creep.pos.roomName == Game.flags['Eden'].pos.roomName){
+            creep.moveTo(baseFlag);
+            if(creep.pos.roomName == baseFlag.pos.roomName){
                 creep.memory.atBase = true;
                 //console.log('5');
             }            

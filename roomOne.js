@@ -28,7 +28,7 @@ var roomOne = {
         
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 1;
+            var UPGRADERS = 3;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -41,7 +41,7 @@ var roomOne = {
             var RESERVERS = 0;
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
-            var MINERAL_MINERS = 0;
+            var MINERAL_MINERS = 1;
             var REMOTE_MINERAL_MINERS = 1;
         }else{
             var HARVESTERS = 1;
@@ -60,7 +60,7 @@ var roomOne = {
     
         
         var roleArray = [
-            ['remotemineralminer',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteMineralMiner,REMOTE_MINERAL_MINERS],
+            ['remotemineralminer',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteMineralMiner,REMOTE_MINERAL_MINERS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],

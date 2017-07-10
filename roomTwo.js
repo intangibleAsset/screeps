@@ -29,7 +29,7 @@ var roomTwo = {
             var TRUCKERS = 2;
             var TANKS = 0;
             var WALLREPPERS = 1;
-            var REMOTE_HARVESTERS = 0;
+            var REMOTE_HARVESTERS = 1;
             var MEDICS = 0;
             var INFANTRY = 0;
             var RESERVERS = 0;
@@ -40,11 +40,11 @@ var roomTwo = {
             var HOARDERS = 0;
             var HOARDERTWOS = 0;
             var TRUCKERS = 1;
-            var TANKS = 3;
+            var TANKS = 2;
             var WALLREPPERS = 0;
             var REMOTE_HARVESTERS = 0;
-            var MEDICS = 3;
-            var INFANTRY = 0;
+            var MEDICS = 1;
+            var INFANTRY = 3;
             var RESERVERS = 0;        
         }
     
@@ -61,7 +61,7 @@ var roomTwo = {
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
             ['trucker',[CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE],roleTrucker,TRUCKERS],
-            ['remoteharvester',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteHarvester,REMOTE_HARVESTERS]
+            ['remoteharvester',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteHarvester,REMOTE_HARVESTERS]
         ];
     
         //********************tower functions********************************************************
@@ -86,7 +86,28 @@ var roomTwo = {
                 console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ spawn.name);
             }
         }
-    
+
+        //****************************remote harvesting helper***************************************
+        
+        var remoteRoomFlags = [
+            'Scotland',
+            'Greyland',
+            'Douglas'
+        ];
+        
+        var creepArray = []
+        
+        for(let i in Game.creeps){
+            let creep = Game.creeps[i];
+            if(creep.memory.role === 'remoteharvester' && creep.memory.spawnName == spawn.name){
+                creepArray.push(creep);
+            }
+        }
+        
+        for(let i=0;i<creepArray.length;i++){
+            creepArray[i].memory.flag = remoteRoomFlags[i];
+        }
+        
 
         //*******************run this rooms creeps***************************************************
         

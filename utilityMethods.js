@@ -62,14 +62,12 @@ var utilityMethods = {
    
    followFlags: function(creep,flagArray){
        if(!creep.memory.path){
-           console.log('reset path if null or undefnined called');
            creep.memory.path = flagArray;
            creep.memory.step = 0;
        }
        
        if(creep.memory.path){
            if(creep.memory.step < creep.memory.path.length){
-               console.log(creep.memory.path[creep.memory.step]);
                creep.moveTo(Game.flags[creep.memory.path[creep.memory.step]], {visualizePathStyle: {stroke: '#ffffff'}});
                if(creep.pos.isNearTo(Game.flags[creep.memory.path[creep.memory.step]].pos)){
                    creep.memory.step += 1;
