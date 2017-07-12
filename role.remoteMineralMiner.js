@@ -49,6 +49,7 @@ var roleRemoteMineralMiner = {
                        creep.memory.atBase = false;
                    }
                }else{
+                   
                     var minerals = creep.pos.findClosestByPath(FIND_MINERALS);
     	       
         	        if(minerals) {

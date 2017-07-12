@@ -4,10 +4,9 @@ var remoteharvester = {
     /** @param {Creep} creep **/
     run: function(creep) {
         
-        
+        //spawn.room.find(FIND_FLAGS)
         
         var baseFlag = Game.spawns[creep.memory.spawnName].room.find(FIND_FLAGS)[0];
-
         
         creep.memory.atRemoteRoom;
         creep.memory.deposit;
