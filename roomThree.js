@@ -68,7 +68,7 @@ var roomThree = {
         //********************tower functions********************************************************
         
         roleTower.run('595a980573eac720bae19849',spawn);
-        //roleTower.run('594448126fb030030f61580f',spawn);
+        roleTower.run('5967b60b578a690585935092',spawn);
         
         //****************************safe mode trigger**********************************************
         
@@ -92,6 +92,12 @@ var roomThree = {
         //*******************run this rooms creeps***************************************************
         
         var thisRoomsCreeps = _.filter(Game.creeps,(creep)=> creep.memory.spawnName === spawn.name );
+        
+        
+        console.log(thisRoomsCreeps.length);
+        if(thisRoomsCreeps.length === 1){
+            thisRoomsCreeps[0].memory.nerdPanic = true;
+        }
         
         for(var creep of thisRoomsCreeps) {
             

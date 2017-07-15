@@ -10,6 +10,8 @@ var roleTank = {
                 creep.moveTo(hostiles[0], {visualizePathStyle: {stroke: '#ffffff'}});
             }
             
+            
+            
     }
 	
 };

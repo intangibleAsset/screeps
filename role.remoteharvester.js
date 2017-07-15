@@ -64,10 +64,20 @@ var remoteharvester = {
         }
         
         if(creep.memory.deposit && creep.memory.atBase){
+            
+                //console.log(creep.room.terminal.store[RESOURCE_ENERGY] > 10000);
 
-                if(creep.transfer(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(creep.room.storage.pos);
+                if(creep.room.terminal.store[RESOURCE_ENERGY] > 30000){
+                    if(creep.transfer(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(creep.room.storage.pos);
+                    }                    
+                }else{
+                    if(creep.transfer(creep.room.terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                        creep.moveTo(creep.room.terminal.pos);
+                        
+                    }
                 }
+
         }
         
         if(creep.memory.atBase && creep.memory.deposit && creep.carry.energy == 0){
