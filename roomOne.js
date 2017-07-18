@@ -27,6 +27,7 @@ var roomOne = {
         //const cost = Game.market.calcTransactionCost(33000, 'W63N36', 'W77S94');
         //console.log(cost);
         //console.log(Game.market.deal('59653161a25a90789c8be5a5',33000,"W63N36"));
+        //console.log(spawn.room.terminal.send(RESOURCE_HYDROGEN,19000,'W61N35'));
         
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
@@ -43,7 +44,7 @@ var roomOne = {
             var RESERVERS = 0;
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
-            var MINERAL_MINERS = 0;
+            var MINERAL_MINERS = 1;
             var REMOTE_MINERAL_MINERS = 0;
         }else{
             var HARVESTERS = 1;
@@ -105,6 +106,12 @@ var roomOne = {
         
         //****************************remote harvesting helper***************************************
         
+        var remoteSources = [
+          new RoomPosition(11,4,'W63N35'),
+          new RoomPosition(9,10,'W62N36'),
+          new RoomPosition(23,41,'W63N37')
+        ];
+        
         var remoteRoomFlags = [
             'Terminus',
             'The Kingdom',
@@ -121,7 +128,7 @@ var roomOne = {
         }
         
         for(let i=0;i<creepArray.length;i++){
-            creepArray[i].memory.flag = remoteRoomFlags[i];
+            creepArray[i].memory.remoteSource = remoteSources[i];
         }
         
 
@@ -130,7 +137,6 @@ var roomOne = {
         var thisRoomsCreeps = _.filter(Game.creeps,(creep)=> creep.memory.spawnName === spawn.name );
         
         
-        console.log(thisRoomsCreeps.length);
         if(thisRoomsCreeps.length === 1){
             thisRoomsCreeps[0].memory.nerdPanic = true;
         }

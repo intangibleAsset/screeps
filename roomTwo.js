@@ -13,6 +13,7 @@ var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
 var roleDismantler = require('role.dismantler');
 var roleMineralMiner = require('role.mineralMiner');
+var roleMover = require('role.mover');
 
 var roomTwo = {
 
@@ -23,10 +24,18 @@ var roomTwo = {
         new RoomVisual('W61N35').text("Total energy capacity: "+spawn.room.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
         new RoomVisual('W61N35').text("Total energy available: "+spawn.room.energyAvailable, 1, 2, {color: 'white', font: 0.5, align: 'left'});
         
+        //const cost = Game.market.calcTransactionCost(15000, 'W61N36', 'W60N70');
+        //console.log(cost);
+        //console.log(Game.market.deal('596a71efad16434321a9dc22',15000,"W61N35"));
+
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,15000,'W63N36'));
+
+        
+ 
  
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 2;
+            var UPGRADERS = 3;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -36,9 +45,10 @@ var roomTwo = {
             var REMOTE_HARVESTERS = 3;
             var MEDICS = 0;
             var INFANTRY = 0;
-            var MINERAL_MINERS = 1;
+            var MINERAL_MINERS = 0;
             var RESERVERS = 0;
             var DISMANTLERS = 0;
+            var MOVERS = 0;
         }else{
             var HARVESTERS = 0;
             var UPGRADERS = 0;
@@ -56,6 +66,7 @@ var roomTwo = {
     
         
         var roleArray = [
+            ['mover',[CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE],roleMover,MOVERS],
             ['dismantler',[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleDismantler,DISMANTLERS],
             ['harvester',[WORK,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
@@ -77,12 +88,20 @@ var roomTwo = {
         roleTower.run('594968a8d1f9f08022176354',spawn);
         roleTower.run('5956e8a71b40cf68a3732e58',spawn);
         
+        //********************run labs***************************************************************
+        var labs = spawn.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
+        labs[0].runReaction(labs[1],labs[2]);
+        //console.log(labs[0].mineralType) // -> OH
+        //console.log(labs[1].mineralType) // -> O
+        //console.log(labs[2].mineralType) // -> H
+        
         //****************************safe mode trigger**********************************************
         
         if(Game.spawns['Spawn2'].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
             Game.spawns['Spawn2'].room.controller.activateSafeMode();
             Game.notify('Room 2 under attack, safe mode activated');
         }
+        
         
         //*****************************autospawning creeps**************************************
         
@@ -96,6 +115,17 @@ var roomTwo = {
         }
 
         //****************************remote harvesting helper***************************************
+        var remoteSources = [
+          new RoomPosition(35,20,'W61N36'),
+          new RoomPosition(8,39,'W61N36'),
+          new RoomPosition(9,28,'W62N35'),
+          new RoomPosition(41,3,'W62N35'),
+          new RoomPosition(34,28,'W62N34'),
+          new RoomPosition(34,42,'W62N34'),
+          new RoomPosition(30,28,'W61N34'),
+          new RoomPosition(14,33,'W61N34')
+        ];
+        
         
         var remoteRoomFlags = [
             'Scotland',
@@ -113,7 +143,7 @@ var roomTwo = {
         }
         
         for(let i=0;i<creepArray.length;i++){
-            creepArray[i].memory.flag = remoteRoomFlags[i];
+            creepArray[i].memory.remoteSource = remoteSources[i];
         }
         
 
@@ -122,7 +152,6 @@ var roomTwo = {
         var thisRoomsCreeps = _.filter(Game.creeps,(creep)=> creep.memory.spawnName === spawn.name );
         
         
-        console.log(thisRoomsCreeps.length);
         if(thisRoomsCreeps.length === 1){
             thisRoomsCreeps[0].memory.nerdPanic = true;
         }

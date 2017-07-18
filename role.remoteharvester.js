@@ -12,6 +12,7 @@ var remoteharvester = {
         creep.memory.deposit;
         creep.memory.atBase;
         creep.memory.flag;
+        creep.memory.remoteSource;
         
         //set default spawn values
         
@@ -29,8 +30,8 @@ var remoteharvester = {
         
         
         if(!creep.memory.atRemoteRoom && !creep.memory.deposit){
-            creep.moveTo(Game.flags[creep.memory.flag]);
-            if(creep.pos.roomName == Game.flags[creep.memory.flag].pos.roomName){
+            creep.moveTo(creep.memory.remoteSource);
+            if(creep.pos.roomName == creep.memory.remoteSource.roomName){
                 creep.memory.atRemoteRoom = true;
                 //console.log('1');
             }
@@ -65,19 +66,33 @@ var remoteharvester = {
         
         if(creep.memory.deposit && creep.memory.atBase){
             
-                //console.log(creep.room.terminal.store[RESOURCE_ENERGY] > 10000);
-
-                if(creep.room.terminal.store[RESOURCE_ENERGY] > 30000){
-                    if(creep.transfer(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(creep.room.storage.pos);
-                    }                    
-                }else{
-                    if(creep.transfer(creep.room.terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-                        creep.moveTo(creep.room.terminal.pos);
+            
+        	       var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                            filter: (structure) => {
+                                return (structure.structureType == STRUCTURE_EXTENSION ||
+                                        structure.structureType == STRUCTURE_SPAWN ||
+                                        structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
+                            }
+                    });
+        	       
+        	        if(target) {
+                        if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+                        }
+                    }else{
+                        if(creep.room.terminal.store[RESOURCE_ENERGY] > 50000){
+                            if(creep.transfer(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(creep.room.storage.pos);
+                            }                    
+                        }else{
+                            if(creep.transfer(creep.room.terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                                creep.moveTo(creep.room.terminal.pos);
+                                
+                            }
+                        }                        
                         
                     }
-                }
-
+                
         }
         
         if(creep.memory.atBase && creep.memory.deposit && creep.carry.energy == 0){

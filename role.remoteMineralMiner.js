@@ -5,7 +5,6 @@ var roleRemoteMineralMiner = {
     /** @param {Creep} creep **/
     run: function(creep) {
         
-            creep.say('I am he');
             if(creep.memory.atBase === undefined){
                 creep.memory.atDestination = false;
                 creep.memory.atBase = true;
@@ -29,9 +28,15 @@ var roleRemoteMineralMiner = {
                    }
                }else{
                    
-                    if(creep.room.storage){
-                        if(creep.transfer(Game.getObjectById('595a7c9f4db1cd7700d219f0'), RESOURCE_KEANIUM) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(Game.getObjectById('595a7c9f4db1cd7700d219f0').pos, {visualizePathStyle: {stroke: '#ffffff'}});
+                   var roomMineral = creep.room.find(FIND_MINERALS);
+                   
+                    if(creep.room.terminal){
+                        if(creep.transfer(creep.room.terminal, roomMineral[0].mineralType) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(creep.room.terminal.pos, {visualizePathStyle: {stroke: '#ffffff'}});
+                        }
+                    }else{
+                        if(creep.transfer(creep.room.storage, roomMineral[0].mineralType) == ERR_NOT_IN_RANGE){
+                            creep.moveTo(creep.room.storage.pos, {visualizePathStyle: {stroke: '#ffffff'}});
                         }
                     }
 

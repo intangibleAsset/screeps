@@ -23,7 +23,7 @@ var roomThree = {
         
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 3;
+            var UPGRADERS = 4;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -94,7 +94,6 @@ var roomThree = {
         var thisRoomsCreeps = _.filter(Game.creeps,(creep)=> creep.memory.spawnName === spawn.name );
         
         
-        console.log(thisRoomsCreeps.length);
         if(thisRoomsCreeps.length === 1){
             thisRoomsCreeps[0].memory.nerdPanic = true;
         }
