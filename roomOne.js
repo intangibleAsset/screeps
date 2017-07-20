@@ -14,6 +14,7 @@ var roleReserver = require('role.reserver');
 var roleRemoteBuilder = require('role.remoteBuilder');
 var roleMineralMiner = require('role.mineralMiner');
 var roleRemoteMineralMiner = require('role.remoteMineralMiner');
+var roleGuardDog = require('role.guardDog');
 
 var roomOne = {
 
@@ -45,7 +46,8 @@ var roomOne = {
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
             var MINERAL_MINERS = 1;
-            var REMOTE_MINERAL_MINERS = 0;
+            var REMOTE_MINERAL_MINERS = 1;
+            var GUARD_DOGS = 1;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -63,6 +65,7 @@ var roomOne = {
     
         
         var roleArray = [
+            ['guarddog',[TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
             ['remotemineralminer',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteMineralMiner,REMOTE_MINERAL_MINERS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
@@ -112,11 +115,6 @@ var roomOne = {
           new RoomPosition(23,41,'W63N37')
         ];
         
-        var remoteRoomFlags = [
-            'Terminus',
-            'The Kingdom',
-            'Hope Street'
-        ];
         
         var creepArray = []
         

@@ -8,11 +8,12 @@ var remoteharvester = {
         
         var baseFlag = Game.spawns[creep.memory.spawnName].room.find(FIND_FLAGS)[0];
         
+        
         creep.memory.atRemoteRoom;
         creep.memory.deposit;
         creep.memory.atBase;
-        creep.memory.flag;
         creep.memory.remoteSource;
+        
         
         //set default spawn values
         
@@ -31,7 +32,7 @@ var remoteharvester = {
         
         if(!creep.memory.atRemoteRoom && !creep.memory.deposit){
             creep.moveTo(creep.memory.remoteSource);
-            if(creep.pos.roomName == creep.memory.remoteSource.roomName){
+            if(creep.pos.inRangeTo(creep.memory.remoteSource,3)){
                 creep.memory.atRemoteRoom = true;
                 //console.log('1');
             }
@@ -43,9 +44,9 @@ var remoteharvester = {
         }
         
         if(creep.memory.atRemoteRoom && !creep.memory.deposit && (creep.carry.energy < creep.carryCapacity || creep.ticksToLive < 60)){
-            var sources = creep.room.find(FIND_SOURCES);
-            if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+            var sources = creep.pos.findClosestByPath(FIND_SOURCES);
+            if(creep.harvest(sources) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(sources, {visualizePathStyle: {stroke: '#ffaa00'}});
             }
             //console.log('3');
         }
@@ -82,11 +83,11 @@ var remoteharvester = {
                     }else{
                         if(creep.room.terminal.store[RESOURCE_ENERGY] > 50000){
                             if(creep.transfer(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(creep.room.storage.pos);
+                            creep.moveTo(creep.room.storage.pos,{visualizePathStyle: {stroke: '#ffffff'}});
                             }                    
                         }else{
                             if(creep.transfer(creep.room.terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
-                                creep.moveTo(creep.room.terminal.pos);
+                                creep.moveTo(creep.room.terminal.pos,{visualizePathStyle: {stroke: '#ffffff'}});
                                 
                             }
                         }                        

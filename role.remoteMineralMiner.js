@@ -28,14 +28,14 @@ var roleRemoteMineralMiner = {
                    }
                }else{
                    
-                   var roomMineral = creep.room.find(FIND_MINERALS);
+                   
                    
                     if(creep.room.terminal){
-                        if(creep.transfer(creep.room.terminal, roomMineral[0].mineralType) == ERR_NOT_IN_RANGE) {
+                        if(creep.transfer(creep.room.terminal, RESOURCE_KEANIUM) == ERR_NOT_IN_RANGE){
                             creep.moveTo(creep.room.terminal.pos, {visualizePathStyle: {stroke: '#ffffff'}});
                         }
                     }else{
-                        if(creep.transfer(creep.room.storage, roomMineral[0].mineralType) == ERR_NOT_IN_RANGE){
+                        if(creep.transfer(creep.room.storage, RESOURCE_KEANIUM) == ERR_NOT_IN_RANGE){
                             creep.moveTo(creep.room.storage.pos, {visualizePathStyle: {stroke: '#ffffff'}});
                         }
                     }

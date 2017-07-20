@@ -1,29 +1,4 @@
 var utilityMethods = {
-    
-    assignSource: function (creep){
-        //equally assigns sources between creeps currently set for all creeps in all rooms
-        var sources = creep.room.find(FIND_SOURCES);
-        var sourceArray = [];
-       
-        for(let i = 0; i < sources.length; i++){
-            sourceArray.push([i,0])
-        }
-        
-        
-        
-        for(let i in Game.creeps){
-            var loopCreep = Game.creeps[i];
-            for(let x of sourceArray){
-                if(loopCreep.memory.source === x[0]){
-                    x[1] += 1;
-                }
-            }
-        }
-        
-        let temp = sourceArray.sort(function(a,b){ return a[1] - b[1]; });
-        creep.memory.source = sourceArray[0][0];
-        
-   }, //note the comma after the first method. It would appear that this is because functions can be variables it makes sense as dictionary notation
    
    returnContainer: function(creep){
         //find all none empty containers

@@ -15,26 +15,37 @@ var roleMover = {
         	    }
         
         	    if(creep.memory.transferring) {
-        	       
-        	       /*var labs = creep.room.find(FIND_STRUCTURES, {filter:{structureType: STRUCTURE_LAB}});
+        	       /*
+        	       var labs = creep.room.find(FIND_STRUCTURES, {filter:{structureType: STRUCTURE_LAB}});
         	       
         	        if(labs.length > 0) {
-                        if(creep.transfer(labs[2], RESOURCE_HYDROGEN) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(labs[2], {visualizePathStyle: {stroke: '#ffffff'}});
+                        if(creep.transfer(labs[1], RESOURCE_OXYGEN) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(labs[1], {visualizePathStyle: {stroke: '#ffffff'}});
                         }
-                    }*/
-                    //if(creep.transfer(creep.room.terminal,RESOURCE_HYDROGEN)==ERR_NOT_IN_RANGE){
-                    //    creep.moveTo(creep.room.terminal);    
-                    //}
-        	       
+                    }
+                    */
+                    /*
+                    if(creep.transfer(creep.room.terminal,RESOURCE_HYDROXIDE)==ERR_NOT_IN_RANGE){
+                        creep.moveTo(creep.room.terminal);    
+                    }
+        	        */
                 }else{
                     /*
+                    var labs = creep.room.find(FIND_STRUCTURES, {filter:{structureType: STRUCTURE_LAB}});
+                    
+                    if(labs.length > 0) {
+                        if(creep.withdraw(labs[1], RESOURCE_HYDROXIDE) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(labs[1], {visualizePathStyle: {stroke: '#ffffff'}});
+                        }
+                    }
+                    */
+                    /*
         	        if(creep.room.terminal) {
-                        if(creep.withdraw(creep.room.terminal, RESOURCE_HYDROGEN) == ERR_NOT_IN_RANGE) {
+                        if(creep.withdraw(creep.room.terminal, RESOURCE_OXYGEN) == ERR_NOT_IN_RANGE) {
                             creep.moveTo(creep.room.terminal, {visualizePathStyle: {stroke: '#ffffff'}});
                         }
-                    }*/
-                        
+                    }
+                    */
                 }
                     
         

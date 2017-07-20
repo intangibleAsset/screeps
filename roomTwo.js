@@ -28,21 +28,21 @@ var roomTwo = {
         //console.log(cost);
         //console.log(Game.market.deal('596a71efad16434321a9dc22',15000,"W61N35"));
 
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,15000,'W63N36'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,40000,'W63N36'));
 
         
  
  
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 3;
+            var UPGRADERS = 4;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 2;
             var TANKS = 0;
             var WALLREPPERS = 1;
-            var REMOTE_HARVESTERS = 3;
+            var REMOTE_HARVESTERS = 8;
             var MEDICS = 0;
             var INFANTRY = 0;
             var MINERAL_MINERS = 0;
@@ -126,12 +126,6 @@ var roomTwo = {
           new RoomPosition(14,33,'W61N34')
         ];
         
-        
-        var remoteRoomFlags = [
-            'Scotland',
-            'Greyland',
-            'Douglas'
-        ];
         
         var creepArray = []
         
