@@ -35,7 +35,7 @@ var roomTwo = {
  
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 4;
+            var UPGRADERS = 3;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -48,7 +48,7 @@ var roomTwo = {
             var MINERAL_MINERS = 0;
             var RESERVERS = 0;
             var DISMANTLERS = 0;
-            var MOVERS = 0;
+            var MOVERS = 1;
         }else{
             var HARVESTERS = 0;
             var UPGRADERS = 0;
@@ -66,13 +66,13 @@ var roomTwo = {
     
         
         var roleArray = [
-            ['mover',[CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE],roleMover,MOVERS],
+            ['mover',[CARRY,CARRY,MOVE,MOVE,CARRY,CARRY,MOVE,MOVE],roleMover,MOVERS],
             ['dismantler',[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleDismantler,DISMANTLERS],
             ['harvester',[WORK,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
             ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
-            ['upgrader',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['upgrader',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
@@ -94,6 +94,14 @@ var roomTwo = {
         //console.log(labs[0].mineralType) // -> OH
         //console.log(labs[1].mineralType) // -> O
         //console.log(labs[2].mineralType) // -> H
+        
+        //*******************mover function***********************************************************
+        for(let i in Game.creeps){
+            let creep = Game.creeps[i];
+            if(creep.memory.role === 'mover' && creep.memory.spawnName === spawn.name){
+                creep.memory.minerals = [RESOURCE_HYDROGEN, RESOURCE_OXYGEN, RESOURCE_HYDROXIDE];
+            }
+        }
         
         //****************************safe mode trigger**********************************************
         

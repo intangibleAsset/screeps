@@ -11,6 +11,8 @@ var roleRemoteHarvester = require('role.remoteharvester');
 var roleMedic = require('role.medic');
 var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
+var roleMover = require('role.mover');
+var roleMineralMiner = require('role.mineralMiner');
 
 var roomThree = {
 
@@ -21,9 +23,17 @@ var roomThree = {
         new RoomVisual('W68N35').text("Total energy capacity: "+spawn.room.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
         new RoomVisual('W68N35').text("Total energy available: "+spawn.room.energyAvailable, 1, 2, {color: 'white', font: 0.5, align: 'left'});
         
+        //const cost = Game.market.calcTransactionCost(15000, 'W68N35', 'W60N70');
+        //console.log(cost);
+        //console.log(Game.market.deal('595b831d1170f1650c7b6f56',35000,"W68N35"));
+
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,40000,'W68N35'));
+
+                
+        
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 4;
+            var UPGRADERS = 2;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -34,6 +44,8 @@ var roomThree = {
             var MEDICS = 0;
             var INFANTRY = 0;
             var RESERVERS = 0;
+            var MOVERS = 1;
+            var MINERAL_MINERS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -51,18 +63,20 @@ var roomThree = {
     
         
         var roleArray = [
+            ['mover',[CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleMover,MOVERS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
             ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
-            ['upgrader',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
-            ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
+            ['upgrader',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,ATTACK],roleTank,TANKS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
             ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
-            ['remoteharvester',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleRemoteHarvester,REMOTE_HARVESTERS]
+            ['remoteharvester',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleRemoteHarvester,REMOTE_HARVESTERS],
+            ['mineralMiner',[WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE],roleMineralMiner,MINERAL_MINERS]            
         ];
     
         //********************tower functions********************************************************
@@ -75,6 +89,21 @@ var roomThree = {
         if(Game.spawns['Spawn2'].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
             Game.spawns['Spawn2'].room.controller.activateSafeMode();
             Game.notify('Room 2 under attack, safe mode activated');
+        }
+        
+        //********************run labs***************************************************************
+        var labs = spawn.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
+        labs[0].runReaction(labs[1],labs[2]);
+        //console.log(labs[0].mineralType) // -> OH
+        //console.log(labs[1].mineralType) // -> O
+        //console.log(labs[2].mineralType) // -> H
+        
+        //*******************mover function***********************************************************
+        for(let i in Game.creeps){
+            let creep = Game.creeps[i];
+            if(creep.memory.role === 'mover' && creep.memory.spawnName === spawn.name){
+                creep.memory.minerals = [RESOURCE_LEMERGIUM, RESOURCE_UTRIUM, RESOURCE_UTRIUM_LEMERGITE];
+            }
         }
         
         //*****************************autospawning creeps**************************************

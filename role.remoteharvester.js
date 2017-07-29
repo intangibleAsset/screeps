@@ -7,6 +7,7 @@ var remoteharvester = {
         //spawn.room.find(FIND_FLAGS)
         
         var baseFlag = Game.spawns[creep.memory.spawnName].room.find(FIND_FLAGS)[0];
+
         
         
         creep.memory.atRemoteRoom;
@@ -102,6 +103,7 @@ var remoteharvester = {
             //console.log('7');
         }
         //at remote room needs clearing up as its not checked at the right time
+        
         
     }//end run
 };

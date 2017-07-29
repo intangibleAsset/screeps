@@ -8,7 +8,6 @@ var roleTrucker = {
         
         var spawn = Game.getObjectById(Game.spawns[creep.memory.spawnName].id);
         
-        
         if(!spawn.memory.hostileInRoom){
             
                 if(creep.memory.transferring && creep.carry.energy == 0) {
