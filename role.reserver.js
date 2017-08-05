@@ -22,41 +22,20 @@ var roleReserver = {
         if(creep.memory.atBase){
             
             if(!creep.memory.step){
-                creep.moveTo(Game.flags['Terminus'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                console.log('going terminus');
-                if(creep.pos.isNearTo(Game.flags['Terminus'].pos)){
+                creep.moveTo(Game.flags['Step one'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
+                console.log('going step one');
+                if(creep.pos.isNearTo(Game.flags['Step one'].pos)){
                     creep.memory.step = 1;
                     
                 }
             }
             
             if(creep.memory.step === 1){
-                creep.moveTo(Game.flags['1'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                console.log('going flag 1');
-                if(creep.pos.isNearTo(Game.flags['1'].pos)){
+                creep.moveTo(Game.flags['Riverlands'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
+                console.log('going Riverlands');
+                if(creep.pos.isNearTo(Game.flags['Riverlands'].pos)){
                     creep.memory.step = 2;
-                }
-            }
-            
-            if(creep.memory.step === 2){
-                creep.moveTo(Game.flags['2'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                if(creep.pos.isNearTo(Game.flags['2'].pos)){
-                    creep.memory.step = 3;
-                }
-            }
-            
-            if(creep.memory.step === 3){
-                creep.moveTo(Game.flags['3'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                if(creep.pos.isNearTo(Game.flags['3'].pos)){
-                    creep.memory.step = 4;
-                }
-            }
-            
-            if(creep.memory.step === 4){
-            creep.moveTo(Game.flags['Aunsou'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                if(creep.pos.isNearTo(Game.flags['Aunsou'].pos)){
                     creep.memory.atRemoteRoom = true;
-                    creep.memory.atBase = false;
                 }
             }
             
@@ -66,7 +45,7 @@ var roleReserver = {
                 creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
             }
         }
-        creep.signController(creep.room.controller,"correlation does not imply causation");
+        //creep.signController(creep.room.controller,"We tend to exalt our rigid empirical methods and technological advances, almost as if we're proud of what we've accomplished");
 
         
     }//end run

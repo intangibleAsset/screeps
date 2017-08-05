@@ -18,15 +18,15 @@ var roleMover = require('role.mover');
 var roomTwo = {
 
     /** @param {creep} creep **/
-    run: function(spawn) {
+    run: function(spawn,roomObj) {
         
-        new RoomVisual('W61N35').text("Room 2", 1, 0, {color: 'white', font: 0.5, align: 'left'});
-        new RoomVisual('W61N35').text("Total energy capacity: "+spawn.room.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
-        new RoomVisual('W61N35').text("Total energy available: "+spawn.room.energyAvailable, 1, 2, {color: 'white', font: 0.5, align: 'left'});
+        this.init(roomObj);
+        
+        this.hud(roomObj);
         
         //const cost = Game.market.calcTransactionCost(15000, 'W61N36', 'W60N70');
         //console.log(cost);
-        //console.log(Game.market.deal('596a71efad16434321a9dc22',15000,"W61N35"));
+        //console.log(Game.market.deal('598439f0f2633f2ec9e3c623',30000,"W61N35"));
 
         //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,40000,'W63N36'));
 
@@ -42,25 +42,25 @@ var roomTwo = {
             var TRUCKERS = 2;
             var TANKS = 0;
             var WALLREPPERS = 1;
-            var REMOTE_HARVESTERS = 8;
+            var REMOTE_HARVESTERS = 4;
             var MEDICS = 0;
             var INFANTRY = 0;
-            var MINERAL_MINERS = 0;
+            var MINERAL_MINERS = 1;
             var RESERVERS = 0;
             var DISMANTLERS = 0;
             var MOVERS = 1;
         }else{
-            var HARVESTERS = 0;
+            var HARVESTERS = 1;
             var UPGRADERS = 0;
             var BUILDERS = 0;
             var HOARDERS = 0;
             var HOARDERTWOS = 0;
             var TRUCKERS = 1;
-            var TANKS = 2;
+            var TANKS = 3;
             var WALLREPPERS = 0;
             var REMOTE_HARVESTERS = 0;
-            var MEDICS = 1;
-            var INFANTRY = 3;
+            var MEDICS = 2;
+            var INFANTRY = 0;
             var RESERVERS = 0;        
         }
     
@@ -99,14 +99,15 @@ var roomTwo = {
         for(let i in Game.creeps){
             let creep = Game.creeps[i];
             if(creep.memory.role === 'mover' && creep.memory.spawnName === spawn.name){
-                creep.memory.minerals = [RESOURCE_HYDROGEN, RESOURCE_OXYGEN, RESOURCE_HYDROXIDE];
+                creep.memory.minerals = [RESOURCE_UTRIUM_LEMERGITE, RESOURCE_ZYNTHIUM_KEANITE, RESOURCE_GHODIUM];
+                creep.memory.reset = false;
             }
         }
         
         //****************************safe mode trigger**********************************************
         
-        if(Game.spawns['Spawn2'].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
-            Game.spawns['Spawn2'].room.controller.activateSafeMode();
+        if(Game.spawns[spawn.name].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
+            Game.spawns[spawn.name].room.controller.activateSafeMode();
             Game.notify('Room 2 under attack, safe mode activated');
         }
         
@@ -180,7 +181,22 @@ var roomTwo = {
   
     
         
-    }
+    },
+    init: function(roomObj){
+        var spawnArray = [];
+        for(let i in Game.spawns){
+            if(Game.spawns[i].room.name === roomObj.name){
+                spawnArray.push(i);
+            }
+        }
+        roomObj.memory.spawnArray = spawnArray;
+    },
+    
+    hud: function(roomObj){
+        new RoomVisual(roomObj.name).text("Room : " + roomObj.name, 1, 0, {color: 'white', font: 0.5, align: 'left'});
+        new RoomVisual(roomObj.name).text("Total energy capacity: "+roomObj.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
+        new RoomVisual(roomObj.name).text("Total energy available: "+roomObj.energyAvailable, 1, 2, {color: 'white', font: 0.5, align: 'left'});
+    },
 	
 };
 

@@ -28,39 +28,26 @@ var roleRemoteBuilder = {
                 }
             }else{
                 if(!creep.memory.step){
-                creep.moveTo(Game.flags['Terminus'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                console.log('going terminus');
-                if(creep.pos.isNearTo(Game.flags['Terminus'].pos)){
+                creep.moveTo(Game.flags['Fenik'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
+                //console.log('going Fenik');
+                if(creep.pos.isNearTo(Game.flags['Fenik'].pos)){
                     creep.memory.step = 1;
                     
                 }
             }
             
             if(creep.memory.step === 1){
-                creep.moveTo(Game.flags['1'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                console.log('going flag 1');
-                if(creep.pos.isNearTo(Game.flags['1'].pos)){
+                creep.moveTo(Game.flags['Drinkwater'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
+                //console.log('going Drinkwater');
+                if(creep.pos.isNearTo(Game.flags['Drinkwater'].pos)){
                     creep.memory.step = 2;
                 }
             }
             
+            
             if(creep.memory.step === 2){
-                creep.moveTo(Game.flags['2'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                if(creep.pos.isNearTo(Game.flags['2'].pos)){
-                    creep.memory.step = 3;
-                }
-            }
-            
-            if(creep.memory.step === 3){
-                creep.moveTo(Game.flags['3'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                if(creep.pos.isNearTo(Game.flags['3'].pos)){
-                    creep.memory.step = 4;
-                }
-            }
-            
-            if(creep.memory.step === 4){
-            creep.moveTo(Game.flags['Aunsou'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                if(creep.pos.isNearTo(Game.flags['Aunsou'].pos)){
+            creep.moveTo(Game.flags['Riverlands'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
+                if(creep.pos.isNearTo(Game.flags['Riverlands'].pos)){
                     creep.memory.atRemoteRoom = true;
                     creep.memory.atBase = false;
                 }

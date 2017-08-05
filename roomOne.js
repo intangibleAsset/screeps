@@ -20,20 +20,21 @@ var roleMover = require('role.mover');
 var roomOne = {
 
     /** @param {creep} creep **/
-    run: function(spawn) {
+    run: function(spawn,roomObj) {
         
-        new RoomVisual('W63N36').text("Room 1", 1, 0, {color: 'white', font: 0.5, align: 'left'});
-        new RoomVisual('W63N36').text("Total energy capacity: "+spawn.room.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
-        new RoomVisual('W63N36').text("Total energy available: "+spawn.room.energyAvailable, 1, 2, {color: 'white', font: 0.5, align: 'left'});
+     
+        this.init(roomObj);
+        
+        this.hud(roomObj);
         
         //const cost = Game.market.calcTransactionCost(25000, 'W63N36', 'W53N83');
         //console.log(cost);
-        //console.log(Game.market.deal('594cbbf34a22922b5d5bf5cc',25000,"W63N36"));
-        //console.log(spawn.room.terminal.send(RESOURCE_HYDROGEN,50000,'W61N35'));
+        //console.log(Game.market.deal('59847b90ab0a0a4df347fe4f',20000,"W63N36"));
+        //console.log(spawn.room.terminal.send(RESOURCE_ZYNTHIUM_KEANITE,24800,'W61N35'));
         
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 4;
+            var UPGRADERS = 2;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -48,8 +49,8 @@ var roomOne = {
             var REMOTE_TANKS = 0;
             var MINERAL_MINERS = 1;
             var REMOTE_MINERAL_MINERS = 0;
-            var GUARD_DOGS = 1;
-            var MOVERS = 1;
+            var GUARD_DOGS = 0;
+            var MOVERS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -92,10 +93,11 @@ var roomOne = {
         roleTower.run('5938757562b0d652193adbd1',spawn);
         roleTower.run('594448126fb030030f61580f',spawn);
         
+        
         //****************************safe mode trigger**********************************************
         
-        if(Game.spawns['Spawn1'].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
-            Game.spawns['Spawn1'].room.controller.activateSafeMode();
+        if(Game.spawns[spawn.name].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
+            Game.spawns[spawn.name].room.controller.activateSafeMode();
             Game.notify('Room 1 under attack, safe mode activated');
         }
         
@@ -179,7 +181,25 @@ var roomOne = {
   
     
         
-    }
+    },
+    
+    init: function(roomObj){
+        var spawnArray = [];
+        for(let i in Game.spawns){
+            if(Game.spawns[i].room.name === roomObj.name){
+                spawnArray.push(i);
+            }
+        }
+        roomObj.memory.spawnArray = spawnArray;
+    },
+    
+    hud: function(roomObj){
+        new RoomVisual(roomObj.name).text("Room : " + roomObj.name, 1, 0, {color: 'white', font: 0.5, align: 'left'});
+        new RoomVisual(roomObj.name).text("Total energy capacity: "+roomObj.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
+        new RoomVisual(roomObj.name).text("Total energy available: "+roomObj.energyAvailable, 1, 2, {color: 'white', font: 0.5, align: 'left'});
+    },
+    
+    
 	
 };
 

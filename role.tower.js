@@ -32,6 +32,11 @@ var roleTower = {
                 tower.repair(damagedStructures);
             }
             
+            if(!spawn.memory.hostileInRoom){
+                let damagedCreeps = tower.room.find(FIND_MY_CREEPS, { filter: (creep) => {return ( creep.hits < creep.hitsMax );}});
+                tower.heal(damagedCreeps[0]);
+            }
+            
         }
         
 	}

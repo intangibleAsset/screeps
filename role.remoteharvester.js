@@ -4,10 +4,14 @@ var remoteharvester = {
     /** @param {Creep} creep **/
     run: function(creep) {
         
-        //spawn.room.find(FIND_FLAGS)
         
         var baseFlag = Game.spawns[creep.memory.spawnName].room.find(FIND_FLAGS)[0];
-
+        
+        var hostiles = creep.room.find(FIND_HOSTILE_CREEPS);
+        if(hostiles.length > 0){
+            creep.memory.deposit = true;
+        }
+        
         
         
         creep.memory.atRemoteRoom;
@@ -32,7 +36,7 @@ var remoteharvester = {
         
         
         if(!creep.memory.atRemoteRoom && !creep.memory.deposit){
-            creep.moveTo(creep.memory.remoteSource);
+            creep.moveTo(creep.memory.remoteSource, {visualizePathStyle: {stroke: '#ffaa00'}});
             if(creep.pos.inRangeTo(creep.memory.remoteSource,3)){
                 creep.memory.atRemoteRoom = true;
                 //console.log('1');
