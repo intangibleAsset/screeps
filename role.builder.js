@@ -22,7 +22,7 @@ var roleBuilder = {
                 }
     	    }
     	    else {
-    	        if(creep.room.storage){
+    	        if(creep.room.storage && creep.room.storage.store[RESOURCE_ENERGY] !== 0){
                     var sources = creep.room.find(FIND_SOURCES);
     		        if(creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                         creep.moveTo(creep.room.storage.pos);

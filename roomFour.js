@@ -17,15 +17,16 @@ var roleRemoteMineralMiner = require('role.remoteMineralMiner');
 var roleGuardDog = require('role.guardDog');
 var roleMover = require('role.mover');
 
-var roomOne = {
+var roomFour = {
 
     
     run: function(spawn,roomObj) {
         
-        //sets roomObj.memory.spawnArray
         this.init(roomObj);
-        //shows hud
-        this.hud(roomObj);
+        this.hud();
+        this.runTowers();
+        this.triggerSafeMode();
+        
         
         
         
@@ -35,12 +36,12 @@ var roomOne = {
         //console.log(spawn.room.terminal.send(RESOURCE_HYDROGEN,50000,'W68N37'));
         
         if(!spawn.memory.hostileInRoom){
-            var HARVESTERS = 4;
-            var UPGRADERS = 4;
-            var BUILDERS = 0;
-            var HOARDERS = 0;
-            var HOARDERTWOS = 0;
-            var TRUCKERS = 0;
+            var HARVESTERS = 1;
+            var UPGRADERS = 2;
+            var BUILDERS = 2;
+            var HOARDERS = 1;
+            var HOARDERTWOS = 1;
+            var TRUCKERS = 2;
             var TANKS = 0;
             var WALLREPPERS = 1;
             var REMOTE_HARVESTERS = 0;
@@ -54,13 +55,13 @@ var roomOne = {
             var GUARD_DOGS = 0;
             var MOVERS = 0;
         }else{
-            var HARVESTERS = 0;
+            var HARVESTERS = 2;
             var UPGRADERS = 0;
             var BUILDERS = 0;
             var HOARDERS = 0;
             var HOARDERTWOS = 0;
             var TRUCKERS = 0;
-            var TANKS = 0;
+            var TANKS = 2;
             var WALLREPPERS = 0;
             var REMOTE_HARVESTERS = 0;
             var MEDICS = 0;
@@ -74,34 +75,21 @@ var roomOne = {
             ['guarddog',[TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
             ['remotemineralminer',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteMineralMiner,REMOTE_MINERAL_MINERS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
-            ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
-            ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
+            ['hoarder',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
+            ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
             ['remoteharvester',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY],roleRemoteHarvester,REMOTE_HARVESTERS],
             ['remoteBuilder',[TOUGH,TOUGH,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
             ['reserver',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,CLAIM],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
             ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
-            ['upgrader',[WORK,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
-            ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
-            ['wallrepper',[WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
-            ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
-            ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
+            ['upgrader',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['builder',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
+            ['wallrepper',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
+            ['tank',[ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
+            ['hoadertwo',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
             ['mineralMiner',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleMineralMiner,MINERAL_MINERS]
             
         ];
-    
-        //********************tower functions********************************************************
-        
-        //roleTower.run('5938757562b0d652193adbd1',spawn);
-        //roleTower.run('594448126fb030030f61580f',spawn);
-        
-        
-        //****************************safe mode trigger**********************************************
-        
-        if(Game.spawns[spawn.name].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
-            Game.spawns[spawn.name].room.controller.activateSafeMode();
-            Game.notify('Room 4 under attack, safe mode activated');
-        }
         
         //********************run labs***************************************************************
         //var labs = spawn.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
@@ -192,16 +180,29 @@ var roomOne = {
                 spawnArray.push(i);
             }
         }
-        roomObj.memory.spawnArray = spawnArray;
+        this.spawnNameArray = spawnArray;
+        this.obj = roomObj;
     },
     
-    hud: function(roomObj){
-        new RoomVisual(roomObj.name).text("Room : " + roomObj.name, 1, 0, {color: 'white', font: 0.5, align: 'left'});
-        new RoomVisual(roomObj.name).text("Total energy capacity: "+roomObj.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
-        new RoomVisual(roomObj.name).text("Total energy available: "+roomObj.energyAvailable, 1, 2, {color: 'white', font: 0.5, align: 'left'});
+    hud: function(){
+        new RoomVisual(this.obj.name).text("Room : " + this.obj.name, 1, 0, {color: 'white', font: 0.5, align: 'left'});
+        new RoomVisual(this.obj.name).text("Total energy capacity: "+this.obj.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
+        new RoomVisual(this.obj.name).text("Total energy available: "+this.obj.energyAvailable, 1, 2, {color: 'white', font: 0.5, align: 'left'});
     },
-    
+	runTowers: function(){
+        let towers = this.obj.find(FIND_MY_STRUCTURES, {filter:{ structureType: STRUCTURE_TOWER}});
+        for(let i of towers){
+            roleTower.run(i,Game.spawns[this.spawnNameArray[0]]);
+            
+        }
+	}, 
+	triggerSafeMode: function(){
+        if(Game.spawns[this.spawnNameArray[0]].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
+            Game.spawns[this.spawnNameArray[0]].room.controller.activateSafeMode();
+            Game.notify('Room ' + this.obj.name + ' under attack, safe mode activated');
+        }	    
+	},
 	
 };
 
-module.exports = roomOne;
+module.exports = roomFour;

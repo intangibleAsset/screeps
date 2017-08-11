@@ -1,9 +1,10 @@
 var roleTower = {
 
     /** @param {Creep} creep **/
-    run: function(towerId,spawn) {
+    run: function(thisTower,spawn) {
+        
        
-        var tower = Game.getObjectById(towerId);
+        var tower = thisTower;
         if(tower) {
             
             var closestHostile = tower.room.find(FIND_HOSTILE_CREEPS);
