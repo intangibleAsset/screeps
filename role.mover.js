@@ -2,7 +2,7 @@ var roleMover = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
-        //if(creep.memory.minerals.length > 0){
+        if(creep.memory.minerals){
             
                 //need to generalise this with creep.carrycapacity .... otherwise creep can only have 200 carry capacity
         
@@ -166,7 +166,7 @@ var roleMover = {
                 }
                     
         
-    //}
+    }
 
     }
 

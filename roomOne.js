@@ -33,7 +33,7 @@ var roomOne = {
         //const cost = Game.market.calcTransactionCost(25000, 'W63N36', 'W53N83');
         //console.log(cost);
         //console.log(Game.market.deal('598d82816c990032745e290c',21000,"W63N36"));
-        //console.log(spawn.room.terminal.send(RESOURCE_HYDROGEN,10400,'W61N35'));
+        //console.log(spawn.room.terminal.send(RESOURCE_HYDROGEN,280,'W61N35'));
         
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
@@ -50,8 +50,8 @@ var roomOne = {
             var RESERVERS = 0;
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
-            var MINERAL_MINERS = 1;
-            var REMOTE_MINERAL_MINERS = 1;
+            var MINERAL_MINERS = 0;
+            var REMOTE_MINERAL_MINERS = 0;
             var GUARD_DOGS = 0;
             var MOVERS = 1;
         }else{
@@ -114,7 +114,7 @@ var roomOne = {
             let temp = _.filter(Game.creeps, (creep) => creep.memory.role == roleArray[i][0] && creep.memory.spawnName === spawn.name);
             
             if(temp.length < roleArray[i][3]){
-                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name});
+                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name, roomName: this.obj.name});
                 console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ spawn.name);
             }
         }

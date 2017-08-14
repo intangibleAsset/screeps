@@ -47,7 +47,7 @@ var roomThree = {
             var INFANTRY = 0;
             var RESERVERS = 0;
             var MOVERS = 0;
-            var MINERAL_MINERS = 1;
+            var MINERAL_MINERS = 0;
             var REMOTE_BUILDERS = 0;
         }else{
             var HARVESTERS = 1;
@@ -105,7 +105,7 @@ var roomThree = {
             let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && creep.memory.spawnName === spawn.name);
             
             if(temp.length < roleArray[i][3]){
-                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name});
+                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name, roomName: this.obj.name});
                 console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ spawn.name);
             }
         }

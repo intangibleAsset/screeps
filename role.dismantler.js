@@ -20,7 +20,7 @@ var roleDismantler = {
     	    }
     
     	    if(creep.memory.transferring) {
-               var flagsArray1 = ['NewEden'];
+               var flagsArray1 = ['Riverlands'];
                if(creep.memory.atBase === (undefined || false)){
                    if(um.followFlags(creep,flagsArray1)){
                        creep.memory.atBase = true;
@@ -41,7 +41,7 @@ var roleDismantler = {
     	        
             }else{
                 
-               var flagsArray2 = ['Destruction'];
+               var flagsArray2 = ['Riverlands'];
                if(creep.memory.atDestination === (undefined || false)){
                    if(um.followFlags(creep,flagsArray2)){
                        creep.memory.atDestination = true;

@@ -16,6 +16,8 @@ var roleMineralMiner = require('role.mineralMiner');
 var roleRemoteMineralMiner = require('role.remoteMineralMiner');
 var roleGuardDog = require('role.guardDog');
 var roleMover = require('role.mover');
+var roleDismantler = require('role.dismantler');
+var roleRemoteHoarder = require('role.remoteHoarder');
 
 var roomFour = {
 
@@ -37,8 +39,8 @@ var roomFour = {
         
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 2;
-            var BUILDERS = 2;
+            var UPGRADERS = 3;
+            var BUILDERS = 1;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 2;
@@ -48,12 +50,14 @@ var roomFour = {
             var MEDICS = 0;
             var INFANTRY = 0;
             var RESERVERS = 0;
-            var REMOTE_BUILDERS = 0;
+            var REMOTE_BUILDERS = 1;
             var REMOTE_TANKS = 0;
             var MINERAL_MINERS = 0;
             var REMOTE_MINERAL_MINERS = 0;
             var GUARD_DOGS = 0;
             var MOVERS = 0;
+            var DISMANTLERS = 0;
+            var REMOTE_HOARDER = 2;
         }else{
             var HARVESTERS = 2;
             var UPGRADERS = 0;
@@ -71,6 +75,8 @@ var roomFour = {
     
         
         var roleArray = [
+            ['remoteHoarder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleRemoteHoarder,REMOTE_HOARDER],
+            ['dismantler',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleDismantler,DISMANTLERS],
             ['mover',[CARRY,CARRY,MOVE,MOVE,CARRY,CARRY,MOVE,MOVE],roleMover,MOVERS],            
             ['guarddog',[TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
             ['remotemineralminer',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteMineralMiner,REMOTE_MINERAL_MINERS],
@@ -78,7 +84,7 @@ var roomFour = {
             ['hoarder',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
             ['remoteharvester',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY],roleRemoteHarvester,REMOTE_HARVESTERS],
-            ['remoteBuilder',[TOUGH,TOUGH,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
+            ['remoteBuilder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
             ['reserver',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,CLAIM],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
             ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
@@ -90,6 +96,14 @@ var roomFour = {
             ['mineralMiner',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleMineralMiner,MINERAL_MINERS]
             
         ];
+        
+        //remote mining helper/////////////////////////////////////////////////////////////////////////
+        var remSources = [
+            new RoomPosition(25,14,'W68N36'),
+            new RoomPosition(35,20,'W69N36')
+        ]
+        
+        this.miningOp(remSources);
         
         //********************run labs***************************************************************
         //var labs = spawn.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
@@ -112,7 +126,7 @@ var roomFour = {
             let temp = _.filter(Game.creeps, (creep) => creep.memory.role == roleArray[i][0] && creep.memory.spawnName === spawn.name);
             
             if(temp.length < roleArray[i][3]){
-                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name});
+                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name,roomName: this.obj.name});
                 console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ spawn.name);
             }
         }
@@ -201,6 +215,32 @@ var roomFour = {
             Game.spawns[this.spawnNameArray[0]].room.controller.activateSafeMode();
             Game.notify('Room ' + this.obj.name + ' under attack, safe mode activated');
         }	    
+	},
+	miningOp: function(sourceArray){
+	    var hoarderArray = [];
+	    var truckerArray = [];
+	    
+        for(let i in Game.creeps){
+            let creep = Game.creeps[i];
+            if(creep.memory.role === 'remoteHoarder' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+                hoarderArray.push(creep);
+            }
+        }
+        
+        for(let i in Game.creeps){
+            let creep = Game.creeps[i];
+            if(creep.memory.role === 'remoteTrucker' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+                truckerArray.push(creep);
+            }
+        }
+        
+        for(let i=0; i < hoarderArray.length; i++){
+            hoarderArray[i].memory.remoteSource = sourceArray[i];
+        }
+        
+        for(let i=0; i < truckerArray.length; i++){
+            truckerArray[i].memory.remoteSource = sourceArray[i];
+        }
 	},
 	
 };

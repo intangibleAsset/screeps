@@ -29,7 +29,7 @@ var roomTwo = {
         //console.log(cost);
         //console.log(Game.market.deal('598d6c3f83489728eb9c2ff3',29000,"W61N35"));
 
-        //console.log(spawn.room.terminal.send(RESOURCE_HYDROXIDE,10400,'W63N36'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,1000,'W62N38'));
 
         
  
@@ -37,7 +37,7 @@ var roomTwo = {
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 2;
-            var BUILDERS = 1;
+            var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 2;
@@ -46,7 +46,7 @@ var roomTwo = {
             var REMOTE_HARVESTERS = 8;
             var MEDICS = 0;
             var INFANTRY = 0;
-            var MINERAL_MINERS = 1;
+            var MINERAL_MINERS = 0;
             var RESERVERS = 0;
             var DISMANTLERS = 0;
             var MOVERS = 1;
@@ -95,8 +95,8 @@ var roomTwo = {
         for(let i in Game.creeps){
             let creep = Game.creeps[i];
             if(creep.memory.role === 'mover' && creep.memory.spawnName === spawn.name){
-                creep.memory.minerals = [RESOURCE_GHODIUM, RESOURCE_HYDROGEN, RESOURCE_GHODIUM_HYDRIDE];
-                creep.memory.reset = false;
+                creep.memory.minerals = [RESOURCE_GHODIUM_HYDRIDE, RESOURCE_HYDROXIDE, RESOURCE_GHODIUM_ACID];
+                creep.memory.reset = true;
             }
         }
         
@@ -107,7 +107,7 @@ var roomTwo = {
             let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && creep.memory.spawnName === spawn.name);
             
             if(temp.length < roleArray[i][3]){
-                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name});
+                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name, roomName: this.obj.name});
                 console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ spawn.name);
             }
         }
