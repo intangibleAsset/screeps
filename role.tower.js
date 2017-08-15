@@ -9,7 +9,6 @@ var roleTower = {
             
             var closestHostile = tower.room.find(FIND_HOSTILE_CREEPS);
             if(closestHostile.length > 0) {
-                console.log(closestHostile[closestHostile.length -1]);
                 tower.attack(closestHostile[closestHostile.length -1]);
                 spawn.memory.hostileInRoom = true;
                 //Game.spawns['Spawn1'].room.controller.activateSafeMode();

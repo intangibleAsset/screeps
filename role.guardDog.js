@@ -5,22 +5,12 @@ var roleGuardDog = {
     /** @param {creep} creep **/
     run: function(creep) {
             
-            var hostiles = creep.room.find(FIND_HOSTILE_CREEPS);
-            var hostilesRoomArray = Game.spawns['Spawn1'].memory.bads;
-            
-            
-            if(hostiles.length > 0){
-                if(creep.attack(hostiles[0]) === ERR_NOT_IN_RANGE){
-                    creep.moveTo(hostiles[0], {visualizePathStyle: {stroke: '#ffffff'}});
-                }
-                
-                
-            
-            }else{
-               creep.moveTo(new RoomPosition(12,12,'W61N34)')); 
-
-            }
-
+        if(!creep.pos.inRangeTo(Game.getObjectById('5839062db454aeb0592e3ee9'),2)){
+            creep.moveTo(Game.getObjectById('5839062db454aeb0592e3ee9'));
+        }else{
+            creep.attack(Game.getObjectById('5839062db454aeb0592e3ee9'));
+        }
+        
     }
 	
 };

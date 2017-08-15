@@ -18,6 +18,7 @@ var roleGuardDog = require('role.guardDog');
 var roleMover = require('role.mover');
 var roleDismantler = require('role.dismantler');
 var roleRemoteHoarder = require('role.remoteHoarder');
+var roleRemoteTrucker = require('role.remoteTrucker')
 
 var roomFour = {
 
@@ -40,7 +41,7 @@ var roomFour = {
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 3;
-            var BUILDERS = 1;
+            var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 2;
@@ -50,7 +51,7 @@ var roomFour = {
             var MEDICS = 0;
             var INFANTRY = 0;
             var RESERVERS = 0;
-            var REMOTE_BUILDERS = 1;
+            var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
             var MINERAL_MINERS = 0;
             var REMOTE_MINERAL_MINERS = 0;
@@ -58,6 +59,7 @@ var roomFour = {
             var MOVERS = 0;
             var DISMANTLERS = 0;
             var REMOTE_HOARDER = 2;
+            var REMOTE_TRUCKERS = 2;
         }else{
             var HARVESTERS = 2;
             var UPGRADERS = 0;
@@ -75,14 +77,15 @@ var roomFour = {
     
         
         var roleArray = [
-            ['remoteHoarder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleRemoteHoarder,REMOTE_HOARDER],
+            ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
+            ['remoteHoarder',[WORK,WORK,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleRemoteHoarder,REMOTE_HOARDER],
             ['dismantler',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleDismantler,DISMANTLERS],
             ['mover',[CARRY,CARRY,MOVE,MOVE,CARRY,CARRY,MOVE,MOVE],roleMover,MOVERS],            
             ['guarddog',[TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
             ['remotemineralminer',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteMineralMiner,REMOTE_MINERAL_MINERS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
-            ['hoarder',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
-            ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
+            ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
+            ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
             ['remoteharvester',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY],roleRemoteHarvester,REMOTE_HARVESTERS],
             ['remoteBuilder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
             ['reserver',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,CLAIM],roleReserver,RESERVERS],
@@ -92,7 +95,7 @@ var roomFour = {
             ['builder',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
-            ['hoadertwo',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
+            ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
             ['mineralMiner',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleMineralMiner,MINERAL_MINERS]
             
         ];
@@ -131,29 +134,6 @@ var roomFour = {
             }
         }
         
-        //****************************remote harvesting helper***************************************
-        
-        var remoteSources = [
-          new RoomPosition(11,4,'W63N35'),
-          new RoomPosition(9,10,'W62N36'),
-          new RoomPosition(23,41,'W63N37')
-        ];
-        
-        
-        var creepArray = []
-        
-        for(let i in Game.creeps){
-            let creep = Game.creeps[i];
-            if(creep.memory.role === 'remoteharvester' && creep.memory.spawnName == spawn.name){
-                creepArray.push(creep);
-            }
-        }
-        
-        for(let i=0;i<creepArray.length;i++){
-            creepArray[i].memory.remoteSource = remoteSources[i];
-        }
-        
-
         //*******************run this rooms creeps***************************************************
         
         var thisRoomsCreeps = _.filter(Game.creeps,(creep)=> creep.memory.spawnName === spawn.name );

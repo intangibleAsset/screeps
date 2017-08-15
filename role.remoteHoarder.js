@@ -5,7 +5,7 @@ var roleRemoteHoarder = {
         this.init(creep);
         
 		//go to destination if not there head to location
-		if(!this.creep.pos.isEqualTo(this.creep.memory.remoteSource)){
+		if(!this.creep.pos.isEqualTo(this.creep.memory.remoteSource) && !this.creep.memory.atDestination){
 			this.creep.moveTo(this.creep.memory.remoteSource, {visualizePathStyle: {stroke: '#ffaa00'}});
 		}else{
 		    this.creep.memory.atDestination = true;
@@ -14,8 +14,10 @@ var roleRemoteHoarder = {
 		if(this.creep.memory.atDestination){
 		    if(this.creep.ticksToLive > 200){
                 this.hoarding();
+                console.log('not repairing');
 		    }else{
 		        this.repairing();
+		        console.log('repairing');
 		    }
  
 		}
@@ -29,7 +31,7 @@ var roleRemoteHoarder = {
 	},
 	
 	hoarding: function(){
-        var container = this.creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) =>  { return (structure.structureType == STRUCTURE_CONTAINER)}});
+        var container = this.creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) =>  { return (structure.structureType == STRUCTURE_CONTAINER) && structure.store[RESOURCE_ENERGY] < structure.storeCapacity}});
 	    var mySource = this.creep.pos.findClosestByRange(FIND_SOURCES);
 
 		    
