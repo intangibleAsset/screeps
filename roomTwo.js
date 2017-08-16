@@ -27,7 +27,7 @@ var roomTwo = {
         
         //const cost = Game.market.calcTransactionCost(30000, 'W61N35', 'W50N70');
         //console.log(cost);
-        //console.log(Game.market.deal('598d6c3f83489728eb9c2ff3',29000,"W61N35"));
+        //console.log(Game.market.deal('59935d58218b0618c4ba5d24',29000,"W61N35"));
 
         //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,1000,'W62N38'));
 

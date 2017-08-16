@@ -23,7 +23,6 @@ var roleReserver = {
             
             if(!creep.memory.step){
                 creep.moveTo(Game.flags['Step one'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                console.log('going step one');
                 if(creep.pos.isNearTo(Game.flags['Step one'].pos)){
                     creep.memory.step = 1;
                     
@@ -32,7 +31,6 @@ var roleReserver = {
             
             if(creep.memory.step === 1){
                 creep.moveTo(Game.flags['Riverlands'].pos, {visualizePathStyle: {stroke: '#ffffff'}});
-                console.log('going Riverlands');
                 if(creep.pos.isNearTo(Game.flags['Riverlands'].pos)){
                     creep.memory.step = 2;
                     creep.memory.atRemoteRoom = true;

@@ -11,9 +11,14 @@ var roleRemoteHarvester = require('role.remoteharvester');
 var roleMedic = require('role.medic');
 var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
-var roleMover = require('role.mover');
-var roleMineralMiner = require('role.mineralMiner');
 var roleRemoteBuilder = require('role.remoteBuilder');
+var roleMineralMiner = require('role.mineralMiner');
+var roleRemoteMineralMiner = require('role.remoteMineralMiner');
+var roleGuardDog = require('role.guardDog');
+var roleMover = require('role.mover');
+var roleDismantler = require('role.dismantler');
+var roleRemoteHoarder = require('role.remoteHoarder');
+var roleRemoteTrucker = require('role.remoteTrucker');
 
 var roomThree = {
 
@@ -24,6 +29,13 @@ var roomThree = {
         this.hud();
         this.runTowers();
         this.triggerSafeMode();    
+        
+        //array of mining locations passed to mining op
+        var remSources = [
+            new RoomPosition(11,13,'W67N35'),
+            new RoomPosition(13,11,'W69N35')
+        ];
+        this.miningOp(remSources);
         
         //const cost = Game.market.calcTransactionCost(15000, 'W68N35', 'W60N70');
         //console.log(cost);
@@ -49,6 +61,9 @@ var roomThree = {
             var MOVERS = 0;
             var MINERAL_MINERS = 0;
             var REMOTE_BUILDERS = 0;
+            var REMOTE_HOARDER = 2;
+            var REMOTE_TRUCKERS = 2;
+            var GUARD_DOGS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -66,6 +81,9 @@ var roomThree = {
     
         
         var roleArray = [
+            ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
+            ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
+            ['remoteHoarder',[WORK,WORK,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleRemoteHoarder,REMOTE_HOARDER],
             ['remoteBuilder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],            
             ['mover',[CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleMover,MOVERS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
@@ -143,6 +161,7 @@ var roomThree = {
     
         
     },
+    
     init: function(roomObj){
         var spawnArray = [];
         for(let i in Game.spawns){
@@ -152,8 +171,10 @@ var roomThree = {
         }
         this.spawnNameArray = spawnArray;
         this.obj = roomObj;
+        if(!this.obj.memory.baddieRoom){
+            this.obj.memory.baddieRoom = this.obj.name;
+        }
     },
-    
     hud: function(){
         new RoomVisual(this.obj.name).text("Room : " + this.obj.name, 1, 0, {color: 'white', font: 0.5, align: 'left'});
         new RoomVisual(this.obj.name).text("Total energy capacity: "+this.obj.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
@@ -171,6 +192,32 @@ var roomThree = {
             Game.spawns[this.spawnNameArray[0]].room.controller.activateSafeMode();
             Game.notify('Room ' + this.obj.name + ' under attack, safe mode activated');
         }	    
+	},
+	miningOp: function(sourceArray){
+	    var hoarderArray = [];
+	    var truckerArray = [];
+	    
+        for(let i in Game.creeps){
+            let creep = Game.creeps[i];
+            if(creep.memory.role === 'remoteHoarder' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+                hoarderArray.push(creep);
+            }
+        }
+        
+        for(let i in Game.creeps){
+            let creep = Game.creeps[i];
+            if(creep.memory.role === 'remoteTrucker' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+                truckerArray.push(creep);
+            }
+        }
+        
+        for(let i=0; i < hoarderArray.length; i++){
+            hoarderArray[i].memory.remoteSource = sourceArray[i];
+        }
+        
+        for(let i=0; i < truckerArray.length; i++){
+            truckerArray[i].memory.remoteSource = sourceArray[i];
+        }
 	},
 	
 };

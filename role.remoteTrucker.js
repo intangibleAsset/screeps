@@ -2,7 +2,6 @@ var roleRemoteTrucker = {
 
     run: function(creep) {
         
-        console.log(this.atSource());
         
             this.init(creep);
             
@@ -17,20 +16,15 @@ var roleRemoteTrucker = {
             }
             
             if(this.creep.memory.transferring){
-                console.log('transferring');
                 if(this.atBase()){
-                    console.log('placing in storage');
-                    this.placeInStorage();
+                    this.transferEnergy();
                 }else{
                     this.creep.moveTo(new RoomPosition(25,25,this.creep.memory.roomName),{visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }else{
-                console.log('not transferring');
                 if(this.atSource()){
-                    console.log('at storage');
                     this.harvestFromContainer();
                 }else{
-                    console.log('moving to storage');
                     this.creep.moveTo(this.creep.memory.remoteSource, {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }
@@ -63,16 +57,41 @@ var roleRemoteTrucker = {
         return value;
     },
     harvestFromContainer: function(){
-        console.log('harvest being called');
         let container = this.creep.pos.findClosestByPath(FIND_STRUCTURES,{filter: (structure) => { return (structure.structureType === STRUCTURE_CONTAINER)}});
         if(this.creep.withdraw(container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
             this.creep.moveTo(container, {visualizePathStyle: {stroke: '#ffaa00'}});
         }
     },
-    placeInStorage: function(){
-        if(this.creep.transfer(this.creep.room.storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
-            this.creep.moveTo(this.creep.room.storage, {visualizePathStyle: {stroke: '#ffaa00'}});
-        }        
+    transferEnergy: function(){
+        var target = this.creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            filter: (structure) => {
+                return (structure.structureType == STRUCTURE_EXTENSION ||
+                    structure.structureType == STRUCTURE_SPAWN ||
+                        structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
+                }});
+        	       
+        if(target) {
+                if(this.creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    this.creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+                }
+            }else{
+                if(this.creep.terminal){
+                    if(this.creep.room.terminal.store[RESOURCE_ENERGY] > 50000){
+                        if(this.creep.transfer(this.creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                            this.creep.moveTo(this.creep.room.storage.pos,{visualizePathStyle: {stroke: '#ffffff'}});
+                        }                    
+                    }else{
+                            if(this.creep.transfer(this.creep.room.terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                                this.creep.moveTo(this.creep.room.terminal.pos,{visualizePathStyle: {stroke: '#ffffff'}});
+                            }
+                    }   
+                }else{
+                    if(this.creep.transfer(this.creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        this.creep.moveTo(this.creep.room.storage.pos,{visualizePathStyle: {stroke: '#ffffff'}});
+                    }
+                }
+                  
+            }
     },
     
 };

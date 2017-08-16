@@ -37,14 +37,14 @@ var roomOne = {
         
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 2;
+            var UPGRADERS = 1;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 3;
             var TANKS = 0;
             var WALLREPPERS = 1;
-            var REMOTE_HARVESTERS = 3;
+            var REMOTE_HARVESTERS = 0;
             var MEDICS = 0;
             var INFANTRY = 0;
             var RESERVERS = 0;
@@ -53,7 +53,7 @@ var roomOne = {
             var MINERAL_MINERS = 0;
             var REMOTE_MINERAL_MINERS = 0;
             var GUARD_DOGS = 0;
-            var MOVERS = 1;
+            var MOVERS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;

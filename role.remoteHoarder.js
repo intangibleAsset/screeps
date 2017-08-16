@@ -4,7 +4,9 @@ var roleRemoteHoarder = {
         
         this.init(creep);
         
-		//go to destination if not there head to location
+        this.baddies();
+        
+        
 		if(!this.creep.pos.isEqualTo(this.creep.memory.remoteSource) && !this.creep.memory.atDestination){
 			this.creep.moveTo(this.creep.memory.remoteSource, {visualizePathStyle: {stroke: '#ffaa00'}});
 		}else{
@@ -12,12 +14,11 @@ var roleRemoteHoarder = {
 		}
 		
 		if(this.creep.memory.atDestination){
+		    
 		    if(this.creep.ticksToLive > 200){
                 this.hoarding();
-                console.log('not repairing');
 		    }else{
 		        this.repairing();
-		        console.log('repairing');
 		    }
  
 		}
@@ -28,48 +29,60 @@ var roleRemoteHoarder = {
 	},
 	init: function(creep){
 	    this.creep = creep;
+
 	},
 	
 	hoarding: function(){
         var container = this.creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (structure) =>  { return (structure.structureType == STRUCTURE_CONTAINER) && structure.store[RESOURCE_ENERGY] < structure.storeCapacity}});
 	    var mySource = this.creep.pos.findClosestByRange(FIND_SOURCES);
-
+        
 		    
         if(this.creep.carry.energy < this.creep.carryCapacity){
 		    this.creep.harvest(mySource);
 	    }else{
 	        if(container){
-    	            if(container.hits < container.hitsMax){
-    		            this.creep.repair(container);
-    		        }else{
-    		            this.creep.transfer(container, RESOURCE_ENERGY);
-    		        }
+    	        if(container.hits < container.hitsMax){
+    		        this.creep.repair(container);
+    		        this.creep.transfer(container, RESOURCE_ENERGY,this.creep.carryCapacity * 0.5);
+    	        }else{
+    	            this.creep.transfer(container, RESOURCE_ENERGY);
+    	        }
+	            
+
 		    }
 		        
         }
 	},
 	repairing: function(){
+	    
 	    if(this.creep.memory.repairing && this.creep.carry.energy === 0){
 	        this.creep.memory.repairing = false;
 	    }
-	    if(!this.creep.memory.repairing && this.creep.carry.energy < this.creep.carryCapacity){
+	    if(!this.creep.repairing && this.creep.carry.energy === this.creep.carryCapacity){
 	        this.creep.memory.repairing = true;
 	    }
 	    
 	    if(this.creep.memory.repairing){
-	        let brokenStructures = this.creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType === STRUCTURE_ROAD || STRUCTURE_CONTAINER) && structure.hits < structure.hitsMax}});
-	        if(this.creep.repair(brokenStructures[0]) === ERR_NOT_IN_RANGE){
-	            this.creep.moveTo(brokenStructures[0]);
+	        let brokenStructures = this.creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: (structure) => {return (structure.structureType === STRUCTURE_ROAD || STRUCTURE_CONTAINER) && structure.hits < structure.hitsMax}});
+	        if(this.creep.repair(brokenStructures) === ERR_NOT_IN_RANGE){
+	            this.creep.moveTo(brokenStructures);
 	        }
 	    }else{
 	        let source = this.creep.pos.findClosestByPath(FIND_SOURCES);
-	        if(this.creep.carry.energy < this.creep.carryCapacity){
-    	        if(this.creep.harvest(source) === ERR_NOT_IN_RANGE){
-    	            this.creep.moveTo(source);
-    	        }
-	        }
+	        if(this.creep.harvest(source) === ERR_NOT_IN_RANGE){
+    	        this.creep.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}});
+    	    }
+	        
 	    }
 	},
+	baddies: function(){
+	    var bads = this.creep.room.find(FIND_HOSTILE_CREEPS);
+	    var thisRoom = Game.rooms[this.creep.memory.roomName];
+	    if(bads.length > 0){
+	        thisRoom.memory.baddieRoom = this.creep.pos.roomName;
+	    }
+	    
+	}
 };
 
 module.exports = roleRemoteHoarder;
