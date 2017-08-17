@@ -13,7 +13,6 @@ var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
 var roleRemoteBuilder = require('role.remoteBuilder');
 var roleMineralMiner = require('role.mineralMiner');
-var roleRemoteMineralMiner = require('role.remoteMineralMiner');
 var roleGuardDog = require('role.guardDog');
 var roleMover = require('role.mover');
 var roleDismantler = require('role.dismantler');
@@ -48,7 +47,7 @@ var roomFour = {
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 3;
-            var BUILDERS = 0;
+            var BUILDERS = 1;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 2;
@@ -61,7 +60,6 @@ var roomFour = {
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
             var MINERAL_MINERS = 0;
-            var REMOTE_MINERAL_MINERS = 0;
             var GUARD_DOGS = 1;
             var MOVERS = 0;
             var DISMANTLERS = 0;
@@ -89,7 +87,6 @@ var roomFour = {
             ['dismantler',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleDismantler,DISMANTLERS],
             ['mover',[CARRY,CARRY,MOVE,MOVE,CARRY,CARRY,MOVE,MOVE],roleMover,MOVERS],            
             ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
-            ['remotemineralminer',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteMineralMiner,REMOTE_MINERAL_MINERS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],

@@ -22,10 +22,15 @@ var roleRemoteTrucker = {
                     this.creep.moveTo(new RoomPosition(25,25,this.creep.memory.roomName),{visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }else{
-                if(this.atSource()){
-                    this.harvestFromContainer();
-                }else{
-                    this.creep.moveTo(this.creep.memory.remoteSource, {visualizePathStyle: {stroke: '#ffaa00'}});
+                try{
+                    if(this.atSource()){
+                        this.harvestFromContainer();
+                    }else{
+                        this.creep.moveTo(this.creep.memory.remoteSource, {visualizePathStyle: {stroke: '#ffaa00'}});
+                    }
+                }
+                catch(err){
+                    console.log('something went wrong in remoteTrucker: ' + err);
                 }
             }
                 

@@ -13,9 +13,11 @@ var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
 var roleRemoteBuilder = require('role.remoteBuilder');
 var roleMineralMiner = require('role.mineralMiner');
-var roleRemoteMineralMiner = require('role.remoteMineralMiner');
 var roleGuardDog = require('role.guardDog');
 var roleMover = require('role.mover');
+var roleDismantler = require('role.dismantler');
+var roleRemoteHoarder = require('role.remoteHoarder');
+var roleRemoteTrucker = require('role.remoteTrucker');
 
 var roomOne = {
 
@@ -27,6 +29,13 @@ var roomOne = {
         this.hud();
         this.runTowers();
         this.triggerSafeMode();
+        //mining code
+        var remSources = [
+            new RoomPosition(23,41,'W63N37'),
+            new RoomPosition(9,10,'W62N36'),
+            new RoomPosition(11,4,'W63N35'),
+        ]
+        this.miningOp(remSources);        
         
         
         
@@ -38,7 +47,7 @@ var roomOne = {
         if(!spawn.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 1;
-            var BUILDERS = 0;
+            var BUILDERS = 1;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 3;
@@ -51,9 +60,10 @@ var roomOne = {
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
             var MINERAL_MINERS = 0;
-            var REMOTE_MINERAL_MINERS = 0;
-            var GUARD_DOGS = 0;
+            var GUARD_DOGS = 1;
             var MOVERS = 0;
+            var REMOTE_HOARDER = 3;
+            var REMOTE_TRUCKERS = 3;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -71,9 +81,10 @@ var roomOne = {
     
         
         var roleArray = [
+            ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
+            ['remoteHoarder',[WORK,WORK,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleRemoteHoarder,REMOTE_HOARDER],
             ['mover',[CARRY,CARRY,MOVE,MOVE,CARRY,CARRY,MOVE,MOVE],roleMover,MOVERS],            
             ['guarddog',[TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
-            ['remotemineralminer',[WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteMineralMiner,REMOTE_MINERAL_MINERS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
@@ -184,6 +195,9 @@ var roomOne = {
         }
         this.spawnNameArray = spawnArray;
         this.obj = roomObj;
+        if(!this.obj.memory.baddieRoom){
+            this.obj.memory.baddieRoom = this.obj.name;
+        }
     },
     
     hud: function(){
@@ -197,14 +211,49 @@ var roomOne = {
             roleTower.run(i,Game.spawns[this.spawnNameArray[0]]);
             
         }
-	},  
+	}, 
 	triggerSafeMode: function(){
         if(Game.spawns[this.spawnNameArray[0]].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
             Game.spawns[this.spawnNameArray[0]].room.controller.activateSafeMode();
             Game.notify('Room ' + this.obj.name + ' under attack, safe mode activated');
         }	    
 	},
-    
+	miningOp: function(sourceArray){
+	    var hoarderArray = [];
+	    var truckerArray = [];
+	    
+        for(let i in Game.creeps){
+            let creep = Game.creeps[i];
+            if(creep.memory.role === 'remoteHoarder' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+                hoarderArray.push(creep);
+            }
+        }
+        
+        for(let i in Game.creeps){
+            let creep = Game.creeps[i];
+            if(creep.memory.role === 'remoteTrucker' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+                truckerArray.push(creep);
+            }
+        }
+        
+        for(let i=0; i < hoarderArray.length; i++){
+            hoarderArray[i].memory.remoteSource = sourceArray[i];
+        }
+        
+        for(let i=0; i < truckerArray.length; i++){
+            truckerArray[i].memory.remoteSource = sourceArray[i];
+        }
+	},
+	reserve: function(roomPos){
+	    let reserverArray = [];
+	    
+	    for(let i in Game.creeps){
+	        let creep = game.creeps[i];
+            if(creep.memory.role === 'reserver' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+                reserverArray.push(creep);
+            }
+	    }
+	},
 	
 };
 

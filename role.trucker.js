@@ -21,27 +21,31 @@ var roleTrucker = {
         	    }
         
         	    if(creep.memory.transferring) {
-        	       
-        	       var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                            filter: (structure) => {
-                                return (structure.structureType == STRUCTURE_EXTENSION ||
-                                        structure.structureType == STRUCTURE_SPAWN ||
-                                        structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
+        	       try{
+            	       var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                                filter: (structure) => {
+                                    return (structure.structureType == STRUCTURE_EXTENSION ||
+                                            structure.structureType == STRUCTURE_SPAWN ||
+                                            structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
+                                }
+                        });
+            	       
+            	        if(target) {
+                            if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                                creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
                             }
-                    });
-        	       
-        	        if(target) {
-                        if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
-                        }
-                    }else{
-                        if(creep.room.storage){
-                            if(creep.transfer(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(creep.room.storage.pos);
+                        }else{
+                            if(creep.room.storage){
+                                if(creep.transfer(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                                creep.moveTo(creep.room.storage.pos);
+                                }
                             }
+                            
                         }
-                        
-                    }
+        	       }
+        	       catch(err){
+        	           console.log('something went wrong in trucker error: ' + err );
+        	       }
         	       
                 }
                 else {

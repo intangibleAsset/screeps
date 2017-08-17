@@ -13,9 +13,14 @@ var roleRemoteHoarder = {
 		    this.creep.memory.atDestination = true;
 		}
 		
+		//every now and then check creep is at the right destination as the source assignment code can be buggy
+		if(this.creep.ticksToLive % 20 === 0){
+		    this.creep.memory.atDestination = false;
+		}
+		
 		if(this.creep.memory.atDestination){
 		    
-		    if(this.creep.ticksToLive > 200){
+		    if(this.creep.ticksToLive > 100){
                 this.hoarding();
 		    }else{
 		        this.repairing();
@@ -43,7 +48,8 @@ var roleRemoteHoarder = {
 	        if(container){
     	        if(container.hits < container.hitsMax){
     		        this.creep.repair(container);
-    		        this.creep.transfer(container, RESOURCE_ENERGY,this.creep.carryCapacity * 0.5);
+    		        //leaves energy in the creep to run repair operation the lower the number the more it repairs (it cycles quicker)
+    		        this.creep.transfer(container, RESOURCE_ENERGY,this.creep.carryCapacity * 0.2);
     	        }else{
     	            this.creep.transfer(container, RESOURCE_ENERGY);
     	        }

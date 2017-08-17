@@ -13,7 +13,6 @@ var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
 var roleRemoteBuilder = require('role.remoteBuilder');
 var roleMineralMiner = require('role.mineralMiner');
-var roleRemoteMineralMiner = require('role.remoteMineralMiner');
 var roleGuardDog = require('role.guardDog');
 var roleMover = require('role.mover');
 var roleDismantler = require('role.dismantler');
@@ -63,7 +62,7 @@ var roomThree = {
             var REMOTE_BUILDERS = 0;
             var REMOTE_HOARDER = 2;
             var REMOTE_TRUCKERS = 2;
-            var GUARD_DOGS = 0;
+            var GUARD_DOGS = 1;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;

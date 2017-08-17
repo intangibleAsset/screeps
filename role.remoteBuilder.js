@@ -4,9 +4,10 @@ var roleRemoteBuilder = {
     /** @param {Creep} creep **/
     run: function(creep) {
         
+        
 		//go to destination if not there head to location
-		if(!creep.pos.isEqualTo(new RoomPosition(13,11,'W69N35')) && !creep.memory.atDestination){
-			creep.moveTo(new RoomPosition(13,11,'W69N35'), {visualizePathStyle: {stroke: '#ffaa00'}});
+		if(!creep.pos.isEqualTo(new RoomPosition(41,3,'W62N35')) && !creep.memory.atDestination){
+			creep.moveTo(new RoomPosition(41,3,'W62N35'), {visualizePathStyle: {stroke: '#ffaa00'}});
 		}else{
 		    creep.memory.atDestination = true;
 		}
@@ -33,9 +34,9 @@ var roleRemoteBuilder = {
                 }
                 
             }else{
-                var sources = creep.room.find(FIND_SOURCES);
-                if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+                var source = creep.pos.findClosestByPath(FIND_SOURCES);
+                if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}});
                 }                
             }
             
@@ -44,7 +45,6 @@ var roleRemoteBuilder = {
 		}
 		
         
-		
 
 	}
 };
