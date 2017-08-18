@@ -38,13 +38,13 @@ var roomThree = {
         
         //const cost = Game.market.calcTransactionCost(15000, 'W68N35', 'W60N70');
         //console.log(cost);
-        //console.log(Game.market.deal('595b831d1170f1650c7b6f56',35000,"W68N35"));
+        //console.log(Game.market.deal('5995dc0632f0fc1a9054c3ff',27000,"W68N35"));
 
         //console.log(spawn.room.terminal.send(RESOURCE_UTRIUM_LEMERGITE,34800,'W61N35'));
 
                 
         
-        if(!spawn.memory.hostileInRoom){
+        if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 2;
             var BUILDERS = 0;
@@ -58,7 +58,7 @@ var roomThree = {
             var INFANTRY = 0;
             var RESERVERS = 0;
             var MOVERS = 0;
-            var MINERAL_MINERS = 0;
+            var MINERAL_MINERS = 1;
             var REMOTE_BUILDERS = 0;
             var REMOTE_HOARDER = 2;
             var REMOTE_TRUCKERS = 2;
@@ -168,12 +168,26 @@ var roomThree = {
                 spawnArray.push(i);
             }
         }
-        this.spawnNameArray = spawnArray;
         this.obj = roomObj;
+        this.obj.memory.spawnNameArray = spawnArray;
         if(!this.obj.memory.baddieRoom){
             this.obj.memory.baddieRoom = this.obj.name;
         }
     },
+    
+    autoSpawn: function(roleArray){
+        
+        for(let i = 0; i < roleArray.length; i++){
+            let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && (creep.memory.spawnName === spawnNameArray[0] || creep.memory.roomName === this.obj.name));
+            
+            if(temp.length < roleArray[i][3]){
+                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name, roomName: this.obj.name});
+                console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ this.obj.name);
+            }
+        }
+        
+    },
+    
     hud: function(){
         new RoomVisual(this.obj.name).text("Room : " + this.obj.name, 1, 0, {color: 'white', font: 0.5, align: 'left'});
         new RoomVisual(this.obj.name).text("Total energy capacity: "+this.obj.energyCapacityAvailable, 1, 1, {color: 'white', font: 0.5, align: 'left'});
@@ -182,13 +196,13 @@ var roomThree = {
 	runTowers: function(){
         let towers = this.obj.find(FIND_MY_STRUCTURES, {filter:{ structureType: STRUCTURE_TOWER}});
         for(let i of towers){
-            roleTower.run(i,Game.spawns[this.spawnNameArray[0]]);
+            roleTower.run(i,Game.spawns[this.obj.memory.spawnNameArray[0]],this.obj);
             
         }
 	}, 
 	triggerSafeMode: function(){
-        if(Game.spawns[this.spawnNameArray[0]].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
-            Game.spawns[this.spawnNameArray[0]].room.controller.activateSafeMode();
+        if(Game.spawns[this.obj.memory.spawnNameArray[0]].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
+            Game.spawns[this.obj.memory.spawnNameArray[0]].room.controller.activateSafeMode();
             Game.notify('Room ' + this.obj.name + ' under attack, safe mode activated');
         }	    
 	},
@@ -198,14 +212,14 @@ var roomThree = {
 	    
         for(let i in Game.creeps){
             let creep = Game.creeps[i];
-            if(creep.memory.role === 'remoteHoarder' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+            if(creep.memory.role === 'remoteHoarder' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.obj.memory.spawnNameArray[0])){
                 hoarderArray.push(creep);
             }
         }
         
         for(let i in Game.creeps){
             let creep = Game.creeps[i];
-            if(creep.memory.role === 'remoteTrucker' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+            if(creep.memory.role === 'remoteTrucker' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.obj.memory.spawnNameArray[0])){
                 truckerArray.push(creep);
             }
         }
@@ -217,6 +231,16 @@ var roomThree = {
         for(let i=0; i < truckerArray.length; i++){
             truckerArray[i].memory.remoteSource = sourceArray[i];
         }
+	},
+	reserve: function(roomPos){
+	    let reserverArray = [];
+	    
+	    for(let i in Game.creeps){
+	        let creep = Game.creeps[i];
+            if(creep.memory.role === 'reserver' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.obj.memory.spawnNameArray[0])){
+                reserverArray.push(creep);
+            }
+	    }
 	},
 	
 };

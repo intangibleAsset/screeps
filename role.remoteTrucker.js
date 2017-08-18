@@ -80,7 +80,7 @@ var roleRemoteTrucker = {
                     this.creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }else{
-                if(this.creep.terminal){
+                if(this.creep.room.terminal){
                     if(this.creep.room.terminal.store[RESOURCE_ENERGY] > 50000){
                         if(this.creep.transfer(this.creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                             this.creep.moveTo(this.creep.room.storage.pos,{visualizePathStyle: {stroke: '#ffffff'}});

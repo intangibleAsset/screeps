@@ -3,18 +3,25 @@ var roleRemoteHoarder = {
     run: function(creep) {
         
         this.init(creep);
-        
         this.baddies();
         
         
 		if(!this.creep.pos.isEqualTo(this.creep.memory.remoteSource) && !this.creep.memory.atDestination){
+			
 			this.creep.moveTo(this.creep.memory.remoteSource, {visualizePathStyle: {stroke: '#ffaa00'}});
-		}else{
+		    
+		}else if(this.creep.ticksToLive < 100){
+		    
 		    this.creep.memory.atDestination = true;
+		    
+		}else{
+		    
+		    this.creep.memory.atDestination = true;
+		    
 		}
 		
 		//every now and then check creep is at the right destination as the source assignment code can be buggy
-		if(this.creep.ticksToLive % 20 === 0){
+		if(this.creep.ticksToLive % 40 === 0){
 		    this.creep.memory.atDestination = false;
 		}
 		

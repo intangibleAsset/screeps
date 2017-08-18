@@ -5,10 +5,10 @@ var roleReserver = {
     run: function(creep) {
         
         this.init(creep);
+        //this.creep.signController(this.creep.room.controller, "Why does remote mining feel like an exercise in repairing containers?");
         
         try{
     		if(!this.creep.pos.isEqualTo(this.creep.memory.controllerToReserve) && !this.creep.memory.atDestination){
-    		    console.log('working?');
     			this.creep.moveTo(this.creep.memory.controllerToReserve, {visualizePathStyle: {stroke: '#ffaa00'}});
     		}else{
     		    this.creep.memory.atDestination = true;

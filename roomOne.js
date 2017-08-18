@@ -35,7 +35,8 @@ var roomOne = {
             new RoomPosition(9,10,'W62N36'),
             new RoomPosition(11,4,'W63N35'),
         ]
-        this.miningOp(remSources);        
+        this.miningOp(remSources);    
+        
         
         
         
@@ -44,10 +45,10 @@ var roomOne = {
         //console.log(Game.market.deal('598d82816c990032745e290c',21000,"W63N36"));
         //console.log(spawn.room.terminal.send(RESOURCE_HYDROGEN,280,'W61N35'));
         
-        if(!spawn.memory.hostileInRoom){
+        if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 1;
-            var BUILDERS = 1;
+            var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 3;
@@ -59,7 +60,7 @@ var roomOne = {
             var RESERVERS = 0;
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
-            var MINERAL_MINERS = 0;
+            var MINERAL_MINERS = 1;
             var GUARD_DOGS = 1;
             var MOVERS = 0;
             var REMOTE_HOARDER = 3;
@@ -193,11 +194,24 @@ var roomOne = {
                 spawnArray.push(i);
             }
         }
-        this.spawnNameArray = spawnArray;
         this.obj = roomObj;
+        this.obj.memory.spawnNameArray = spawnArray;
         if(!this.obj.memory.baddieRoom){
             this.obj.memory.baddieRoom = this.obj.name;
         }
+    },
+    
+    autoSpawn: function(roleArray){
+        
+        for(let i = 0; i < roleArray.length; i++){
+            let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && (creep.memory.spawnName === spawnNameArray[0] || creep.memory.roomName === this.obj.name));
+            
+            if(temp.length < roleArray[i][3]){
+                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name, roomName: this.obj.name});
+                console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ this.obj.name);
+            }
+        }
+        
     },
     
     hud: function(){
@@ -208,13 +222,13 @@ var roomOne = {
 	runTowers: function(){
         let towers = this.obj.find(FIND_MY_STRUCTURES, {filter:{ structureType: STRUCTURE_TOWER}});
         for(let i of towers){
-            roleTower.run(i,Game.spawns[this.spawnNameArray[0]]);
+            roleTower.run(i,Game.spawns[this.obj.memory.spawnNameArray[0]],this.obj);
             
         }
 	}, 
 	triggerSafeMode: function(){
-        if(Game.spawns[this.spawnNameArray[0]].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
-            Game.spawns[this.spawnNameArray[0]].room.controller.activateSafeMode();
+        if(Game.spawns[this.obj.memory.spawnNameArray[0]].pos.findInRange(FIND_HOSTILE_CREEPS,6).length > 0){
+            Game.spawns[this.obj.memory.spawnNameArray[0]].room.controller.activateSafeMode();
             Game.notify('Room ' + this.obj.name + ' under attack, safe mode activated');
         }	    
 	},
@@ -224,14 +238,14 @@ var roomOne = {
 	    
         for(let i in Game.creeps){
             let creep = Game.creeps[i];
-            if(creep.memory.role === 'remoteHoarder' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+            if(creep.memory.role === 'remoteHoarder' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.obj.memory.spawnNameArray[0])){
                 hoarderArray.push(creep);
             }
         }
         
         for(let i in Game.creeps){
             let creep = Game.creeps[i];
-            if(creep.memory.role === 'remoteTrucker' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+            if(creep.memory.role === 'remoteTrucker' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.obj.memory.spawnNameArray[0])){
                 truckerArray.push(creep);
             }
         }
@@ -248,8 +262,8 @@ var roomOne = {
 	    let reserverArray = [];
 	    
 	    for(let i in Game.creeps){
-	        let creep = game.creeps[i];
-            if(creep.memory.role === 'reserver' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.spawnNameArray[0])){
+	        let creep = Game.creeps[i];
+            if(creep.memory.role === 'reserver' && (creep.memory.roomName === this.obj.name || creep.memory.spawnName === this.obj.memory.spawnNameArray[0])){
                 reserverArray.push(creep);
             }
 	    }
