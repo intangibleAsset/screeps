@@ -35,7 +35,8 @@ var roomOne = {
             new RoomPosition(9,10,'W62N36'),
             new RoomPosition(11,4,'W63N35'),
         ]
-        this.miningOp(remSources);    
+        this.miningOp(remSources);  
+        
         
         
         
@@ -102,6 +103,8 @@ var roomOne = {
             ['mineralMiner',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleMineralMiner,MINERAL_MINERS]
             
         ];
+        
+        this.autoSpawn(roleArray);
     
         
         //********************run labs***************************************************************
@@ -121,7 +124,7 @@ var roomOne = {
         }
         
         //*****************************autospawning creeps*******************************************
-        
+        /*
         for(let i = 0; i < roleArray.length; i++){
             let temp = _.filter(Game.creeps, (creep) => creep.memory.role == roleArray[i][0] && creep.memory.spawnName === spawn.name);
             
@@ -130,7 +133,7 @@ var roomOne = {
                 console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ spawn.name);
             }
         }
-        
+        */
         //****************************remote harvesting helper***************************************
         
         var remoteSources = [
@@ -204,10 +207,23 @@ var roomOne = {
     autoSpawn: function(roleArray){
         
         for(let i = 0; i < roleArray.length; i++){
-            let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && (creep.memory.spawnName === spawnNameArray[0] || creep.memory.roomName === this.obj.name));
+            let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && (creep.memory.spawnName === this.obj.memory.spawnNameArray[0] || creep.memory.roomName === this.obj.name));
+            
+            var chosenSpawn;
+            
+            for(let i = 0; i < this.obj.memory.spawnNameArray.length; i++){
+                let roomSpawn = Game.spawns[this.obj.memory.spawnNameArray[i]];
+                if(!roomSpawn.spawning){
+                    chosenSpawn = roomSpawn;
+                }
+            }
+            
+            if(!chosenSpawn){
+                chosenSpawn = Game.spawns[this.obj.memory.spawnNameArray[0]];
+            }
             
             if(temp.length < roleArray[i][3]){
-                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name, roomName: this.obj.name});
+                var newName = chosenSpawn.createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: this.obj.memory.spawnNameArray[0], roomName: this.obj.name});
                 console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ this.obj.name);
             }
         }
@@ -267,6 +283,9 @@ var roomOne = {
                 reserverArray.push(creep);
             }
 	    }
+	    for(let i=0; i < reserverArray.length; i++){
+            reserverArray[i].memory.controllerToReserve = roomPos[i];
+        }
 	},
 	
 };

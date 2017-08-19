@@ -247,6 +247,9 @@ var roomFour = {
                 reserverArray.push(creep);
             }
 	    }
+	    for(let i=0; i < reserverArray.length; i++){
+            reserverArray[i].memory.controllerToReserve = roomPos[i];
+        }
 	},
 
 	

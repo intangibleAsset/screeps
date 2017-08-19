@@ -86,7 +86,7 @@ var roleMover = {
         	        
 
                 }else{
-                    //half done, half done, half done, half done, half done //////////////////////////
+
                     if(creep.memory.reset){
                         //not implemented yet meant to empty labs when changing compounds
                         if(creep.memory.step === 0 && labs[1].mineralAmount > 0){

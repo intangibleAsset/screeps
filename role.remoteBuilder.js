@@ -6,8 +6,8 @@ var roleRemoteBuilder = {
         
         
 		//go to destination if not there head to location
-		if(!creep.pos.isEqualTo(new RoomPosition(41,3,'W62N35')) && !creep.memory.atDestination){
-			creep.moveTo(new RoomPosition(41,3,'W62N35'), {visualizePathStyle: {stroke: '#ffaa00'}});
+		if(!creep.pos.isEqualTo(new RoomPosition(13,38,'W61N36')) && !creep.memory.atDestination){
+			creep.moveTo(new RoomPosition(13,38,'W61N36'), {visualizePathStyle: {stroke: '#ffaa00'}});
 		}else{
 		    creep.memory.atDestination = true;
 		}
