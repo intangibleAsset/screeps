@@ -1,7 +1,7 @@
 var roleRemoteTrucker = {
 
     run: function(creep) {
-        
+        //creep.move(LEFT);
         
             this.init(creep);
             
@@ -20,6 +20,7 @@ var roleRemoteTrucker = {
                     this.transferEnergy();
                 }else{
                     this.creep.moveTo(new RoomPosition(25,25,this.creep.memory.roomName),{visualizePathStyle: {stroke: '#ffaa00'}});
+                    this.repairRoadStandingOn();
                 }
             }else{
                 try{
@@ -97,6 +98,16 @@ var roleRemoteTrucker = {
                 }
                   
             }
+    },
+    repairRoadStandingOn: function(){
+        var repairTarget = this.creep.pos.lookFor(LOOK_STRUCTURES);
+        function checkRoad(index){
+            return index.structureType === STRUCTURE_ROAD;
+        }
+        repairTarget = repairTarget.filter(checkRoad);
+        if(repairTarget.length > 0){
+             this.creep.repair(repairTarget[0]);
+        }
     },
     
 };

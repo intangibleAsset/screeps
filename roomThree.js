@@ -7,9 +7,7 @@ var roleTank = require('role.tank');
 var roleHoarder = require('role.hoarder');
 var roleHoarderTwo = require('role.hoardertwo');
 var roleTrucker = require('role.trucker');
-var roleRemoteHarvester = require('role.remoteharvester');
 var roleMedic = require('role.medic');
-var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
 var roleRemoteBuilder = require('role.remoteBuilder');
 var roleMineralMiner = require('role.mineralMiner');
@@ -53,9 +51,7 @@ var roomThree = {
             var TRUCKERS = 2;
             var TANKS = 0;
             var WALLREPPERS = 1;
-            var REMOTE_HARVESTERS = 0;
             var MEDICS = 0;
-            var INFANTRY = 0;
             var RESERVERS = 0;
             var MOVERS = 0;
             var MINERAL_MINERS = 1;
@@ -80,15 +76,14 @@ var roomThree = {
     
         
         var roleArray = [
-            ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
+            ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
             ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
-            ['remoteHoarder',[WORK,WORK,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleRemoteHoarder,REMOTE_HOARDER],
+            ['remoteHoarder',[CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY],roleRemoteHoarder,REMOTE_HOARDER],
             ['remoteBuilder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],            
             ['mover',[CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleMover,MOVERS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
-            ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
             ['upgrader',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
@@ -96,7 +91,6 @@ var roomThree = {
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
             ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
-            ['remoteharvester',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleRemoteHarvester,REMOTE_HARVESTERS],
             ['mineralMiner',[WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE],roleMineralMiner,MINERAL_MINERS]            
         ];
 
@@ -146,16 +140,7 @@ var roomThree = {
             }
         }
 
-        //********************spawner messager*******************************************************
-    
-        if(Game.spawns[spawn.name].spawning) { 
-            var spawningCreep = Game.creeps[Game.spawns[spawn.name].spawning.name];
-            Game.spawns[spawn.name].room.visual.text(
-                'New: ' + spawningCreep.memory.role,
-                Game.spawns[spawn.name].pos.x + 1, 
-                Game.spawns[spawn.name].pos.y, 
-                {align: 'left', opacity: 0.8});
-        }
+
   
     
         

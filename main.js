@@ -21,5 +21,17 @@ module.exports.loop = function () {
     roomThree.run(Game.spawns['Spawn3'],Game.rooms['W68N35']);
     roomFour.run(Game.spawns['Spawn4'],Game.rooms['W68N37']);
     
+    //********************spawner visual*******************************************************
+    for(let i in Game.spawns){
+        if(Game.spawns[i].spawning) { 
+            var spawningCreep = Game.creeps[Game.spawns[i].spawning.name];
+            Game.spawns[i].room.visual.text(
+                'New: ' + spawningCreep.memory.role,
+                Game.spawns[i].pos.x + 1, 
+                Game.spawns[i].pos.y, 
+                {align: 'left', opacity: 0.8, font: 0.5});
+        }
+    }
+    
     
 }

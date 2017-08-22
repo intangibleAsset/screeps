@@ -7,9 +7,7 @@ var roleTank = require('role.tank');
 var roleHoarder = require('role.hoarder');
 var roleHoarderTwo = require('role.hoardertwo');
 var roleTrucker = require('role.trucker');
-var roleRemoteHarvester = require('role.remoteharvester');
 var roleMedic = require('role.medic');
-var roleInfantry = require('role.infantry');
 var roleReserver = require('role.reserver');
 var roleRemoteBuilder = require('role.remoteBuilder');
 var roleMineralMiner = require('role.mineralMiner');
@@ -33,6 +31,7 @@ var roomTwo = {
             new RoomPosition(29,28,'W61N34'),
             new RoomPosition(14,33,'W61N34'),
             new RoomPosition(41,3,'W62N35'),
+            new RoomPosition(10,28,'W62N35'),
         ]
         
         this.miningOp(remSources);
@@ -46,7 +45,7 @@ var roomTwo = {
         
         //const cost = Game.market.calcTransactionCost(30000, 'W61N35', 'W50N70');
         //console.log(cost);
-        //console.log(Game.market.deal('59935d58218b0618c4ba5d24',29000,"W61N35"));
+        //console.log(Game.market.deal('599b3843a0ee4f13b23be664',21350,"W61N35"));
 
         //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,1000,'W62N38'));
 
@@ -55,23 +54,21 @@ var roomTwo = {
  
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 2;
-            var BUILDERS = 1;
+            var UPGRADERS = 3;
+            var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 2;
             var TANKS = 0;
             var WALLREPPERS = 1;
-            var REMOTE_HARVESTERS = 0;
             var MEDICS = 0;
-            var INFANTRY = 0;
-            var MINERAL_MINERS = 1;
+            var MINERAL_MINERS = 0;
             var RESERVERS = 2;
             var DISMANTLERS = 0;
             var MOVERS = 0;
-            var REMOTE_BUILDERS = 0;
-            var REMOTE_HOARDER = 3;
-            var REMOTE_TRUCKERS = 3;
+            var REMOTE_BUILDERS = 1;
+            var REMOTE_HOARDER = 4;
+            var REMOTE_TRUCKERS = 4;
             var GUARD_DOGS = 1;
         }else{
             var HARVESTERS = 1;
@@ -90,16 +87,15 @@ var roomTwo = {
     
         
         var roleArray = [
-            ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
-            ['remoteBuilder',[TOUGH,TOUGH,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
-            ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
-            ['remoteHoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteHoarder,REMOTE_HOARDER],
+            ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
+            ['remoteBuilder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
+            ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,WORK,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
+            ['remoteHoarder',[CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY],roleRemoteHoarder,REMOTE_HOARDER],
             ['mover',[CARRY,CARRY,MOVE,MOVE,CARRY,CARRY,MOVE,MOVE],roleMover,MOVERS],
             ['dismantler',[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleDismantler,DISMANTLERS],
             ['harvester',[WORK,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
-            ['reserver',[CLAIM,MOVE,CLAIM,MOVE],roleReserver,RESERVERS],
+            ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
-            ['infantry',[TOUGH,MOVE,TOUGH,MOVE,RANGED_ATTACK,MOVE,RANGED_ATTACK,MOVE],roleInfantry,INFANTRY],
             ['upgrader',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
@@ -107,11 +103,11 @@ var roomTwo = {
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
             ['trucker',[CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE,CARRY,CARRY,MOVE],roleTrucker,TRUCKERS],
-            ['remoteharvester',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY],roleRemoteHarvester,REMOTE_HARVESTERS],
             ['mineralMiner',[WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE],roleMineralMiner,MINERAL_MINERS]
         ];
         
         this.autoSpawn(roleArray);
+        //this.spawnMessage();
     
         //********************run labs***************************************************************
         var labs = spawn.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
@@ -141,32 +137,6 @@ var roomTwo = {
             }
         }
         */
-        //****************************remote harvesting helper***************************************
-        var remoteSources = [
-          new RoomPosition(35,20,'W61N36'),
-          new RoomPosition(8,39,'W61N36'),
-          new RoomPosition(9,28,'W62N35'),
-          new RoomPosition(41,3,'W62N35'),
-          new RoomPosition(34,28,'W62N34'),
-          new RoomPosition(34,42,'W62N34'),
-          new RoomPosition(30,28,'W61N34'),
-          new RoomPosition(14,33,'W61N34')
-        ];
-        
-        
-        var creepArray = []
-        
-        for(let i in Game.creeps){
-            let creep = Game.creeps[i];
-            if(creep.memory.role === 'remoteharvester' && creep.memory.spawnName == spawn.name){
-                creepArray.push(creep);
-            }
-        }
-        
-        for(let i=0;i<creepArray.length;i++){
-            creepArray[i].memory.remoteSource = remoteSources[i];
-        }
-        
 
         //*******************run this rooms creeps***************************************************
         
@@ -187,7 +157,7 @@ var roomTwo = {
         }
 
         //********************spawner messager*******************************************************
-    
+/*    
         if(Game.spawns[spawn.name].spawning) { 
             var spawningCreep = Game.creeps[Game.spawns[spawn.name].spawning.name];
             Game.spawns[spawn.name].room.visual.text(
@@ -196,7 +166,7 @@ var roomTwo = {
                 Game.spawns[spawn.name].pos.y, 
                 {align: 'left', opacity: 0.8});
         }
-  
+*/  
     
         
     },
@@ -238,6 +208,19 @@ var roomTwo = {
             }
         }
         
+    },
+    
+    spawnMessage: function(){
+        for(let i in Game.spawns){
+            if(Game.spawns[i].spawning) { 
+                var spawningCreep = Game.creeps[Game.spawns[i].spawning.name];
+                Game.spawns[i].room.visual.text(
+                    'New: ' + spawningCreep.memory.role,
+                    Game.spawns[i].pos.x + 1, 
+                    Game.spawns[i].pos.y, 
+                    {align: 'left', opacity: 0.8, font: 0.5});
+            }
+        }
     },
     
     hud: function(){
