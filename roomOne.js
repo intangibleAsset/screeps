@@ -16,6 +16,7 @@ var roleMover = require('role.mover');
 var roleDismantler = require('role.dismantler');
 var roleRemoteHoarder = require('role.remoteHoarder');
 var roleRemoteTrucker = require('role.remoteTrucker');
+var roleLogistics = require('role.logistics')
 
 var roomOne = {
 
@@ -62,6 +63,7 @@ var roomOne = {
             var MOVERS = 0;
             var REMOTE_HOARDER = 3;
             var REMOTE_TRUCKERS = 3;
+            var LOGISTICS = 1;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -79,6 +81,7 @@ var roomOne = {
     
         
         var roleArray = [
+            ['logistics',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleLogistics,LOGISTICS],
             ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,WORK,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
             ['remoteHoarder',[CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY],roleRemoteHoarder,REMOTE_HOARDER],
             ['mover',[CARRY,CARRY,MOVE,MOVE,CARRY,CARRY,MOVE,MOVE],roleMover,MOVERS],            

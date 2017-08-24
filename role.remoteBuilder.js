@@ -3,7 +3,7 @@ var roleRemoteBuilder = {
     
     /** @param {Creep} creep **/
     run: function(creep) {
-        
+        //creep.move(LEFT);
         
 		//go to destination if not there head to location
 		if(!creep.pos.isEqualTo(new RoomPosition(35,1,'W61N34')) && !creep.memory.atDestination){

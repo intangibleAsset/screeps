@@ -40,7 +40,7 @@ var roomFour = {
         //const cost = Game.market.calcTransactionCost(25000, 'W68N37', 'W53N83');
         //console.log(cost);
         //console.log(Game.market.deal('594cbbf34a22922b5d5bf5cc',25000,"W68N37"));
-        //console.log(spawn.room.terminal.send(RESOURCE_HYDROGEN,50000,'W68N37'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,50000,'W63N36'));
         
         
         if(!this.obj.memory.hostileInRoom){
@@ -82,7 +82,7 @@ var roomFour = {
             ['remoteHoarder',[CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY],roleRemoteHoarder,REMOTE_HOARDER],
             ['dismantler',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleDismantler,DISMANTLERS],
             ['mover',[CARRY,CARRY,MOVE,MOVE,CARRY,CARRY,MOVE,MOVE],roleMover,MOVERS],            
-            ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
+            ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],

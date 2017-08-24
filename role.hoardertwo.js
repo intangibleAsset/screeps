@@ -5,15 +5,17 @@ var roleHoarderTwo = {
     /** @param {Creep} creep **/
     run: function(creep) {
         
-    	    if(creep.carry.energy < creep.carryCapacity) {
-                var sources = creep.room.find(FIND_SOURCES);
-                if(creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(sources[1], {visualizePathStyle: {stroke: '#ffaa00'}});
+            this.init(creep);
+        
+    	    if(this.creep.carry.energy < this.creep.carryCapacity) {
+                var sources = this.creep.room.find(FIND_SOURCES);
+                if(this.creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
+                    this.creep.moveTo(sources[1], {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }
             else {
                 
-                var target = creep.pos.findClosestByRange(FIND_STRUCTURES, {
+                var target = this.creep.pos.findClosestByRange(FIND_STRUCTURES, {
                         filter: (structure) => {
                             return (structure.structureType == STRUCTURE_CONTAINER) && structure.store[RESOURCE_ENERGY] < structure.storeCapacity;
                        }
@@ -21,14 +23,17 @@ var roleHoarderTwo = {
                 
                 
                 if(target) {
-                    if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#ffffff'}});
+                    if(this.creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        this.creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#ffffff'}});
                     }
                 }
             }
 
         
-	}//end run
+	},
+	init: function(creep){
+	    this.creep = creep;
+	},
 };
 
 module.exports = roleHoarderTwo;

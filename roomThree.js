@@ -37,8 +37,7 @@ var roomThree = {
         //const cost = Game.market.calcTransactionCost(15000, 'W68N35', 'W60N70');
         //console.log(cost);
         //console.log(Game.market.deal('5995dc0632f0fc1a9054c3ff',27000,"W68N35"));
-
-        //console.log(spawn.room.terminal.send(RESOURCE_UTRIUM_LEMERGITE,34800,'W61N35'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,30000,'W63N36'));
 
                 
         

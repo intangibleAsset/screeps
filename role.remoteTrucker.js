@@ -1,7 +1,6 @@
 var roleRemoteTrucker = {
 
     run: function(creep) {
-        //creep.move(LEFT);
         
             this.init(creep);
             

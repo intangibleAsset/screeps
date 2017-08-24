@@ -10,10 +10,6 @@ var roleRemoteHoarder = {
 			
 			this.creep.moveTo(this.creep.memory.remoteSource, {visualizePathStyle: {stroke: '#ffaa00'}});
 		    
-		}else if(this.creep.ticksToLive < 100){
-		    
-		    this.creep.memory.atDestination = true;
-		    
 		}else{
 		    
 		    this.creep.memory.atDestination = true;
@@ -26,13 +22,7 @@ var roleRemoteHoarder = {
 		}
 		
 		if(this.creep.memory.atDestination){
-		    
-		    if(this.creep.ticksToLive > 100){
-                this.hoarding();
-		    }else{
-		        this.repairing();
-		    }
- 
+            this.hoarding();
 		}
 		
         
@@ -67,6 +57,8 @@ var roleRemoteHoarder = {
         }
 	},
 	repairing: function(){
+	    
+	    //not used for now maybe overkill now remoteTruckers fix roads
 	    
 	    if(this.creep.memory.repairing && this.creep.carry.energy === 0){
 	        this.creep.memory.repairing = false;
