@@ -37,7 +37,7 @@ var roomThree = {
         //const cost = Game.market.calcTransactionCost(15000, 'W68N35', 'W60N70');
         //console.log(cost);
         //console.log(Game.market.deal('5995dc0632f0fc1a9054c3ff',27000,"W68N35"));
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,30000,'W63N36'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,13000,'W63N36'));
 
                 
         
@@ -92,6 +92,8 @@ var roomThree = {
             ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
             ['mineralMiner',[WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE],roleMineralMiner,MINERAL_MINERS]            
         ];
+        
+        this.autoSpawn(roleArray);
 
         
         //********************run labs***************************************************************
@@ -109,17 +111,6 @@ var roomThree = {
             }
         }
         
-        //*****************************autospawning creeps**************************************
-        
-        for(let i = 0; i < roleArray.length; i++){
-            let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && creep.memory.spawnName === spawn.name);
-            
-            if(temp.length < roleArray[i][3]){
-                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name, roomName: this.obj.name});
-                console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ spawn.name);
-            }
-        }
-    
 
         //*******************run this rooms creeps***************************************************
         
@@ -159,18 +150,6 @@ var roomThree = {
         }
     },
     
-    autoSpawn: function(roleArray){
-        
-        for(let i = 0; i < roleArray.length; i++){
-            let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && (creep.memory.spawnName === spawnNameArray[0] || creep.memory.roomName === this.obj.name));
-            
-            if(temp.length < roleArray[i][3]){
-                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name, roomName: this.obj.name});
-                console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ this.obj.name);
-            }
-        }
-        
-    },
     
     hud: function(){
         new RoomVisual(this.obj.name).text("Room : " + this.obj.name, 1, 0, {color: 'white', font: 0.5, align: 'left'});
@@ -229,6 +208,31 @@ var roomThree = {
             reserverArray[i].memory.controllerToReserve = roomPos[i];
         }
 	},
+    autoSpawn: function(roleArray){
+        
+        for(let i = 0; i < roleArray.length; i++){
+            let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && (creep.memory.spawnName === this.obj.memory.spawnNameArray[0] || creep.memory.roomName === this.obj.name));
+            
+            var chosenSpawn;
+            
+            for(let i = 0; i < this.obj.memory.spawnNameArray.length; i++){
+                let roomSpawn = Game.spawns[this.obj.memory.spawnNameArray[i]];
+                if(!roomSpawn.spawning){
+                    chosenSpawn = roomSpawn;
+                }
+            }
+            
+            if(!chosenSpawn){
+                chosenSpawn = Game.spawns[this.obj.memory.spawnNameArray[0]];
+            }
+            
+            if(temp.length < roleArray[i][3]){
+                var newName = chosenSpawn.createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: this.obj.memory.spawnNameArray[0], roomName: this.obj.name});
+                console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ this.obj.name);
+            }
+        }
+        
+    },
 	
 };
 

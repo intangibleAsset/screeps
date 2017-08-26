@@ -47,7 +47,7 @@ var roomTwo = {
         //console.log(cost);
         //console.log(Game.market.deal('599b3843a0ee4f13b23be664',21350,"W61N35"));
 
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,1000,'W62N38'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,25000,'W63N36'));
 
         
  

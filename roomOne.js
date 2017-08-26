@@ -23,12 +23,14 @@ var roomOne = {
     /** @param {creep} creep **/
     run: function(spawn,roomObj) {
         
+
         
         this.init(roomObj);
         this.hud();
         this.runTowers();
         this.triggerSafeMode();
-        //mining code
+        
+        //mining code/////////////////////////////////////
         var remSources = [
             new RoomPosition(23,41,'W63N37'),
             new RoomPosition(9,10,'W62N36'),
@@ -36,13 +38,20 @@ var roomOne = {
         ]
         this.miningOp(remSources);  
         
+        //link code///////////////////////////////////////
+        var controllerLink = Game.structures['599dbca575ed1751e02943c9'];
+        var storageLink = Game.structures['599dc20b638f836e40d04b63'];
+        var sourceOneLink = Game.structures['599dfb1d2affed3f2ef44dd2'];
+        var sourceTwoLink = Game.structures['599df0220ae5c644363d94e3'];
+        this.registerLinks(controllerLink,storageLink,sourceOneLink,sourceTwoLink);
+        this.runLinks(controllerLink,storageLink,sourceOneLink,sourceTwoLink);
         
         
         
         
         //const cost = Game.market.calcTransactionCost(25000, 'W63N36', 'W53N83');
         //console.log(cost);
-        //console.log(Game.market.deal('598d82816c990032745e290c',21000,"W63N36"));
+        //console.log(Game.market.deal('59a02fff109df04ec1cdb380',100000,"W63N36"));
         //console.log(spawn.room.terminal.send(RESOURCE_HYDROGEN,280,'W61N35'));
         
         if(!this.obj.memory.hostileInRoom){
@@ -81,7 +90,7 @@ var roomOne = {
     
         
         var roleArray = [
-            ['logistics',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleLogistics,LOGISTICS],
+            ['logistics',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleLogistics,LOGISTICS],
             ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,WORK,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
             ['remoteHoarder',[CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY],roleRemoteHoarder,REMOTE_HOARDER],
             ['mover',[CARRY,CARRY,MOVE,MOVE,CARRY,CARRY,MOVE,MOVE],roleMover,MOVERS],            
@@ -92,7 +101,7 @@ var roomOne = {
             ['remoteBuilder',[TOUGH,TOUGH,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
             ['reserver',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,CLAIM],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
-            ['upgrader',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
@@ -251,6 +260,25 @@ var roomOne = {
             reserverArray[i].memory.controllerToReserve = roomPos[i];
         }
 	},
+	runLinks: function(controllerLink,storageLink,sourceOneLink,sourceTwoLink){
+	    if(storageLink.energy == storageLink.energyCapacity){
+	        storageLink.transferEnergy(controllerLink);
+	    }
+	    if(sourceOneLink.energy == sourceOneLink.energyCapacity){
+	        sourceOneLink.transferEnergy(controllerLink);
+	    }
+	    if(sourceTwoLink.energy == sourceTwoLink.energyCapacity){
+	        sourceTwoLink.transferEnergy(controllerLink);
+	    }
+	},
+	registerLinks: function(controllerLink,storageLink,sourceOneLink,sourceTwoLink){
+	    this.obj.memory.controllerLinkId = controllerLink.id;
+	    this.obj.memory.storageLinkId = storageLink.id;
+	    this.obj.memory.sourceOneLinkId = sourceOneLink.id;
+	    this.obj.memory.sourceTwoLinkId = sourceTwoLink.id;
+	    
+	},
+
 	
 };
 

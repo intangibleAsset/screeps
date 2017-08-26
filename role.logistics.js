@@ -7,12 +7,25 @@ var roleLogistics = {
         
         
         if(this.toMuchEnergyInTerminal(50200)){
-            this.moveFromTerminalToStorage();
+            this.moveFromTerminalToStorage(RESOURCE_ENERGY);
         }else{
-            switch(this.creep.memory.task){
-                case 'DEFAULT':
-                    this.fillTowers();
-                    break;
+            try{
+            var thisRoom = Game.rooms[this.creep.memory.roomName];
+            var linkId = thisRoom.memory.storageLinkId;
+            var storageLink = Game.structures[linkId];
+            } catch (err){
+                console.log('error in logistics creep, maybe no links' + err);
+            }
+            if(storageLink){
+                if(this.transferring()){
+                    if(this.creep.transfer(storageLink, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
+                        this.creep.moveTo(storageLink);
+                    }
+                }else{
+                   if(this.creep.withdraw(this.creep.room.storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
+                       this.creep.moveTo(this.creep.room.storage);
+                   } 
+                }
             }
         }
         
@@ -53,7 +66,6 @@ var roleLogistics = {
     },
     moveFromTerminalToStorage: function(resource){
         if(this.transferring()){
-            
             if(this.creep.transfer(this.creep.room.storage, resource)===ERR_NOT_IN_RANGE){
                 this.creep.moveTo(this.creep.room.storage);
             }
