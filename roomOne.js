@@ -16,7 +16,7 @@ var roleMover = require('role.mover');
 var roleDismantler = require('role.dismantler');
 var roleRemoteHoarder = require('role.remoteHoarder');
 var roleRemoteTrucker = require('role.remoteTrucker');
-var roleLogistics = require('role.logistics')
+var roleLogistics = require('role.logistics');
 
 var roomOne = {
 
@@ -56,7 +56,7 @@ var roomOne = {
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 3;
+            var UPGRADERS = 4;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -72,7 +72,7 @@ var roomOne = {
             var MOVERS = 0;
             var REMOTE_HOARDER = 3;
             var REMOTE_TRUCKERS = 3;
-            var LOGISTICS = 1;
+            var LOGISTICS = 2;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -101,7 +101,7 @@ var roomOne = {
             ['remoteBuilder',[TOUGH,TOUGH,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
             ['reserver',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,CLAIM],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
-            ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],

@@ -16,6 +16,7 @@ var roleMover = require('role.mover');
 var roleDismantler = require('role.dismantler');
 var roleRemoteHoarder = require('role.remoteHoarder');
 var roleRemoteTrucker = require('role.remoteTrucker');
+var roleLogistics = require('role.logistics');
 
 var roomThree = {
 
@@ -34,10 +35,10 @@ var roomThree = {
         ];
         this.miningOp(remSources);
         
-        //const cost = Game.market.calcTransactionCost(15000, 'W68N35', 'W60N70');
+        //const cost = Game.market.calcTransactionCost(20000, 'W68N35', 'W50S10');
         //console.log(cost);
-        //console.log(Game.market.deal('5995dc0632f0fc1a9054c3ff',27000,"W68N35"));
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,13000,'W63N36'));
+        //console.log(Game.market.deal('59a2e327ea77be271a8dbbc7',20000,"W68N35"));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,40000,'W63N36'));
 
                 
         
@@ -53,11 +54,12 @@ var roomThree = {
             var MEDICS = 0;
             var RESERVERS = 0;
             var MOVERS = 0;
-            var MINERAL_MINERS = 1;
+            var MINERAL_MINERS = 0;
             var REMOTE_BUILDERS = 0;
             var REMOTE_HOARDER = 2;
             var REMOTE_TRUCKERS = 2;
             var GUARD_DOGS = 1;
+            var LOGISTICS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -75,6 +77,7 @@ var roomThree = {
     
         
         var roleArray = [
+            ['logistics',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleLogistics,LOGISTICS],
             ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
             ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
             ['remoteHoarder',[CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY],roleRemoteHoarder,REMOTE_HOARDER],

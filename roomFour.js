@@ -16,6 +16,7 @@ var roleMover = require('role.mover');
 var roleDismantler = require('role.dismantler');
 var roleRemoteHoarder = require('role.remoteHoarder');
 var roleRemoteTrucker = require('role.remoteTrucker');
+var roleLogistics = require('role.logistics');
 
 var roomFour = {
 
@@ -40,13 +41,13 @@ var roomFour = {
         //const cost = Game.market.calcTransactionCost(25000, 'W68N37', 'W53N83');
         //console.log(cost);
         //console.log(Game.market.deal('594cbbf34a22922b5d5bf5cc',25000,"W68N37"));
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,20000,'W63N36'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,43000,'W63N36'));
         
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 3;
-            var BUILDERS = 0;
+            var BUILDERS = 1;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 2;
@@ -62,6 +63,7 @@ var roomFour = {
             var DISMANTLERS = 0;
             var REMOTE_HOARDER = 2;
             var REMOTE_TRUCKERS = 2;
+            var LOGISTICS = 0;
         }else{
             var HARVESTERS = 2;
             var UPGRADERS = 0;
@@ -78,6 +80,7 @@ var roomFour = {
     
         
         var roleArray = [
+            ['logistics',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleLogistics,LOGISTICS],
             ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
             ['remoteHoarder',[CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY],roleRemoteHoarder,REMOTE_HOARDER],
             ['dismantler',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleDismantler,DISMANTLERS],

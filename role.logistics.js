@@ -6,28 +6,43 @@ var roleLogistics = {
         this.init(creep);
         
         
-        if(this.toMuchEnergyInTerminal(50200)){
-            this.moveFromTerminalToStorage(RESOURCE_ENERGY);
-        }else{
-            try{
-            var thisRoom = Game.rooms[this.creep.memory.roomName];
-            var linkId = thisRoom.memory.storageLinkId;
-            var storageLink = Game.structures[linkId];
-            } catch (err){
-                console.log('error in logistics creep, maybe no links' + err);
-            }
-            if(storageLink){
-                if(this.transferring()){
-                    if(this.creep.transfer(storageLink, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
-                        this.creep.moveTo(storageLink);
+
+            switch(this.creep.memory.task){
+                case 'fillLink': 
+                    try{
+                    var thisRoom = Game.rooms[this.creep.memory.roomName];
+                    var linkId = thisRoom.memory.storageLinkId;
+                    var storageLink = Game.structures[linkId];
+                    } catch (err){
+                        console.log('error in logistics creep, maybe no links' + err);
                     }
-                }else{
-                   if(this.creep.withdraw(this.creep.room.storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
-                       this.creep.moveTo(this.creep.room.storage);
-                   } 
-                }
+                    if(storageLink){
+                        if(this.transferring()){
+                            if(this.creep.transfer(storageLink, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
+                                this.creep.moveTo(storageLink);
+                            }
+                        }else{
+                           if(this.creep.withdraw(this.creep.room.storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
+                               this.creep.moveTo(this.creep.room.storage);
+                           } 
+                        }
+                    }                  
+                    break;
+                    
+                case 'moveToTerminal':
+                    if(_.sum(this.creep.room.terminal.store) <= 290000){
+                        this.moveFromStorageToTerminal(this.creep.memory.resourceToMove);
+                    }
+                    break;
+                
+                case 'moveToStorage':
+                    if(_.sum(this.creep.room.storage) <= 990000 ){
+                        this.moveFromTerminalToStorage(this.creep.memory.resourceToMove);
+                    }
+                    break;
+                    
             }
-        }
+
         
         
         
@@ -36,7 +51,10 @@ var roleLogistics = {
     init: function(creep){
         this.creep = creep;
         if(!this.creep.memory.task){
-            this.creep.memory.task = 'DEFAULT';
+            this.creep.memory.task = 'fillLink';
+        }
+        if(!this.creep.memory.resourceToMove){
+            this.creep.memory.resourceToMove = RESOURCE_ENERGY;
         }
 
     },

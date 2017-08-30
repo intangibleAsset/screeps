@@ -16,6 +16,7 @@ var roleMover = require('role.mover');
 var roleDismantler = require('role.dismantler');
 var roleRemoteHoarder = require('role.remoteHoarder');
 var roleRemoteTrucker = require('role.remoteTrucker');
+var roleLogistics = require('role.logistics');
 
 var roomTwo = {
 
@@ -47,7 +48,7 @@ var roomTwo = {
         //console.log(cost);
         //console.log(Game.market.deal('599b3843a0ee4f13b23be664',21350,"W61N35"));
 
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,25000,'W63N36'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,43000,'W63N36'));
 
         
  
@@ -70,6 +71,7 @@ var roomTwo = {
             var REMOTE_HOARDER = 4;
             var REMOTE_TRUCKERS = 4;
             var GUARD_DOGS = 1;
+            var LOGISTICS = 1;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -87,6 +89,7 @@ var roomTwo = {
     
         
         var roleArray = [
+            ['logistics',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleLogistics,LOGISTICS],
             ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
             ['remoteBuilder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
             ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,WORK,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
@@ -96,7 +99,7 @@ var roomTwo = {
             ['harvester',[WORK,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['reserver',[CLAIM,MOVE,CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
-            ['upgrader',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
