@@ -41,7 +41,7 @@ var roomFour = {
         //const cost = Game.market.calcTransactionCost(25000, 'W68N37', 'W53N83');
         //console.log(cost);
         //console.log(Game.market.deal('594cbbf34a22922b5d5bf5cc',25000,"W68N37"));
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,43000,'W63N36'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,40000,'W61N35'));
         
         
         if(!this.obj.memory.hostileInRoom){

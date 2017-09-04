@@ -48,15 +48,23 @@ var roomTwo = {
         //console.log(cost);
         //console.log(Game.market.deal('599b3843a0ee4f13b23be664',21350,"W61N35"));
 
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,43000,'W63N36'));
-
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,30000,'W63N36'));
+        
+        //link code///////////////////////////////////////
+        var controllerLink = Game.structures['59a9c4a08e7b310817547bee'];
+        var storageLink = Game.structures['59a9b02d1670201cffde1c82'];
+        var sourceOneLink = undefined;
+        var sourceTwoLink = undefined;
+        this.registerLinks(controllerLink,storageLink,sourceOneLink,sourceTwoLink);
+        this.runLinks(controllerLink,storageLink,sourceOneLink,sourceTwoLink);
+        
         
  
  
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 3;
-            var BUILDERS = 0;
+            var BUILDERS = 1;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 2;
@@ -99,8 +107,8 @@ var roomTwo = {
             ['harvester',[WORK,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['reserver',[CLAIM,MOVE,CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
-            ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
-            ['builder',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
+            ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['builder',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
@@ -110,11 +118,12 @@ var roomTwo = {
         ];
         
         this.autoSpawn(roleArray);
-        //this.spawnMessage();
-    
+        
+        
+        
         //********************run labs***************************************************************
-        var labs = spawn.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
-        labs[0].runReaction(labs[1],labs[2]);
+        //var labs = spawn.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
+        //labs[0].runReaction(labs[1],labs[2]);
         //console.log(labs[0].mineralType) // -> OH
         //console.log(labs[1].mineralType) // -> O
         //console.log(labs[2].mineralType) // -> H
@@ -283,7 +292,37 @@ var roomTwo = {
             reserverArray[i].memory.controllerToReserve = roomPos[i];
         }
 	},
-
+	runLinks: function(controllerLink,storageLink,sourceOneLink,sourceTwoLink){
+	    if(storageLink){
+    	    if(storageLink.energy == storageLink.energyCapacity){
+    	        storageLink.transferEnergy(controllerLink);
+    	    }
+	    }
+	    if(sourceOneLink){
+    	    if(sourceOneLink.energy == sourceOneLink.energyCapacity){
+    	        sourceOneLink.transferEnergy(controllerLink);
+    	    }
+	    }
+	    if(sourceTwoLink){
+    	    if(sourceTwoLink.energy == sourceTwoLink.energyCapacity){
+    	        sourceTwoLink.transferEnergy(controllerLink);
+    	    }
+	    }
+	},
+	registerLinks: function(controllerLink,storageLink,sourceOneLink,sourceTwoLink){
+	    if(controllerLink){
+	        this.obj.memory.controllerLinkId = controllerLink.id;
+	    }
+	    if(storageLink){
+	        this.obj.memory.storageLinkId = storageLink.id;
+	    }
+	    if(sourceOneLink){
+	        this.obj.memory.sourceOneLinkId = sourceOneLink.id;
+	    }
+	    if(sourceTwoLink){
+	        this.obj.memory.sourceTwoLinkId = sourceTwoLink.id;
+	    }
+	},
 };
 
 module.exports = roomTwo;

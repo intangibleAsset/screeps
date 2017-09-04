@@ -40,6 +40,12 @@ var roleLogistics = {
                         this.moveFromTerminalToStorage(this.creep.memory.resourceToMove);
                     }
                     break;
+                case 'fillNukeWithGhodium':
+                    this.fillNukeWithGhodium();
+                    break;
+                case 'fillNukeWithEnergy':
+                    this.fillNukeWithEnergy();
+                    break;
                     
             }
 
@@ -123,6 +129,56 @@ var roleLogistics = {
             }
         }else{
             console.log('no storage or storage empty in : ' + this.creep.memory.roomName);
+        }
+    },
+    fillNukeWithGhodium: function(){
+        if(this.creep.carry){
+            for(let resource in this.creep.carry){
+                if(resource === RESOURCE_ENERGY){
+                    this.creep.drop(RESOURCE_ENERGY);
+                }
+            }
+        }
+        let nuker = this.creep.room.find(FIND_STRUCTURES,
+            {
+                filter: function(structure){
+                    return structure.structureType === STRUCTURE_NUKER;
+                }
+            }
+        );
+        
+        if(this.transferring()){
+            if(this.creep.transfer(nuker[0], RESOURCE_GHODIUM)===ERR_NOT_IN_RANGE){
+                this.creep.moveTo(nuker[0]);
+            }
+            
+        }else{
+            if(this.creep.withdraw(this.creep.room.terminal, RESOURCE_GHODIUM) === ERR_NOT_IN_RANGE){
+                this.creep.moveTo(this.creep.room.terminal);
+            }
+        }
+        
+    },
+    fillNukeWithEnergy: function(){
+        let nuker = this.creep.room.find(FIND_STRUCTURES,
+            {
+                filter: function(structure){
+                    return structure.structureType === STRUCTURE_NUKER;
+                }
+            }
+        );
+        if(this.transferring()){
+            
+            if(this.creep.transfer(nuker[0], RESOURCE_ENERGY)===ERR_NOT_IN_RANGE){
+                this.creep.moveTo(nuker[0]);
+            }
+            
+        }else{
+            
+            if(this.creep.withdraw(this.creep.room.storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
+                this.creep.moveTo(this.creep.room.storage);
+            }
+            
         }
     },
     

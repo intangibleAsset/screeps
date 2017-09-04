@@ -24,11 +24,11 @@ var roomOne = {
     run: function(spawn,roomObj) {
         
 
-        
         this.init(roomObj);
         this.hud();
         this.runTowers();
         this.triggerSafeMode();
+
         
         //mining code/////////////////////////////////////
         var remSources = [
@@ -45,24 +45,28 @@ var roomOne = {
         var sourceTwoLink = Game.structures['599df0220ae5c644363d94e3'];
         this.registerLinks(controllerLink,storageLink,sourceOneLink,sourceTwoLink);
         this.runLinks(controllerLink,storageLink,sourceOneLink,sourceTwoLink);
+        this.registerLabs('59aba193db14456acb9da69d','59ab047c76a0221339962e69');
+        this.runLabs(this.firstLabId,this.secondLabId); 
+        this.mineralsToCombine();
+        
         
         
         
         
         //const cost = Game.market.calcTransactionCost(25000, 'W63N36', 'W53N83');
         //console.log(cost);
-        //console.log(Game.market.deal('59a02fff109df04ec1cdb380',100000,"W63N36"));
-        //console.log(spawn.room.terminal.send(RESOURCE_HYDROGEN,280,'W61N35'));
+        //console.log(Game.market.deal('599c1d77b011204d8809f23a',2500,"W63N36"));
+        //console.log(spawn.room.terminal.send(RESOURCE_HYDROGEN,12280,'W63N36'));
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 4;
+            var UPGRADERS = 1;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 3;
             var TANKS = 0;
-            var WALLREPPERS = 1;
+            var WALLREPPERS = 2;
             var MEDICS = 0;
             var RESERVERS = 0;
             var REMOTE_BUILDERS = 0;
@@ -72,7 +76,7 @@ var roomOne = {
             var MOVERS = 0;
             var REMOTE_HOARDER = 3;
             var REMOTE_TRUCKERS = 3;
-            var LOGISTICS = 2;
+            var LOGISTICS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -101,9 +105,9 @@ var roomOne = {
             ['remoteBuilder',[TOUGH,TOUGH,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
             ['reserver',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,CLAIM],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
-            ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
-            ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
-            ['wallrepper',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
+            ['upgrader',[WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['builder',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
+            ['wallrepper',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
             ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
             ['mineralMiner',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleMineralMiner,MINERAL_MINERS]
@@ -115,8 +119,8 @@ var roomOne = {
     
         
         //********************run labs***************************************************************
-        var labs = spawn.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
-        labs[0].runReaction(labs[1],labs[2]);
+        //var labs = spawn.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
+        //labs[0].runReaction(labs[1],labs[2]);
         //console.log(labs[0].mineralType) // -> OH
         //console.log(labs[1].mineralType) // -> O
         //console.log(labs[2].mineralType) // -> H
@@ -278,6 +282,27 @@ var roomOne = {
 	    this.obj.memory.sourceTwoLinkId = sourceTwoLink.id;
 	    
 	},
+	registerLabs: function(firstLabId, secondLabId){
+	    this.firstLabId = firstLabId;
+	    this.secondLabId = secondLabId;
+	},
+	runLabs: function(firstLabId, secondLabId){
+	    let labs = this.obj.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
+        let index1 = labs.indexOf(Game.getObjectById(firstLabId));
+        let index2 = labs.indexOf(Game.getObjectById(secondLabId));
+        if(index1 > -1){
+            labs.splice(index1,1);
+        }
+        if(index2 > -1){
+            labs.splice(index2,1);
+        }
+        for(let i of labs){
+            i.runReaction(Game.getObjectById(firstLabId),Game.getObjectById(secondLabId));
+        }
+	},
+	mineralsToCombine: function(mineralOne,mineralTwo){
+	    
+	}
 
 	
 };

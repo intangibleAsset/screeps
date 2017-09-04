@@ -29,7 +29,7 @@ module.exports.loop = function () {
                 'New: ' + spawningCreep.memory.role,
                 Game.spawns[i].pos.x + 1, 
                 Game.spawns[i].pos.y, 
-                {align: 'left', opacity: 0.8, font: 0.5});
+                {align: 'left', opacity: 1, font: 0.5});
         }
     }
     

@@ -15,10 +15,14 @@ var roleDismantler = {
         }
         
         if(creep.memory.transferring){
-            
+            creep.drop(RESOURCE_ENERGY);
         }else{
-            var dismantleTarget = creep.pos.findClosestByPath(FIND_STRUCTURES);
-        }
+            
+                creep.moveTo(Game.flags['Marshland']);
+                var dismantleTarget = creep.pos.findClosestByPath(FIND_STRUCTURES);
+                creep.dismantle(dismantleTarget);
+            }
+                
     }
 
 };

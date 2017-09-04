@@ -38,7 +38,7 @@ var roomThree = {
         //const cost = Game.market.calcTransactionCost(20000, 'W68N35', 'W50S10');
         //console.log(cost);
         //console.log(Game.market.deal('59a2e327ea77be271a8dbbc7',20000,"W68N35"));
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,40000,'W63N36'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,30000,'W63N36'));
 
                 
         
@@ -59,7 +59,7 @@ var roomThree = {
             var REMOTE_HOARDER = 2;
             var REMOTE_TRUCKERS = 2;
             var GUARD_DOGS = 1;
-            var LOGISTICS = 0;
+            var LOGISTICS = 1;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
