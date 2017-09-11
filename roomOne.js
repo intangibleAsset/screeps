@@ -17,6 +17,7 @@ var roleDismantler = require('role.dismantler');
 var roleRemoteHoarder = require('role.remoteHoarder');
 var roleRemoteTrucker = require('role.remoteTrucker');
 var roleLogistics = require('role.logistics');
+var roleLabAssistant = require('role.labAssistant');
 
 var roomOne = {
 
@@ -45,18 +46,19 @@ var roomOne = {
         var sourceTwoLink = Game.structures['599df0220ae5c644363d94e3'];
         this.registerLinks(controllerLink,storageLink,sourceOneLink,sourceTwoLink);
         this.runLinks(controllerLink,storageLink,sourceOneLink,sourceTwoLink);
+        //Lab code////////////////////////////////////////
         this.registerLabs('59aba193db14456acb9da69d','59ab047c76a0221339962e69');
         this.runLabs(this.firstLabId,this.secondLabId); 
-        this.mineralsToCombine();
+        this.mineralsToCombine(RESOURCE_ZYNTHIUM_KEANITE,RESOURCE_UTRIUM_LEMERGITE,false);
         
         
         
         
         
-        //const cost = Game.market.calcTransactionCost(25000, 'W63N36', 'W53N83');
+        //const cost = Game.market.calcTransactionCost(14400, 'W63N36', 'W25N91');
         //console.log(cost);
-        //console.log(Game.market.deal('599c1d77b011204d8809f23a',2500,"W63N36"));
-        //console.log(spawn.room.terminal.send(RESOURCE_HYDROGEN,12280,'W63N36'));
+        //console.log(Game.market.deal('594d24328434c82039a02f3b',14400,"W63N36"));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,110000,'W68N35'));
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
@@ -71,12 +73,13 @@ var roomOne = {
             var RESERVERS = 0;
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
-            var MINERAL_MINERS = 0;
+            var MINERAL_MINERS = 1;
             var GUARD_DOGS = 1;
             var MOVERS = 0;
             var REMOTE_HOARDER = 3;
             var REMOTE_TRUCKERS = 3;
             var LOGISTICS = 0;
+            var LAB_ASSISTANTS = 1;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -94,6 +97,7 @@ var roomOne = {
     
         
         var roleArray = [
+            ['labAssistant',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleLabAssistant,LAB_ASSISTANTS],
             ['logistics',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleLogistics,LOGISTICS],
             ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,WORK,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
             ['remoteHoarder',[CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY],roleRemoteHoarder,REMOTE_HOARDER],
@@ -265,31 +269,44 @@ var roomOne = {
         }
 	},
 	runLinks: function(controllerLink,storageLink,sourceOneLink,sourceTwoLink){
-	    if(storageLink.energy == storageLink.energyCapacity){
-	        storageLink.transferEnergy(controllerLink);
+	    if(storageLink){
+    	    if(storageLink.energy == storageLink.energyCapacity){
+    	        storageLink.transferEnergy(controllerLink);
+    	    }
 	    }
-	    if(sourceOneLink.energy == sourceOneLink.energyCapacity){
-	        sourceOneLink.transferEnergy(controllerLink);
+	    if(sourceOneLink){
+    	    if(sourceOneLink.energy == sourceOneLink.energyCapacity){
+    	        sourceOneLink.transferEnergy(controllerLink);
+    	    }
 	    }
-	    if(sourceTwoLink.energy == sourceTwoLink.energyCapacity){
-	        sourceTwoLink.transferEnergy(controllerLink);
+	    if(sourceTwoLink){
+    	    if(sourceTwoLink.energy == sourceTwoLink.energyCapacity){
+    	        sourceTwoLink.transferEnergy(controllerLink);
+    	    }
 	    }
 	},
 	registerLinks: function(controllerLink,storageLink,sourceOneLink,sourceTwoLink){
-	    this.obj.memory.controllerLinkId = controllerLink.id;
-	    this.obj.memory.storageLinkId = storageLink.id;
-	    this.obj.memory.sourceOneLinkId = sourceOneLink.id;
-	    this.obj.memory.sourceTwoLinkId = sourceTwoLink.id;
-	    
+	    if(controllerLink){
+	        this.obj.memory.controllerLinkId = controllerLink.id;
+	    }
+	    if(storageLink){
+	        this.obj.memory.storageLinkId = storageLink.id;
+	    }
+	    if(sourceOneLink){
+	        this.obj.memory.sourceOneLinkId = sourceOneLink.id;
+	    }
+	    if(sourceTwoLink){
+	        this.obj.memory.sourceTwoLinkId = sourceTwoLink.id;
+	    }
 	},
 	registerLabs: function(firstLabId, secondLabId){
-	    this.firstLabId = firstLabId;
-	    this.secondLabId = secondLabId;
+	    this.obj.memory.firstLabId = firstLabId;
+	    this.obj.memory.secondLabId = secondLabId;
 	},
 	runLabs: function(firstLabId, secondLabId){
 	    let labs = this.obj.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
-        let index1 = labs.indexOf(Game.getObjectById(firstLabId));
-        let index2 = labs.indexOf(Game.getObjectById(secondLabId));
+        let index1 = labs.indexOf(Game.getObjectById(this.obj.memory.firstLabId));
+        let index2 = labs.indexOf(Game.getObjectById(this.obj.memory.secondLabId));
         if(index1 > -1){
             labs.splice(index1,1);
         }
@@ -297,14 +314,20 @@ var roomOne = {
             labs.splice(index2,1);
         }
         for(let i of labs){
-            i.runReaction(Game.getObjectById(firstLabId),Game.getObjectById(secondLabId));
+            i.runReaction(Game.getObjectById(this.obj.memory.firstLabId),Game.getObjectById(this.obj.memory.secondLabId));
         }
 	},
-	mineralsToCombine: function(mineralOne,mineralTwo){
-	    
-	}
+    mineralsToCombine: function(mineralOne,mineralTwo,reset){
+    	for(let i in Game.creeps){
+    		let creep = Game.creeps[i];
+    		if(creep.memory.role === 'labAssistant' && creep.memory.roomName === this.obj.name){
+    			creep.memory.mineralOne = mineralOne;
+    			creep.memory.mineralTwo = mineralTwo;
+    			creep.memory.reset = reset;
+    		}
+    	}
+    },
 
-	
 };
 
 module.exports = roomOne;

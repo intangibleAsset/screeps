@@ -5,7 +5,7 @@ var roleLogistics = {
         
         this.init(creep);
         
-        
+        //this.creep.drop(RESOURCE_GHODIUM);
 
             switch(this.creep.memory.task){
                 case 'fillLink': 

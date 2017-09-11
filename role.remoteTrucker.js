@@ -70,9 +70,12 @@ var roleRemoteTrucker = {
     transferEnergy: function(){
         var target = this.creep.pos.findClosestByPath(FIND_STRUCTURES, {
             filter: (structure) => {
-                return (structure.structureType == STRUCTURE_EXTENSION ||
-                    structure.structureType == STRUCTURE_SPAWN ||
-                        structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
+                return (structure.structureType === STRUCTURE_EXTENSION ||
+                    structure.structureType === STRUCTURE_SPAWN ||
+                        structure.structureType === STRUCTURE_TOWER ||
+                        structure.structureType === STRUCTURE_LAB ||
+                        structure.structureType === STRUCTURE_POWER_SPAWN ||
+                        structure.structureType === STRUCTURE_NUKER) && structure.energy < structure.energyCapacity;
                 }});
         	       
         if(target) {

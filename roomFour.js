@@ -41,13 +41,13 @@ var roomFour = {
         //const cost = Game.market.calcTransactionCost(25000, 'W68N37', 'W53N83');
         //console.log(cost);
         //console.log(Game.market.deal('594cbbf34a22922b5d5bf5cc',25000,"W68N37"));
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,40000,'W61N35'));
+        //console.log(spawn.room.terminal.send(RESOURCE_KEANIUM,3750,'W63N36'));
         
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 3;
-            var BUILDERS = 1;
+            var BUILDERS = 2;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 2;
@@ -57,7 +57,7 @@ var roomFour = {
             var RESERVERS = 0;
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
-            var MINERAL_MINERS = 0;
+            var MINERAL_MINERS = 1;
             var GUARD_DOGS = 1;
             var MOVERS = 0;
             var DISMANTLERS = 0;
@@ -97,7 +97,7 @@ var roomFour = {
             ['wallrepper',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
             ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
-            ['mineralMiner',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleMineralMiner,MINERAL_MINERS]
+            ['mineralMiner',[WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE],roleMineralMiner,MINERAL_MINERS]
             
         ];
         

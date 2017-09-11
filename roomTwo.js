@@ -47,8 +47,7 @@ var roomTwo = {
         //const cost = Game.market.calcTransactionCost(30000, 'W61N35', 'W50N70');
         //console.log(cost);
         //console.log(Game.market.deal('599b3843a0ee4f13b23be664',21350,"W61N35"));
-
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,30000,'W63N36'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,120000,'W68N35'));
         
         //link code///////////////////////////////////////
         var controllerLink = Game.structures['59a9c4a08e7b310817547bee'];
@@ -63,7 +62,7 @@ var roomTwo = {
  
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 3;
+            var UPGRADERS = 1;
             var BUILDERS = 1;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -71,7 +70,7 @@ var roomTwo = {
             var TANKS = 0;
             var WALLREPPERS = 1;
             var MEDICS = 0;
-            var MINERAL_MINERS = 0;
+            var MINERAL_MINERS = 1;
             var RESERVERS = 2;
             var DISMANTLERS = 0;
             var MOVERS = 0;
