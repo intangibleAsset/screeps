@@ -49,7 +49,7 @@ var roomOne = {
         //Lab code////////////////////////////////////////
         this.registerLabs('59aba193db14456acb9da69d','59ab047c76a0221339962e69');
         this.runLabs(this.firstLabId,this.secondLabId); 
-        this.mineralsToCombine(RESOURCE_ZYNTHIUM_KEANITE,RESOURCE_UTRIUM_LEMERGITE,false);
+        this.mineralsToCombine(RESOURCE_ZYNTHIUM_KEANITE,RESOURCE_UTRIUM_LEMERGITE,true);
         
         
         
@@ -57,8 +57,8 @@ var roomOne = {
         
         //const cost = Game.market.calcTransactionCost(14400, 'W63N36', 'W25N91');
         //console.log(cost);
-        //console.log(Game.market.deal('594d24328434c82039a02f3b',14400,"W63N36"));
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,110000,'W68N35'));
+        //console.log(Game.market.deal('59ba6f4d8504cd5e19f21195',21000,"W63N36"));
+        //console.log(spawn.room.terminal.send(RESOURCE_CATALYZED_GHODIUM_ACID,15000,'W68N35'));
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
@@ -73,13 +73,13 @@ var roomOne = {
             var RESERVERS = 0;
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
-            var MINERAL_MINERS = 1;
+            var MINERAL_MINERS = 0;
             var GUARD_DOGS = 1;
             var MOVERS = 0;
             var REMOTE_HOARDER = 3;
             var REMOTE_TRUCKERS = 3;
             var LOGISTICS = 0;
-            var LAB_ASSISTANTS = 1;
+            var LAB_ASSISTANTS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;

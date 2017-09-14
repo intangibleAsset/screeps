@@ -4,21 +4,30 @@ var roleUpgrader = {
     run: function(creep) {
         
         this.init(creep);
+        
 
-		if(creep.memory.upgrading && creep.carry.energy == 0) {
-		    creep.memory.upgrading = false;
-		    creep.say('harvest');
+		if(this.creep.memory.upgrading && this.creep.carry.energy == 0) {
+		    this.creep.memory.upgrading = false;
+		    this.creep.say('harvest');
 		    }
 		    
-		    if(!creep.memory.upgrading && creep.carry.energy == creep.carryCapacity) {
-			creep.memory.upgrading = true;
-			creep.say('upgrade');
+		    if(!this.creep.memory.upgrading && this.creep.carry.energy == this.creep.carryCapacity) {
+			this.creep.memory.upgrading = true;
+			this.creep.say('upgrade');
 		    }
 
-		    if(creep.memory.upgrading) {
-    			if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-    			creep.moveTo(creep.room.controller,{visualizePathStyle: {stroke: '#ffaa00'}});
-    		    }
+		    if(this.creep.memory.upgrading) {
+		          if(!this.isBoosted()&&this.boostingLab()){
+                    let lab = this.boostingLab();
+                    if(lab.boostCreep(this.creep)===ERR_NOT_IN_RANGE){
+                        this.creep.moveTo(lab);
+                    }
+                }else{
+        			if(this.creep.upgradeController(this.creep.room.controller) == ERR_NOT_IN_RANGE) {
+        			    this.creep.moveTo(this.creep.room.controller,{visualizePathStyle: {stroke: '#ffaa00'}});
+        		    }                    
+                }
+
     		}else {
     		    try{
             	    var thisRoom = Game.rooms[this.creep.memory.roomName];
@@ -35,14 +44,14 @@ var roleUpgrader = {
     		        }
     		        
     		    }
-                else if(creep.room.storage && creep.room.storage.store[RESOURCE_ENERGY] !== 0){
-                    if(creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(creep.room.storage.pos);
+                else if(this.creep.room.storage && this.creep.room.storage.store[RESOURCE_ENERGY] !== 0){
+                    if(this.creep.withdraw(this.creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        this.creep.moveTo(this.creep.room.storage.pos);
                     }
     	        }else{
-    	            var sources = creep.room.find(FIND_SOURCES);
-                    if(creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(sources[1], {visualizePathStyle: {stroke: '#ffaa00'}});
+    	            var sources = this.creep.room.find(FIND_SOURCES);
+                    if(this.creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
+                        this.creep.moveTo(sources[1], {visualizePathStyle: {stroke: '#ffaa00'}});
                     }
                 }
     		        
@@ -50,7 +59,35 @@ var roleUpgrader = {
     },
     init: function(creep){
         this.creep = creep;
-    }
+    },
+    isBoosted: function(){
+        var body = this.creep.body;
+        var boosted = false;
+        for(let i of body){
+            if(i.boost){
+                boosted = true;
+            }
+        }
+        return boosted;
+    },
+    boostingLab: function(){
+        let workParts = _.filter(this.creep.body,function(part){
+            return part.type === WORK;
+        });
+        
+        let amountOfWorkParts = workParts.length;
+        let energyRequired = amountOfWorkParts * 20;
+        let mineralsRequired = amountOfWorkParts * 30;
+        
+        let labs = this.creep.room.find(FIND_STRUCTURES,
+            {filter: (structure) => {
+                return (structure.structureType === STRUCTURE_LAB)&&(structure.energy >= energyRequired)&&
+                (structure.mineralType === RESOURCE_CATALYZED_GHODIUM_ACID)&&(structure.mineralAmount >= mineralsRequired);
+            }}
+        );
+        return labs[0];
+    },
+
 };
 
 module.exports = roleUpgrader;

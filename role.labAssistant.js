@@ -101,7 +101,6 @@ var roleLabAssistant = {
 	    if(mineral in this.creep.room.terminal.store){
 	        return true;
 	    }else{
-	        this.creep.memory.reset;
 	        return false;
 	    }
 	},

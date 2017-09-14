@@ -41,13 +41,13 @@ var roomFour = {
         //const cost = Game.market.calcTransactionCost(25000, 'W68N37', 'W53N83');
         //console.log(cost);
         //console.log(Game.market.deal('594cbbf34a22922b5d5bf5cc',25000,"W68N37"));
-        //console.log(spawn.room.terminal.send(RESOURCE_KEANIUM,3750,'W63N36'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ZYNTHIUM,20000,'W63N36'));
         
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
             var UPGRADERS = 3;
-            var BUILDERS = 2;
+            var BUILDERS = 1;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 2;
@@ -57,7 +57,7 @@ var roomFour = {
             var RESERVERS = 0;
             var REMOTE_BUILDERS = 0;
             var REMOTE_TANKS = 0;
-            var MINERAL_MINERS = 1;
+            var MINERAL_MINERS = 0;
             var GUARD_DOGS = 1;
             var MOVERS = 0;
             var DISMANTLERS = 0;
