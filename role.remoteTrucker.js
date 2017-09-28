@@ -85,17 +85,34 @@ var roleRemoteTrucker = {
             }else{
                 if(this.creep.room.terminal){
                     if(this.creep.room.terminal.store[RESOURCE_ENERGY] > 50000){
-                        if(this.creep.transfer(this.creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                            this.creep.moveTo(this.creep.room.storage.pos,{visualizePathStyle: {stroke: '#ffffff'}});
-                        }                    
+                        if(this.creep.room.storage){
+                            if(this.creep.transfer(this.creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                                this.creep.moveTo(this.creep.room.storage.pos,{visualizePathStyle: {stroke: '#ffffff'}});
+                            }
+                        }
                     }else{
                             if(this.creep.transfer(this.creep.room.terminal, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
                                 this.creep.moveTo(this.creep.room.terminal.pos,{visualizePathStyle: {stroke: '#ffffff'}});
                             }
                     }   
                 }else{
-                    if(this.creep.transfer(this.creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        this.creep.moveTo(this.creep.room.storage.pos,{visualizePathStyle: {stroke: '#ffffff'}});
+                    if(this.creep.room.storage){
+                        if(this.creep.transfer(this.creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                            this.creep.moveTo(this.creep.room.storage.pos,{visualizePathStyle: {stroke: '#ffffff'}});
+                        }
+                    }else{
+                        let container = this.creep.room.find(FIND_STRUCTURES, 
+                            {filter: function(structure){
+                                return (structure.structureType === STRUCTURE_CONTAINER) && structure.store[RESOURCE_ENERGY] < structure.storeCapacity;
+                            }}
+                        );
+                        try{
+                            if(this.creep.transfer(container[0],RESOURCE_ENERGY)===ERR_NOT_IN_RANGE){
+                                this.creep.moveTo(container[0]);
+                            }
+                        }catch(err){
+                            console.log('no where to put energy in '+ this.creep.room.name);
+                        }
                     }
                 }
                   

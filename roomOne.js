@@ -49,7 +49,7 @@ var roomOne = {
         //Lab code////////////////////////////////////////
         this.registerLabs('59aba193db14456acb9da69d','59ab047c76a0221339962e69');
         this.runLabs(this.firstLabId,this.secondLabId); 
-        this.mineralsToCombine(RESOURCE_ZYNTHIUM_KEANITE,RESOURCE_UTRIUM_LEMERGITE,true);
+        this.mineralsToCombine(RESOURCE_GHODIUM_HYDRIDE,RESOURCE_HYDROXIDE);
         
         
         
@@ -57,8 +57,8 @@ var roomOne = {
         
         //const cost = Game.market.calcTransactionCost(14400, 'W63N36', 'W25N91');
         //console.log(cost);
-        //console.log(Game.market.deal('59ba6f4d8504cd5e19f21195',21000,"W63N36"));
-        //console.log(spawn.room.terminal.send(RESOURCE_CATALYZED_GHODIUM_ACID,15000,'W68N35'));
+        //console.log(Game.market.deal('59c2526d9b55ec08a5ba1f3c',30000,"W63N36"));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,43000,'W68N35'));
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
@@ -68,7 +68,7 @@ var roomOne = {
             var HOARDERTWOS = 1;
             var TRUCKERS = 3;
             var TANKS = 0;
-            var WALLREPPERS = 2;
+            var WALLREPPERS = 1;
             var MEDICS = 0;
             var RESERVERS = 0;
             var REMOTE_BUILDERS = 0;
@@ -78,8 +78,8 @@ var roomOne = {
             var MOVERS = 0;
             var REMOTE_HOARDER = 3;
             var REMOTE_TRUCKERS = 3;
-            var LOGISTICS = 0;
-            var LAB_ASSISTANTS = 0;
+            var LOGISTICS = 1;
+            var LAB_ASSISTANTS = 1;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -121,13 +121,6 @@ var roomOne = {
         this.autoSpawn(roleArray);
         //this.spawnMessage();
     
-        
-        //********************run labs***************************************************************
-        //var labs = spawn.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
-        //labs[0].runReaction(labs[1],labs[2]);
-        //console.log(labs[0].mineralType) // -> OH
-        //console.log(labs[1].mineralType) // -> O
-        //console.log(labs[2].mineralType) // -> H
         
         //*******************mover function***********************************************************
         for(let i in Game.creeps){
@@ -317,13 +310,12 @@ var roomOne = {
             i.runReaction(Game.getObjectById(this.obj.memory.firstLabId),Game.getObjectById(this.obj.memory.secondLabId));
         }
 	},
-    mineralsToCombine: function(mineralOne,mineralTwo,reset){
+    mineralsToCombine: function(mineralOne,mineralTwo){
     	for(let i in Game.creeps){
     		let creep = Game.creeps[i];
     		if(creep.memory.role === 'labAssistant' && creep.memory.roomName === this.obj.name){
     			creep.memory.mineralOne = mineralOne;
     			creep.memory.mineralTwo = mineralTwo;
-    			creep.memory.reset = reset;
     		}
     	}
     },

@@ -23,7 +23,11 @@ var roomTwo = {
     /** @param {creep} creep **/
     run: function(spawn,roomObj) {
         
+       
         this.init(roomObj);
+        
+        this.autoTransfer('W68N37');
+        
         this.hud();
         this.runTowers();
         this.triggerSafeMode();
@@ -47,7 +51,7 @@ var roomTwo = {
         //const cost = Game.market.calcTransactionCost(30000, 'W61N35', 'W50N70');
         //console.log(cost);
         //console.log(Game.market.deal('59ba98538d4f1f2df35cce21',20000,"W61N35"));
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,110000,'W68N35'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,180000,'W68N35'));
         
         //link code///////////////////////////////////////
         var controllerLink = Game.structures['59a9c4a08e7b310817547bee'];
@@ -320,6 +324,13 @@ var roomTwo = {
 	    }
 	    if(sourceTwoLink){
 	        this.obj.memory.sourceTwoLinkId = sourceTwoLink.id;
+	    }
+	},
+	autoTransfer: function(transferRoom){
+	    if(this.obj.terminal.store[RESOURCE_ENERGY] > 49999){
+	        if(!this.obj.terminal.send(RESOURCE_ENERGY,40000,transferRoom)){
+	            console.log('insufficient energy in terminal to transfer from ' + this.obj.name + ' to ' + transferRoom)
+	        }
 	    }
 	},
 };

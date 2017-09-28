@@ -17,7 +17,7 @@ var roleUpgrader = {
 		    }
 
 		    if(this.creep.memory.upgrading) {
-		          if(!this.isBoosted()&&this.boostingLab()){
+		        if(!this.isBoosted()&&this.boostingLab()){
                     let lab = this.boostingLab();
                     if(lab.boostCreep(this.creep)===ERR_NOT_IN_RANGE){
                         this.creep.moveTo(lab);
@@ -43,11 +43,17 @@ var roleUpgrader = {
     		            this.creep.moveTo(controllerLink);
     		        }
     		        
-    		    }
-                else if(this.creep.room.storage && this.creep.room.storage.store[RESOURCE_ENERGY] !== 0){
+    		    }else if(this.creep.room.storage && this.creep.room.storage.store[RESOURCE_ENERGY] !== 0){
                     if(this.creep.withdraw(this.creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                         this.creep.moveTo(this.creep.room.storage.pos);
                     }
+                }else if(this.creep.room.storage && this.creep.room.storage.store[RESOURCE_ENERGY] === 0 
+                && this.creep.room.terminal && this.creep.room.terminal.store[RESOURCE_ENERGY] > this.creep.carryCapacity){
+                console.log('arse'+this.creep.room.name);
+                    if(this.creep.withdraw(this.creep.room.terminal, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
+                        this.creep.moveTo(this.creep.room.terminal);
+                    }
+    	            
     	        }else{
     	            var sources = this.creep.room.find(FIND_SOURCES);
                     if(this.creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {

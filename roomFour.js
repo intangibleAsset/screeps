@@ -41,13 +41,13 @@ var roomFour = {
         //const cost = Game.market.calcTransactionCost(25000, 'W68N37', 'W53N83');
         //console.log(cost);
         //console.log(Game.market.deal('594cbbf34a22922b5d5bf5cc',25000,"W68N37"));
-        //console.log(spawn.room.terminal.send(RESOURCE_ZYNTHIUM,20000,'W63N36'));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,49000,'W68N35'));
         
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 3;
-            var BUILDERS = 1;
+            var UPGRADERS = 2;
+            var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
             var TRUCKERS = 2;
@@ -65,7 +65,7 @@ var roomFour = {
             var REMOTE_TRUCKERS = 2;
             var LOGISTICS = 0;
         }else{
-            var HARVESTERS = 2;
+            var HARVESTERS = 1;
             var UPGRADERS = 0;
             var BUILDERS = 0;
             var HOARDERS = 0;
@@ -92,14 +92,16 @@ var roomFour = {
             ['remoteBuilder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
             ['reserver',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,CLAIM],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
-            ['upgrader',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleUpgrader,UPGRADERS],
-            ['builder',[WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
+            ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['builder',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],
             ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
             ['mineralMiner',[WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE],roleMineralMiner,MINERAL_MINERS]
             
         ];
+        
+        this.autoSpawn(roleArray);
         
         //remote mining helper/////////////////////////////////////////////////////////////////////////
 
@@ -120,7 +122,7 @@ var roomFour = {
         }
         
         //*****************************autospawning creeps*******************************************
-        
+        /*
         for(let i = 0; i < roleArray.length; i++){
             let temp = _.filter(Game.creeps, (creep) => creep.memory.role == roleArray[i][0] && creep.memory.spawnName === spawn.name);
             
@@ -129,7 +131,7 @@ var roomFour = {
                 console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ spawn.name);
             }
         }
-        
+        */
         //*******************run this rooms creeps***************************************************
         
         var thisRoomsCreeps = _.filter(Game.creeps,(creep)=> creep.memory.spawnName === spawn.name );
@@ -170,10 +172,23 @@ var roomFour = {
     autoSpawn: function(roleArray){
         
         for(let i = 0; i < roleArray.length; i++){
-            let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && (creep.memory.spawnName === spawnNameArray[0] || creep.memory.roomName === this.obj.name));
+            let temp = _.filter(Game.creeps, (creep) => creep.memory.role === roleArray[i][0] && (creep.memory.spawnName === this.obj.memory.spawnNameArray[0] || creep.memory.roomName === this.obj.name));
+            
+            var chosenSpawn;
+            
+            for(let i = 0; i < this.obj.memory.spawnNameArray.length; i++){
+                let roomSpawn = Game.spawns[this.obj.memory.spawnNameArray[i]];
+                if(!roomSpawn.spawning){
+                    chosenSpawn = roomSpawn;
+                }
+            }
+            
+            if(!chosenSpawn){
+                chosenSpawn = Game.spawns[this.obj.memory.spawnNameArray[0]];
+            }
             
             if(temp.length < roleArray[i][3]){
-                var newName = Game.spawns[spawn.name].createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: spawn.name, roomName: this.obj.name});
+                var newName = chosenSpawn.createCreep(roleArray[i][1], (roleArray[i][0] + ': ' + Math.floor((Math.random() * 9999) + 1)), {role: roleArray[i][0],spawnName: this.obj.memory.spawnNameArray[0], roomName: this.obj.name});
                 console.log('spawning new '+ roleArray[i][0] + ' : ' + newName +' from '+ this.obj.name);
             }
         }
