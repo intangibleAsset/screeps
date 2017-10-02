@@ -11,18 +11,18 @@ var roleLabAssistant = {
 		    && _.sum(this.creep.room.terminal.store) < 250000 && !this.creep.memory.reset){
 		        
             
-			if(!this.transferring()){
+			if(!creep.transferring()){
 			    
 			    if(this.isLabOne(this.labs[step])){
 			        if(this.terminalHasMineral(this.creep.memory.mineralOne)){
-			            this.withdrawFromTerminal(this.creep.memory.mineralOne);
+			            creep.withdrawFromTerminal(this.creep.memory.mineralOne);
 			        }else{
 			            this.nextStep();
 			        }
 		            
 			    }else if(this.isLabTwo(this.labs[step])){
                     if(this.terminalHasMineral(this.creep.memory.mineralTwo)){
-			            this.withdrawFromTerminal(this.creep.memory.mineralTwo);
+			            creep.withdrawFromTerminal(this.creep.memory.mineralTwo);
 			        }else{
 			            this.nextStep();
 			        }			        
@@ -48,7 +48,7 @@ var roleLabAssistant = {
 		}
 		
 		if(this.creep.memory.reset){
-		    if(!this.transferring()){
+		    if(!creep.transferring()){
 		       this.emptyLab(this.labs[step]);
 		    }else{
 		        this.transferToTerminal();
@@ -62,6 +62,7 @@ var roleLabAssistant = {
 		}
 		this.labs = this.creep.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_LAB}});
 	},
+/*	
     transferring: function(){
         if(!this.creep.memory.transferring && _.sum(this.creep.carry) === this.creep.carryCapacity){
             this.creep.memory.transferring = true;
@@ -76,6 +77,7 @@ var roleLabAssistant = {
         
         return this.creep.memory.transferring;
     },
+*/
 	nextStep: function(){
 		if(this.creep.memory.step < this.labs.length -1){
 			this.creep.memory.step++;
@@ -112,11 +114,13 @@ var roleLabAssistant = {
 	        return false;
 	    }
 	},
+/*	
 	withdrawFromTerminal: function(mineral){
 	    if(this.creep.withdraw(this.creep.room.terminal,mineral)===ERR_NOT_IN_RANGE){
 	        this.creep.moveTo(this.creep.room.terminal, {visualizePathStyle: {stroke: '#ffffff'}});
 	    }
 	},
+*/
 	withdrawFromLab: function(lab){
 	    if(this.creep.withdraw(lab,lab.mineralType)===ERR_NOT_IN_RANGE){
 	        this.creep.moveTo(lab, {visualizePathStyle: {stroke: '#ffffff'}});

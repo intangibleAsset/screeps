@@ -12,7 +12,6 @@ var roleReserver = require('role.reserver');
 var roleRemoteBuilder = require('role.remoteBuilder');
 var roleMineralMiner = require('role.mineralMiner');
 var roleGuardDog = require('role.guardDog');
-var roleMover = require('role.mover');
 var roleDismantler = require('role.dismantler');
 var roleRemoteHoarder = require('role.remoteHoarder');
 var roleRemoteTrucker = require('role.remoteTrucker');
@@ -29,6 +28,7 @@ var roomOne = {
         this.hud();
         this.runTowers();
         this.triggerSafeMode();
+        this.autoTransfer('W68N35');
 
         
         //mining code/////////////////////////////////////
@@ -49,7 +49,7 @@ var roomOne = {
         //Lab code////////////////////////////////////////
         this.registerLabs('59aba193db14456acb9da69d','59ab047c76a0221339962e69');
         this.runLabs(this.firstLabId,this.secondLabId); 
-        this.mineralsToCombine(RESOURCE_GHODIUM_HYDRIDE,RESOURCE_HYDROXIDE);
+        this.mineralsToCombine(RESOURCE_KEANIUM,RESOURCE_ZYNTHIUM);
         
         
         
@@ -57,8 +57,8 @@ var roomOne = {
         
         //const cost = Game.market.calcTransactionCost(14400, 'W63N36', 'W25N91');
         //console.log(cost);
-        //console.log(Game.market.deal('59c2526d9b55ec08a5ba1f3c',30000,"W63N36"));
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,43000,'W68N35'));
+        //console.log(Game.market.deal('58bbc4bf505cf7401bc7d78b',6000,"W63N36"));
+        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,93000,'W68N35'));
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
@@ -75,11 +75,10 @@ var roomOne = {
             var REMOTE_TANKS = 0;
             var MINERAL_MINERS = 0;
             var GUARD_DOGS = 1;
-            var MOVERS = 0;
             var REMOTE_HOARDER = 3;
             var REMOTE_TRUCKERS = 3;
             var LOGISTICS = 1;
-            var LAB_ASSISTANTS = 1;
+            var LAB_ASSISTANTS = 0;
         }else{
             var HARVESTERS = 1;
             var UPGRADERS = 0;
@@ -101,8 +100,7 @@ var roomOne = {
             ['logistics',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE],roleLogistics,LOGISTICS],
             ['remoteTrucker',[CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,CARRY,MOVE,WORK,MOVE],roleRemoteTrucker,REMOTE_TRUCKERS],
             ['remoteHoarder',[CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,WORK,WORK,WORK,WORK,WORK,WORK,CARRY],roleRemoteHoarder,REMOTE_HOARDER],
-            ['mover',[CARRY,CARRY,MOVE,MOVE,CARRY,CARRY,MOVE,MOVE],roleMover,MOVERS],            
-            ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK],roleGuardDog,GUARD_DOGS],
+            ['guarddog',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK],roleGuardDog,GUARD_DOGS],
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
@@ -319,6 +317,13 @@ var roomOne = {
     		}
     	}
     },
+	autoTransfer: function(transferRoom){
+	    if(this.obj.terminal.store[RESOURCE_ENERGY] > 49999){
+	        if(!this.obj.terminal.send(RESOURCE_ENERGY,40000,transferRoom)){
+	            console.log('insufficient energy in terminal to transfer from ' + this.obj.name + ' to ' + transferRoom)
+	        }
+	    }
+	},
 
 };
 

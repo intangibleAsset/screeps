@@ -4,7 +4,8 @@ var roleUpgrader = {
     run: function(creep) {
         
         this.init(creep);
-        
+
+        console.log(creep.transferring());
 
 		if(this.creep.memory.upgrading && this.creep.carry.energy == 0) {
 		    this.creep.memory.upgrading = false;
@@ -49,7 +50,6 @@ var roleUpgrader = {
                     }
                 }else if(this.creep.room.storage && this.creep.room.storage.store[RESOURCE_ENERGY] === 0 
                 && this.creep.room.terminal && this.creep.room.terminal.store[RESOURCE_ENERGY] > this.creep.carryCapacity){
-                console.log('arse'+this.creep.room.name);
                     if(this.creep.withdraw(this.creep.room.terminal, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
                         this.creep.moveTo(this.creep.room.terminal);
                     }

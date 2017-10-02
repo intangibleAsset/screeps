@@ -1,3 +1,4 @@
+require('prototype.creep');
 var roomOne = require('roomOne');
 var roomTwo = require('roomTwo');
 var roomThree = require('roomThree');

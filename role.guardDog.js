@@ -14,8 +14,9 @@ var roleGuardDog = {
             }else{
                 let theBads = this.creep.room.find(FIND_HOSTILE_CREEPS);
                 if(theBads.length > 0){
-                    if(creep.attack(theBads[0])===ERR_NOT_IN_RANGE){
+                    if(creep.rangedAttack(theBads[0])===ERR_NOT_IN_RANGE){
                         creep.moveTo(theBads[0], {visualizePathStyle: {stroke: '#ffffff'}});
+
                     }
                 }
             }     
