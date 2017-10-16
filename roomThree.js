@@ -26,7 +26,9 @@ var roomThree = {
         this.init(roomObj);
         this.hud();
         this.runTowers();
-        this.triggerSafeMode();    
+        this.triggerSafeMode(); 
+        this.autoTransfer('W68N37');
+        
         
         //array of mining locations passed to mining op
         var remSources = [
@@ -56,7 +58,7 @@ var roomThree = {
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 2;
+            var UPGRADERS = 1;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -98,11 +100,11 @@ var roomThree = {
             ['harvester',[WORK,CARRY,CARRY,MOVE,MOVE],roleHarvester,HARVESTERS],
             ['reserver',[CLAIM,MOVE],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
-            ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['upgrader',[WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK,ATTACK,ATTACK],roleTank,TANKS],
-            ['hoarder',[WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
+            ['hoarder',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE],roleHoarder,HOARDERS],
             ['hoadertwo',[WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE],roleHoarderTwo,HOARDERTWOS],
             ['trucker',[CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleTrucker,TRUCKERS],
             ['mineralMiner',[WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE,WORK,CARRY,MOVE],roleMineralMiner,MINERAL_MINERS]            
@@ -307,6 +309,13 @@ var roomThree = {
     		}
     	}
     },
+	autoTransfer: function(transferRoom){
+	    if(this.obj.terminal.store[RESOURCE_ENERGY] > 49999){
+	        if(!this.obj.terminal.send(RESOURCE_ENERGY,40000,transferRoom)){
+	            console.log('insufficient energy in terminal to transfer from ' + this.obj.name + ' to ' + transferRoom)
+	        }
+	    }
+	},
 	
 };
 

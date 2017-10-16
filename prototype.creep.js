@@ -17,8 +17,32 @@ Creep.prototype.withdrawFromTerminal = function(resource){
     }
 };
 
-Creep.prototype.withdrawFromLab = function(lab){
-    if(this.creep.withdraw(lab,lab.mineralType)===ERR_NOT_IN_RANGE){
-        this.creep.moveTo(lab, {visualizePathStyle: {stroke: '#ffffff'}});
+Creep.prototype.transferToTerminal = function(){
+    let resource;
+    for(property in this.carry){
+        resource = property;
+    }
+    if(this.transfer(this.room.terminal,mineral)===ERR_NOT_IN_RANGE){
+        this.moveTo(this.room.terminal, {visualizePathStyle: {stroke: '#ffffff'}});   
     }
 };
+
+Creep.prototype.withdrawFromLab = function(lab){
+    //just takes the mineral that is already in the lab out
+    if(this.withdraw(lab,lab.mineralType)===ERR_NOT_IN_RANGE){
+        this.moveTo(lab, {visualizePathStyle: {stroke: '#ffffff'}});
+    }
+};
+
+Creep.prototype.transferToLab = function(lab){
+    //should work if creep is only carrying one type of resource
+    let resource;
+    for(property in this.carry){
+        resource = property;
+    }
+    if(this.transfer(lab,mineral)===ERR_NOT_IN_RANGE){
+        this.moveTo(lab, {visualizePathStyle: {stroke: '#ffffff'}});   
+    }
+};
+
+

@@ -28,7 +28,7 @@ var roomOne = {
         this.hud();
         this.runTowers();
         this.triggerSafeMode();
-        this.autoTransfer('W68N35');
+        this.autoTransfer('W68N37');
 
         
         //mining code/////////////////////////////////////
@@ -58,7 +58,7 @@ var roomOne = {
         //const cost = Game.market.calcTransactionCost(14400, 'W63N36', 'W25N91');
         //console.log(cost);
         //console.log(Game.market.deal('58bbc4bf505cf7401bc7d78b',6000,"W63N36"));
-        //console.log(spawn.room.terminal.send(RESOURCE_ENERGY,93000,'W68N35'));
+        //console.log(spawn.room.terminal.send(RESOURCE_CATALYZED_GHODIUM_ACID,5760,'W68N35'));
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;

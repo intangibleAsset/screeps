@@ -45,7 +45,7 @@ var roomFour = {
         
         if(!this.obj.memory.hostileInRoom){
             var HARVESTERS = 1;
-            var UPGRADERS = 2;
+            var UPGRADERS = 1;
             var BUILDERS = 0;
             var HOARDERS = 1;
             var HOARDERTWOS = 1;
@@ -89,7 +89,7 @@ var roomFour = {
             ['remoteBuilder',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleRemoteBuilder,REMOTE_BUILDERS],
             ['reserver',[TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,CLAIM],roleReserver,RESERVERS],
             ['medic',[TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,TOUGH,MOVE,HEAL,MOVE,HEAL],roleMedic,MEDICS],
-            ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
+            ['upgrader',[WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],roleUpgrader,UPGRADERS],
             ['builder',[WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],roleBuilder,BUILDERS],
             ['wallrepper',[WORK,CARRY,MOVE,MOVE,WORK,CARRY,MOVE,MOVE],roleWallrepper,WALLREPPERS],
             ['tank',[ATTACK,MOVE,ATTACK,MOVE,ATTACK,MOVE],roleTank,TANKS],

@@ -1,12 +1,14 @@
 require('prototype.creep');
+require('prototype.room');
 var roomOne = require('roomOne');
 var roomTwo = require('roomTwo');
 var roomThree = require('roomThree');
-var roomFour = require('roomFour')
+var roomFour = require('roomFour');
 
 
 module.exports.loop = function () {
     
+        
     
     
     //********************delete dead creeps****************************************************

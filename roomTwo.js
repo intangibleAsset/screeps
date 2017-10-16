@@ -25,7 +25,7 @@ var roomTwo = {
        
         this.init(roomObj);
         
-        this.autoTransfer('W68N35');
+        this.autoTransfer('W68N37');
         
         this.hud();
         this.runTowers();
